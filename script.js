@@ -333,46 +333,37 @@ function sendToWhatsApp() {
 
 
 // эвакуатор
-
 function sendLocationToWA(phoneNumber) {
-    // Санҷиши мавҷудияти Geolocation дар браузер
     if (!navigator.geolocation) {
-        alert("Браузери шумо муайянкунии маконро дастгирӣ намекунад.");
+        alert("Браузери шумо GPS-ро дастгирӣ намекунад.");
         return;
     }
 
-    // Нишон додани паёми интизорӣ
-    alert("Лутфан иҷозат диҳед, ки сайт макони шуморо муайян кунад. Ин чанд сония вақт мегирад...");
+    // Огоҳӣ барои корбар
+    alert("Ҷустуҷӯи макон... Лутфан иҷозат диҳед (Allow)");
 
     navigator.geolocation.getCurrentPosition(
         (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
-            // Сохтани линки Google Maps бо координатаҳои дақиқ
+            // Линки дурусти Google Maps
             const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
             
-            // Сохтани матни паём барои WhatsApp
             const message = encodeURIComponent(
-                `🚨 *Ёрии таъҷилӣ!* \n` +
-                `Мошини ман вайрон шуд. Лутфан ба ман эвакуатор фиристед. \n\n` +
-                `📍 *Макони ман дар харита:* \n${mapLink}`
+                `🚨 Салом! Ба ман эвакуатор лозим аст.\n📍 Макони ман дар харита:\n${mapLink}`
             );
 
-            // Кушодани WhatsApp бо рақами компания ва паёми тайёр
+            // Кушодани WhatsApp
             window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
         },
         (error) => {
-            // Дар ҳолати хатогӣ ё рад кардани иҷозат
-            let errorMsg = "Хатогӣ дар ёфтани макон.";
-            if (error.code === 1) errorMsg = "Лутфан иҷозати GPS-ро дар танзимоти телефон фаъол кунед.";
+            console.error(error);
+            alert("Хатогӣ: Макон ёфт нашуд. Иҷозати GPS-ро дар телефон тафтиш кунед.");
             
-            alert(errorMsg);
-            
-            // Агар GPS кор накунад, ақаллан WhatsApp-ро бе локация мекушояд
-            const simpleMsg = encodeURIComponent("🚨 Салом! Мошини ман вайрон шуд, ба ман эвакуатор лозим аст.");
-            window.open(`https://wa.me/${phoneNumber}?text=${simpleMsg}`, '_blank');
+            // Агар GPS кор накунад, ақаллан WhatsApp-ро мекушояд
+            window.open(`https://wa.me/${phoneNumber}?text=Салом! Ба ман эвакуатор лозим аст.`, '_blank');
         },
-        { enableHighAccuracy: true, timeout: 10000 } // Танзимоти дақиқии баланд
+        { enableHighAccuracy: true, timeout: 10000 }
     );
 }
