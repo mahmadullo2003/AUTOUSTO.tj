@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AUTOUSTO.TJ — Ёфтани беҳтарин устоҳои мошин дар Тоҷикистон</title>
+
+<meta name="description" content="Платформаи ягона барои ёфтани устоҳои мошин, электрикҳо ва мотористҳо дар Душанбе, Хуҷанд ва тамоми Тоҷикистон.">
+
+<meta name="keywords" content="усто, устои мошин, моторист, электрик, таъмири мошин, запчаст, Душанбе, Тоҷикистон, ремонт машин, автосервис Таджикистан, мастер по машинам">
+
+<meta property="og:title" content="USTO.TJ — Беҳтарин устоҳо дар як ҷо">
+<meta property="og:description" content="Устои лозимиро дар 1 дақиқа пайдо кунед.">
+<meta property="og:image" content="img/logo.jpg">
+    <link rel="stylesheet" href="style.css">
+   
+ 
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">USTO.TJ<span class="count-badge">Миқдори устоҳо: <span id="masterCount">3</span></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#">Асосӣ</a></li>
+            <li><a href="#services">Хизматрасониҳо</a></li>
+            <li><a href="#vipusto">VIP-Усто</a></li>
+            <li><a href="#ustoho">Устоҳои мо</a></li>
+            <li><a href="#contact">Тамос</a></li>
+        </ul>
+        <div class="burger" onclick="toggleMenu()">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Беҳтарин устоҳоро пайдо кунед</h1>
+        <div class="search-container">
+            <input type="text" id="citySearch" placeholder="Шаҳр (масалан: Душанбе)">
+            <select id="proSearch">
+                
+                <option value="моторист">🔧Моторист</option>
+                <option value="электрик">⚡Электрик</option>
+                <option value="ходовой">🚗Устои ходовой</option>
+                <option value="чарх">🚗Устои чарх</option>
+            </select>
+            <button onclick="searchMaster()">Ҷустуҷӯ</button>
+        </div>
+    </header>
+    <section  class="services-section" id="services">
+    <h2 style="text-align: center; margin-bottom: 30px;">Хизматрасониҳои мо</h2>
+    <div class="services-grid">
+        <div class="service-card" onclick="filterByService('motorist')">
+            <i class="fas fa-tools"></i>
+            <h3>Таъмири муҳаррик</h3>
+            <p>Таъмири асосии муҳаррик (мотор) ва ивази қисмҳо.</p>
+        </div>
+
+        <div class="service-card" onclick="filterByService('electric')">
+            <i class="fas fa-bolt"></i>
+            <h3>Электрика</h3>
+            <p>Диагностикаи компютерӣ ва таъмири ноқилҳо.</p>
+        </div>
+
+        <div class="service-card" onclick="filterByService('ходовой')">
+            <i class="fas fa-car"></i>
+            <h3>Ходовой</h3>
+            <p>Таъмири қисмҳои ҳаракаткунандаи мошин.</p>
+        </div>
+
+        <div class="service-card" onclick="filterByService('шина')">
+            <i class="fas fa-compact-disc"></i>
+            <h3>Шинамонтаж</h3>
+            <p>Балансировка ва ивази чархҳои мошин.</p>
+        </div>
+    </div>
+</section>
+<section class="vip-section" id="vipusto">
+    <div class="container">
+        <h2 class="section-title">🌟 Устоҳои беҳтарини ҳафта</h2>
+        <div id="vipContainer" class="vip-slider">
+            </div>
+    </div>
+</section>
+
+    <section class="masters-list" id="ustoho">
+        <h2 >Устоҳои мо</h2>
+<div id="mastersGrid" class="grid">
+    </div>
+
+<div id="ratingModal" class="modal">
+    <div class="modal-content">
+        <h3>Ба усто баҳо диҳед</h3>
+        
+        <div class="star-rating" id="userRating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+        </div>
+
+        <textarea id="commentText" placeholder="Фикри худро нависед (масалан: Устои зӯр будааст...)" rows="4" style="width: 100%; margin-top: 15px; padding: 10px; border-radius: 8px; border: 1px solid #ddd;"></textarea>
+
+        <div class="btn-group" style="margin-top: 15px; display: flex; gap: 10px;">
+            <button class="btn-send" onclick="submitRating()" style="flex: 1; background: #27ae60; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold;">Фиристодан</button>
+            <button class="btn-cancel" onclick="closeModal()" style="flex: 1; background: #eee; border: none; padding: 10px; border-radius: 8px; cursor: pointer;">Пӯшидан</button>
+        </div>
+    </div>
+</div>
+    </section>
+<section id="contact" class="contact-section">
+    <div class="container">
+        <h2 style="text-align: center; margin-bottom: 30px;">Сабти устои нав</h2>
+        <div class="contact-wrapper">
+            <div class="contact-form">
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                    Маълумоти худро пур кунед ва мо шуморо ба сайт илова мекунем.
+                </p>
+                <form id="masterRegistrationForm">
+                    <input type="text" id="masterName" placeholder="Ном ва Насаб" required>
+                    <input type="number" id="masterBirthYear" placeholder="Соли таваллуд (м-н: 1990)" required>
+                    <input type="tel" id="masterPhone" placeholder="Рақами телефон (м-н: +992...)" required>
+                    <input type="text" id="masterAddress" placeholder="Суроғаи ҷои кор" required>
+                    
+                    <select id="masterJob" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;">
+                        <option value="">Интихоби касб...</option>
+                        <option value="Моторист">🔧 Моторист</option>
+                        <option value="Электрик">⚡ Электрик</option>
+                        <option value="Ходовой">🚗 Устои ходовой</option>
+                        <option value="Шинамонтаж">🛞 Устои шина</option>
+                    </select>
+
+                    <input type="url" id="masterMap" placeholder="Линки харита (агар бошад)">
+                    
+                    <button type="button" onclick="sendToWhatsApp()" class="send-btn" style="background: #25D366;">
+                        <i class="fab fa-whatsapp"></i> Фиристодан ба WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+    <script src="script.js"></script>
+    <footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h2 class="footer-logo">USTO.TJ</h2>
+            <p>Платформаи ягона барои ёфтани устоҳои касбӣ дар Тоҷикистон. Мо ба шумо кӯмак мекунем, ки дар як дақиқа устои лозимиро пайдо кунед.</p>
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-section links">
+            <h3>Линкҳои муфид</h3>
+            <ul>
+                <li><a href="#">Асосӣ</a></li>
+                <li><a href="#services">Хизматрасониҳо</a></li>
+                <li><a href="#vipusto">VIP-Устоҳо</a></li>
+                <li><a href="#contact">Сабти усто</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section contact-dev">
+            <h3>Таҳиягар</h3>
+            <p>Лоиҳа аз ҷониби Барномасоз <strong>Нарзиев Маҳмадулло  Комилович</strong> сохта шудааст.</p>
+            <p>📍 Марғеб, ноҳияи Айнӣ</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; 2026 USTO.TJ — Ҳамаи ҳуқуқҳо ҳифз шудаанд.</p>
+    </div>
+</footer>
+</body>
+</html>
