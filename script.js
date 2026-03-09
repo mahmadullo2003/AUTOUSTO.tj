@@ -10,7 +10,7 @@ const mastersData = [
         city: "Душанбе-Кушониён",
         phone: "+992933099029",
         rating: 4.8,
-        about: "Мутахассиси қисмҳои электорнии астобил, қобилияти диагностика, TPMS-датчик шина, ва ғайра, таҷрибаи кори 2сол ",
+        about: "Мутахассиси қисмҳои электорнии автомобил, қобилияти диагностика кардани мошин пок кардани хатогиҳо, TPMS-датчик шина, ва ғайра, таҷрибаи кори 2сол ",
         mapUrl: "https://goo.gl/maps/example1",
         openTime: 8,
         closeTime: 18,
@@ -19,7 +19,7 @@ const mastersData = [
     },
     {
         id: 2,
-        name: "Усто Маҳмад",
+        name: "electrick",
         job: "электрик",
         experience: "10 сол",
         photo: "https://via.placeholder.com/100",
@@ -35,7 +35,7 @@ const mastersData = [
     },
     {
         id: 3,
-        name: "Усто Аҳмад",
+        name: "шина мантаж",
         job: "чарх",
         photo: "https://via.placeholder.com/100",
         city: "Душанбе",
@@ -329,4 +329,5 @@ function sendToWhatsApp() {
 
     // Кушодани линк
     window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
+
 }
