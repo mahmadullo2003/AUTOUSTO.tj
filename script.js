@@ -10,7 +10,7 @@ const mastersData = [
         city: "Душанбе-Кушониён",
         phone: "+992933099029",
         rating: 4.8,
-        about: "Мутахассиси қисмҳои электорнии автомобил, қобилияти диагностика кардани мошин пок кардани хатогиҳо, TPMS-датчик шина, ва ғайра, таҷрибаи кори 2сол ",
+        about: "Мутахассиси қисмҳои электорнии астобил, қобилияти диагностика, TPMS-датчик шина, ва ғайра, таҷрибаи кори 2сол ",
         mapUrl: "https://goo.gl/maps/example1",
         openTime: 8,
         closeTime: 18,
@@ -19,7 +19,7 @@ const mastersData = [
     },
     {
         id: 2,
-        name: "electrick",
+        name: "Усто Маҳмад",
         job: "электрик",
         experience: "10 сол",
         photo: "https://via.placeholder.com/100",
@@ -35,7 +35,7 @@ const mastersData = [
     },
     {
         id: 3,
-        name: "шина мантаж",
+        name: "Усто Аҳмад",
         job: "чарх",
         photo: "https://via.placeholder.com/100",
         city: "Душанбе",
@@ -329,5 +329,50 @@ function sendToWhatsApp() {
 
     // Кушодани линк
     window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
+}
 
+
+// эвакуатор
+
+function sendLocationToWA(phoneNumber) {
+    // Санҷиши мавҷудияти Geolocation дар браузер
+    if (!navigator.geolocation) {
+        alert("Браузери шумо муайянкунии маконро дастгирӣ намекунад.");
+        return;
+    }
+
+    // Нишон додани паёми интизорӣ
+    alert("Лутфан иҷозат диҳед, ки сайт макони шуморо муайян кунад. Ин чанд сония вақт мегирад...");
+
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Сохтани линки Google Maps бо координатаҳои дақиқ
+            const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
+            
+            // Сохтани матни паём барои WhatsApp
+            const message = encodeURIComponent(
+                `🚨 *Ёрии таъҷилӣ!* \n` +
+                `Мошини ман вайрон шуд. Лутфан ба ман эвакуатор фиристед. \n\n` +
+                `📍 *Макони ман дар харита:* \n${mapLink}`
+            );
+
+            // Кушодани WhatsApp бо рақами компания ва паёми тайёр
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        },
+        (error) => {
+            // Дар ҳолати хатогӣ ё рад кардани иҷозат
+            let errorMsg = "Хатогӣ дар ёфтани макон.";
+            if (error.code === 1) errorMsg = "Лутфан иҷозати GPS-ро дар танзимоти телефон фаъол кунед.";
+            
+            alert(errorMsg);
+            
+            // Агар GPS кор накунад, ақаллан WhatsApp-ро бе локация мекушояд
+            const simpleMsg = encodeURIComponent("🚨 Салом! Мошини ман вайрон шуд, ба ман эвакуатор лозим аст.");
+            window.open(`https://wa.me/${phoneNumber}?text=${simpleMsg}`, '_blank');
+        },
+        { enableHighAccuracy: true, timeout: 10000 } // Танзимоти дақиқии баланд
+    );
 }

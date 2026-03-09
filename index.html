@@ -19,13 +19,14 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo">USTO.TJ<span class="count-badge">Миқдори устоҳо: <span id="masterCount">3</span></div>
+        <div class="logo">AUTOUSTO.TJ<span class="count-badge">Миқдори устоҳо: <span id="masterCount">3</span></div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#">Асосӣ</a></li>
             <li><a href="#services">Хизматрасониҳо</a></li>
             <li><a href="#vipusto">VIP-Усто</a></li>
             <li><a href="#ustoho">Устоҳои мо</a></li>
-            <li><a href="#contact">Тамос</a></li>
+            <li><a href="#evacuator" class="nav-sos">🚨 Эвакуатор</a></li>
+            <li><a href="#contact">Сабти усто</a></li>
         </ul>
         <div class="burger" onclick="toggleMenu()">
             <div class="line"></div>
@@ -42,8 +43,18 @@
                 
                 <option value="моторист">🔧Моторист</option>
                 <option value="электрик">⚡Электрик</option>
+                <option value="диагностика">💻 Диагностика</option>
                 <option value="ходовой">🚗Устои ходовой</option>
-                <option value="чарх">🚗Устои чарх</option>
+                <option value="чарх">🛞Устои чарх</option>
+                <option value="ранг">🎨Устои рангу бор</option>
+                <option value="кузов">🔨Устои оҳангар (Жестянка) </option>
+                <option value="газ">⛽ Устои газ </option>
+                <option value="шиша">💎 Устои шиша </option>
+                <option value="тасма">⛓️ Устои ГРМ ва тасмаҳо</option>
+                <option value="каробка">⚙️⚙️ Устои кароака (М/А)</option>
+                <option value="сардкунак">❄️ Устои кондитсионер</option>
+                <option value="развал">📐 Устои танзими чархҳо-Развал) </option>
+
             </select>
             <button onclick="searchMaster()">Ҷустуҷӯ</button>
         </div>
@@ -110,6 +121,53 @@
     </div>
 </div>
     </section>
+
+
+
+
+<section id="evacuator" class="evacuator-section">
+    <div class="container">
+        <h2 class="section-title" style="text-align:center; margin-bottom:10px;">🚨 Хизматрасонии Эвакуатор 24/7</h2>
+        <p style="text-align:center; margin-bottom:40px; color: #666;">Компанияи мувофиқро интихоб кунед ва макони худро фиристед:</p>
+
+        <div class="evacuator-grid">
+            
+            <div class="evacuator-card">
+                <div class="comp-icon">🚛</div>
+                <h3>Эвакуатор "Марғеб-Сервис"</h3>
+                <p>📍 Минтақа: н. Айнӣ, Панҷдарра</p>
+                <div class="sos-action-buttons">
+                    <button onclick="sendLocationToWA('992933099029')" class="btn-loc-mini">📍 Фиристодани Локация</button>
+                    <a href="tel:+992933099029" class="btn-call-mini">📞 Занг задан</a>
+                </div>
+            </div>
+
+            <div class="evacuator-card">
+                <div class="comp-icon">🚚</div>
+                <h3>Эвакуатор "Зарафшон"</h3>
+                <p>📍 Минтақа: ш. Панҷакент</p>
+                <div class="sos-action-buttons">
+                    <button onclick="sendLocationToWA('992900000000')" class="btn-loc-mini">📍 Фиристодани Локация</button>
+                    <a href="tel:+992900000000" class="btn-call-mini">📞 Занг задан</a>
+                </div>
+            </div>
+
+            <div class="evacuator-card">
+                <div class="comp-icon">🚚</div>
+                <h3>Эвакуатор "Помощ"</h3>
+                <p>📍 Минтақа: Душанбе - Хуҷанд</p>
+                <div class="sos-action-buttons">
+                    <button onclick="sendLocationToWA('992918000000')" class="btn-loc-mini">📍 Фиристодани Локация</button>
+                    <a href="tel:+992918000000" class="btn-call-mini">📞 Занг задан</a>
+                </div>
+            </div>
+
+        </div> </div>
+</section>
+
+
+
+
 <section id="contact" class="contact-section">
     <div class="container">
         <h2 style="text-align: center; margin-bottom: 30px;">Сабти устои нав</h2>
@@ -125,11 +183,19 @@
                     <input type="text" id="masterAddress" placeholder="Суроғаи ҷои кор" required>
                     
                     <select id="masterJob" required style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px;">
-                        <option value="">Интихоби касб...</option>
-                        <option value="Моторист">🔧 Моторист</option>
-                        <option value="Электрик">⚡ Электрик</option>
-                        <option value="Ходовой">🚗 Устои ходовой</option>
-                        <option value="Шинамонтаж">🛞 Устои шина</option>
+                       <option value="моторист">🔧Моторист</option>
+                <option value="электрик">⚡Электрик</option>
+                <option value="диагностика">💻 Диагностика</option>
+                <option value="ходовой">🚗Устои ходовой</option>
+                <option value="чарх">🛞Устои чарх</option>
+                <option value="ранг">🎨Устои рангу бор</option>
+                <option value="кузов">🔨Устои оҳангар (Жестянка) </option>
+                <option value="газ">⛽ Устои газ </option>
+                <option value="шиша">💎 Устои шиша </option>
+                <option value="тасма">⛓️ Устои ГРМ ва тасмаҳо</option>
+                <option value="каробка">⚙️⚙️ Устои кароака (М/А)</option>
+                <option value="сардкунак">❄️ Устои кондитсионер</option>
+                <option value="развал">📐 Устои танзими чархҳо-Развал) </option>
                     </select>
 
                     <input type="url" id="masterMap" placeholder="Линки харита (агар бошад)">
@@ -162,6 +228,7 @@
                 <li><a href="#services">Хизматрасониҳо</a></li>
                 <li><a href="#vipusto">VIP-Устоҳо</a></li>
                 <li><a href="#contact">Сабти усто</a></li>
+                <li><a href="#evacuator" class="nav-sos">🚨 Эвакуатор</a></li>
             </ul>
         </div>
 

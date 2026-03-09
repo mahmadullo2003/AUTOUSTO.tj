@@ -533,3 +533,135 @@ details[open] summary::before {
     font-size: 13px;
     color: #95a5a6;
 }
+
+
+/* эвакуатор */
+
+.evacuator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.evacuator-card {
+    background: #fff;
+    border: 2px solid #eee;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.evacuator-card:hover {
+    border-color: #ff4757;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.comp-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.sos-action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-loc-mini {
+    background: #1a73e8;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-call-mini {
+    background: #27ae60;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.sos-action-buttons {
+    display: flex;
+    flex-direction: column; /* Дар телефон тугмаҳо зери ҳам мешаванд */
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-loc-mini {
+    background: #25D366; /* Ранги WhatsApp */
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-call-mini {
+    background: #3498db;
+    color: white;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.btn-loc-mini:hover {
+    background: #128C7E;
+    transform: scale(1.02);
+}
+/* Контейнере, ки кортҳоро дар як саф мечинад */
+.evacuator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.evacuator-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.comp-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.sos-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Маҳдуд кардани андозаи тугмаҳо */
+.btn-loc-mini, .btn-call-mini {
+    width: 100%;
+    max-width: 280px; /* Намегузорад, ки тугма аз ҳад дароз шавад */
+    margin: 0 auto;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-loc-mini { background-color: #25D366; color: white; }
+.btn-call-mini { background-color: #3498db; color: white; }
