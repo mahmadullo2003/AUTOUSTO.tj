@@ -337,53 +337,63 @@ function sendToWhatsApp() {
 
 // эвакуатор
 
-function sendLocationToWA(phoneNumber) {
-    // 1. Санҷиш: Оё браузер GPS-ро дастгирӣ мекунад?
+async function sendLocationToWA(phoneNumber) {
     if (!navigator.geolocation) {
-        alert("Браузери шумо GPS-ро дастгирӣ намекунад. Лутфан маконро дастӣ нависед.");
-        openWhatsAppWithoutLocation(phoneNumber);
+        alert("Браузери шумо GPS-ро дастгирӣ намекунад.");
         return;
     }
 
-    // Танзимоти GPS барои телефон
+    // Нишон додани паёми интизорӣ ба корбар
+    const statusLabel = "Лутфан каме интизор шавед, макони шуморо муайян карда истодаем...";
+    alert(statusLabel);
+
     const options = {
-        enableHighAccuracy: true, // Истифодаи дақиқии баланд
-        timeout: 10000,            // Интизорӣ то 10 сония
-        maximumAge: 0
+        enableHighAccuracy: true, // Истифодаи маҳз GPS, на танҳо Wi-Fi
+        timeout: 15000,           // Интизорӣ то 15 сония (барои телефонҳои суст муҳим аст)
+        maximumAge: 0             // Кэшро истифода набар, макони воқеиро бигир
     };
 
     navigator.geolocation.getCurrentPosition(
         (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
+            const accuracy = position.coords.accuracy; // Дақиқӣ бо метр
+
+            // Линки Google Maps, ки дар телефонҳо 100% бо маркер кушода мешавад
             const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
             
             const message = encodeURIComponent(
-                `🚨 Салом! Ба ман эвакуатор лозим аст.\n📍 Макони ман дар харита:\n${mapLink}`
+                `🚨 *Салом! Ба ман эвакуатор лозим аст.*\n\n` +
+                `📍 *Макони дақиқи ман:* ${mapLink}\n` +
+                `🎯 *Дақиқӣ:* тақрибан ${Math.round(accuracy)} метр`
             );
-            
-            executeWhatsApp(phoneNumber, message);
+
+            const cleanPhone = phoneNumber.replace(/\D/g, '');
+            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
         },
         (error) => {
-            // Агар корбар "Block" кунад ё GPS хомӯш бошад
-            console.warn("GPS Error:", error.message);
-            alert("Макон ёфт нашуд. WhatsApp кушода мешавад, лутфан номи кӯча ё деҳаро нависед.");
-            openWhatsAppWithoutLocation(phoneNumber);
+            let errorMsg = "";
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMsg = "Шумо иҷозати GPS-ро надодед. Лутфан дар танзимоти браузер 'Allow' кунед.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMsg = "Маълумоти GPS дастрас нест. Боварӣ ҳосил кунед, ки GPS-и телефон фаъол аст.";
+                    break;
+                case error.TIMEOUT:
+                    errorMsg = "Вақти интизорӣ гузашт. Шояд сигнали GPS дар ин ҷо заиф бошад.";
+                    break;
+                default:
+                    errorMsg = "Хатогии номаълум ҳангоми ёфтани макон.";
+            }
+            alert(errorMsg);
+            
+            // Агар хатогӣ шавад, ақаллан WhatsApp-ро бе локатсия мекушоем
+            const cleanPhone = phoneNumber.replace(/\D/g, '');
+            window.open(`https://wa.me/${cleanPhone}?text=Салом! Ба ман эвакуатор лозим аст. Макони манро ёфта натавонистам.`, '_blank');
         },
         options
     );
-}
-
-// Функсияи ёрирасон барои кушодани WhatsApp
-function executeWhatsApp(phone, msg) {
-    const cleanPhone = phone.replace(/\D/g, '');
-    window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
-}
-
-// Агар локатсия кор накунад
-function openWhatsAppWithoutLocation(phone) {
-    const defaultMsg = encodeURIComponent("🚨 Салом! Ба ман эвакуатор лозим аст. Макони ман:");
-    executeWhatsApp(phone, defaultMsg);
 }
 
 
@@ -398,3 +408,4 @@ window.addEventListener('scroll', function() {
     }
 
 });
+
