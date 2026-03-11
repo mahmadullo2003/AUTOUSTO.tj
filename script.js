@@ -163,20 +163,23 @@ function submitRating() {
     const comment = document.getElementById("commentText").value.trim();
     
     if (currentScore > 0) {
-        // Тайёр кардани маълумот барои фиристодан
-        const ratingData = {
-            masterId: selectedMasterId,
-            stars: currentScore,
-            text: comment,
-            date: new Date().toLocaleString()
-        };
+        // Ёфтани номи усто аз рӯи ID
+        const master = mastersData.find(m => m.id === selectedMasterId);
+        const masterName = master ? master.name : "Устои номаълум";
 
-        console.log("Маълумоти нав:", ratingData);
+        // Сохтани матни паём барои шумо
+        const message = encodeURIComponent(
+            `⭐ *Баҳогузории нав дар USTO.TJ* \n\n` +
+            `👤 *Усто:* ${masterName}\n` +
+            `🌟 *Баҳо:* ${currentScore} ситора\n` +
+            `💬 *Шарҳ:* ${comment || "Бе шарҳ"}`
+        );
+
+        const myNumber = "992933099029"; // Рақами администратор
+
+        // Кушодани WhatsApp
+        window.open(`https://wa.me/${myNumber}?text=${message}`, '_blank');
         
-        alert(`Ташаккур! Баҳои шумо (${currentScore} ⭐) ва шарҳи шумо қабул шуд.`);
-        
-        // Тоза кардани форма ва пӯшидани модал
-        document.getElementById("commentText").value = "";
         closeModal();
     } else {
         alert("Лутфан камаш як ситораро интихоб кунед!");
@@ -316,7 +319,7 @@ function sendToWhatsApp() {
     }
 
     // Сохтани матни паём
-    const message = `🚀 *Аризаи нав барои USTO.TJ* %0A%0A` +
+    const message = `🚀 *Аризаи нав барои AUTOUSTO.TJ* %0A%0A` +
                     `👤 *Ном:* ${name}%0A` +
                     `📅 *Соли таваллуд:* ${birthYear}%0A` +
                     `📞 *Телефон:* ${phone}%0A` +
@@ -333,13 +336,13 @@ function sendToWhatsApp() {
 
 
 // эвакуатор
+
 function sendLocationToWA(phoneNumber) {
     if (!navigator.geolocation) {
         alert("Браузери шумо GPS-ро дастгирӣ намекунад.");
         return;
     }
 
-    // Огоҳӣ барои корбар
     alert("Ҷустуҷӯи макон... Лутфан иҷозат диҳед (Allow)");
 
     navigator.geolocation.getCurrentPosition(
@@ -347,23 +350,33 @@ function sendLocationToWA(phoneNumber) {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
             
-            // Линки дурусти Google Maps
+            // Линки 100% коршоям
             const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
             
             const message = encodeURIComponent(
                 `🚨 Салом! Ба ман эвакуатор лозим аст.\n📍 Макони ман дар харита:\n${mapLink}`
             );
 
-            // Кушодани WhatsApp
-            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+            // Рақами телефонро аз аломатҳои зиёдатӣ тоза мекунем
+            const cleanPhone = phoneNumber.replace(/\D/g, '');
+            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
         },
         (error) => {
-            console.error(error);
-            alert("Хатогӣ: Макон ёфт нашуд. Иҷозати GPS-ро дар телефон тафтиш кунед.");
-            
-            // Агар GPS кор накунад, ақаллан WhatsApp-ро мекушояд
-            window.open(`https://wa.me/${phoneNumber}?text=Салом! Ба ман эвакуатор лозим аст.`, '_blank');
+            alert("Хатогӣ: Иҷозати GPS дода нашуд. Лутфан танзимотро санҷед.");
+            window.open(`https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=Салом! Мошинам вайрон шуд, ба ман эвакуатор лозим аст.`, '_blank');
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
 }
+
+
+
+
+window.addEventListener('scroll', function() {
+    const navbar = document.getElementById('mainNavbar');
+    if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+    } else {
+        navbar.classList.remove('scrolled');
+    }
+});

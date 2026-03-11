@@ -19,7 +19,8 @@
 <body>
 
     <nav class="navbar">
-        <div class="logo">AUTOUSTO.TJ<span class="count-badge">Миқдори устоҳо: <span id="masterCount">3</span></div>
+        <div class="logo">🚗AUTOUSTO.TJ🚗<span class="count-badge">Миқдори устоҳо: <span id="masterCount">3</span></div>
+
         <ul class="nav-links" id="navLinks">
             <li><a href="#">Асосӣ</a></li>
             <li><a href="#services">Хизматрасониҳо</a></li>
@@ -28,6 +29,9 @@
             <li><a href="#evacuator" class="nav-sos">🚨 Эвакуатор</a></li>
             <li><a href="#contact">Сабти усто</a></li>
         </ul>
+        <div class="nav-bottom-progress">
+        <div class="nav-progress-line"></div>
+    </div>
         <div class="burger" onclick="toggleMenu()">
             <div class="line"></div>
             <div class="line"></div>
@@ -51,7 +55,7 @@
                 <option value="газ">⛽ Устои газ </option>
                 <option value="шиша">💎 Устои шиша </option>
                 <option value="тасма">⛓️ Устои ГРМ ва тасмаҳо</option>
-                <option value="каробка">⚙️⚙️ Устои кароака (М/А)</option>
+                <option value="каробка">⚙️⚙️ Устои каропка(КПП) (М/А)</option>
                 <option value="сардкунак">❄️ Устои кондитсионер</option>
                 <option value="развал">📐 Устои танзими чархҳо-Развал) </option>
 
@@ -59,34 +63,66 @@
             <button onclick="searchMaster()">Ҷустуҷӯ</button>
         </div>
     </header>
-    <section  class="services-section" id="services">
-    <h2 style="text-align: center; margin-bottom: 30px;">Хизматрасониҳои мо</h2>
-    <div class="services-grid">
-        <div class="service-card" onclick="filterByService('motorist')">
-            <i class="fas fa-tools"></i>
-            <h3>Таъмири муҳаррик</h3>
-            <p>Таъмири асосии муҳаррик (мотор) ва ивази қисмҳо.</p>
-        </div>
 
-        <div class="service-card" onclick="filterByService('electric')">
-            <i class="fas fa-bolt"></i>
-            <h3>Электрика</h3>
-            <p>Диагностикаи компютерӣ ва таъмири ноқилҳо.</p>
+<section class="services-section" id="services">
+    <div class="services-header-container">
+    <div class="main-title-wrapper">
+        <h2 class="dynamic-title">
+            <span class="tool-icon">🛠</span> 
+            Хизматрасониҳои касбӣ
+        </h2>
+        <div class="auto-progress-bar">
+            <div class="shimmer-line"></div>
         </div>
-
-        <div class="service-card" onclick="filterByService('ходовой')">
-            <i class="fas fa-car"></i>
-            <h3>Ходовой</h3>
-            <p>Таъмири қисмҳои ҳаракаткунандаи мошин.</p>
-        </div>
-
-        <div class="service-card" onclick="filterByService('шина')">
-            <i class="fas fa-compact-disc"></i>
-            <h3>Шинамонтаж</h3>
-            <p>Балансировка ва ивази чархҳои мошин.</p>
+    </div>
+    <p class="sub-text-fade">Беҳтарин устоҳо дар як ҷо</p>
+</div>
+        <div class="services-grid">
+            <div class="service-card" onclick="filterByService('моторист')">
+                <div class="card-icon">🔧</div>
+                <h3>Моторист</h3>
+                <p>Таъмири асосии муҳаррик</p>
+            </div>
+            <div class="service-card" onclick="filterByService('электрик')">
+                <div class="card-icon">⚡</div>
+                <h3>Электрик</h3>
+                <p>Электроника ва ноқилҳо</p>
+            </div>
+            <div class="service-card" onclick="filterByService('диагностика')">
+                <div class="card-icon">💻</div>
+                <h3>Диагностика</h3>
+                <p>Санҷиши компютерии мошин</p>
+            </div>
+            <div class="service-card" onclick="filterByService('ходовой')">
+                <div class="card-icon">🚗</div>
+                <h3>Устои ходовой</h3>
+                <p>Таъмири қисмҳои ҳаракат</p>
+            </div>
+            <div class="service-card" onclick="filterByService('чарх')">
+                <div class="card-icon">🛞</div>
+                <h3>Устои чарх</h3>
+                <p>Шинамонтаж ва балансировка</p>
+            </div>
+            <div class="service-card" onclick="filterByService('ранг')">
+                <div class="card-icon">🎨</div>
+                <h3>Рангу бор</h3>
+                <p>Рангкунии кузов ва полировка</p>
+            </div>
+            <div class="service-card" onclick="filterByService('кузов')">
+                <div class="card-icon">🔨</div>
+                <h3>Оҳангар</h3>
+                <p>Таъмири кузов (Жестянка)</p>
+            </div>
+            <div class="service-card" onclick="filterByService('каробка')">
+                <div class="card-icon">⚙️</div>
+                <h3>Каробка (М/А)</h3>
+                <p>Таъмири қуттии фишанг</p>
+            </div>
         </div>
     </div>
 </section>
+
+
 <section class="vip-section" id="vipusto">
     <div class="container">
         <h2 class="section-title">🌟 Устоҳои беҳтарини ҳафта</h2>
@@ -147,8 +183,8 @@
                 <h3>Эвакуатор "Зарафшон"</h3>
                 <p>📍 Минтақа: ш. Панҷакент</p>
                 <div class="sos-action-buttons">
-                    <button onclick="sendLocationToWA('992900000000')" class="btn-loc-mini">📍 Фиристодани Локация</button>
-                    <a href="tel:+992900000000" class="btn-call-mini">📞 Занг задан</a>
+                    <button onclick="sendLocationToWA('933099029')" class="btn-loc-mini">📍 Фиристодани Локация</button>
+                    <a href="tel:992933099029" class="btn-call-mini">📞 Занг задан</a>
                 </div>
             </div>
 
@@ -157,8 +193,8 @@
                 <h3>Эвакуатор "Помощ"</h3>
                 <p>📍 Минтақа: Душанбе - Хуҷанд</p>
                 <div class="sos-action-buttons">
-                    <button onclick="sendLocationToWA('992918000000')" class="btn-loc-mini">📍 Фиристодани Локация</button>
-                    <a href="tel:+992918000000" class="btn-call-mini">📞 Занг задан</a>
+                    <button onclick="sendLocationToWA('992933099029')" class="btn-loc-mini">📍 Фиристодани Локация</button>
+                    <a href="tel:992933099029" class="btn-call-mini">📞 Занг задан</a>
                 </div>
             </div>
 
@@ -193,7 +229,7 @@
                 <option value="газ">⛽ Устои газ </option>
                 <option value="шиша">💎 Устои шиша </option>
                 <option value="тасма">⛓️ Устои ГРМ ва тасмаҳо</option>
-                <option value="каробка">⚙️⚙️ Устои кароака (М/А)</option>
+                <option value="каробка">⚙️⚙️ Устои каропка(КПП) (М/А)</option>
                 <option value="сардкунак">❄️ Устои кондитсионер</option>
                 <option value="развал">📐 Устои танзими чархҳо-Развал) </option>
                     </select>

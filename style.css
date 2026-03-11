@@ -63,6 +63,163 @@ body {
     transition: 0.3s;
 }
 
+/* Танзимоти Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(15, 23, 42, 0.9); /* Торики шаффоф */
+    backdrop-filter: blur(12px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    z-index: 1000;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Контейнери Прогресс дар зери Навбар */
+.nav-bottom-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px; /* Ғафсии хатт */
+    background: rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+}
+
+/* Аниматсияи Хатти Дурахшон */
+.nav-progress-line {
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #3b82f6, #f1c40f, transparent);
+    position: absolute;
+    left: -30%;
+    animation: navFlow 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
+}
+
+@keyframes navFlow {
+    0% { left: -30%; }
+    100% { left: 110%; }
+}
+
+/* Стили текстҳо дар Навбар */
+.logo-text {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.logo-text span {
+    color: #3b82f6; /* Ранги кабуд барои .TJ */
+}
+
+.nav-item {
+    color: #e2e8f0 !important;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 0 15px;
+    transition: 0.3s;
+}
+
+.nav-item:hover {
+    color: #3b82f6 !important;
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+
+/* 1. Заминаи асосии бахш - ранги мулоими техникӣ */
+.services-section {
+    padding: 100px 0;
+    background: radial-gradient(circle at top, #f8faff 0%, #eef2f7 100%);
+    position: relative;
+}
+
+/* 2. Сарлавҳаи "Хизматрасониҳои касбӣ" - бо эффектҳои металлӣ */
+.dynamic-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+    text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+}
+
+/* 3. Дизайни кортҳо - бо сояи амиқ ва градиенти мулоим */
+.service-card {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    border: none;
+    border-radius: 24px;
+    padding: 40px 20px;
+    box-shadow: 20px 20px 60px #d1d9e6, 
+               -20px -20px 60px #ffffff; /* Эффекти Neumorphism */
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.service-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    background: #ffffff;
+    box-shadow: 0 30px 60px rgba(26, 115, 232, 0.15);
+}
+
+/* 4. Иконаҳо - бо рангҳои равшан */
+.card-icon {
+    font-size: 55px;
+    background: linear-gradient(135deg, #1a73e8, #00d2ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 5px 10px rgba(26, 115, 232, 0.3));
+    margin-bottom: 20px;
+}
+
+/* 5. Хатти прогресси зери сарлавҳа - дурахшон */
+.auto-progress-bar {
+    width: 150px;
+    height: 6px;
+    background: #dbe4f0;
+    border-radius: 10px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.shimmer-line {
+    background: linear-gradient(90deg, #1a73e8, #f1c40f, #1a73e8);
+    box-shadow: 0 0 15px rgba(26, 115, 232, 0.6);
+}
+
+
+/* Тугмаи SOS (Эвакуатор) */
+.nav-sos-btn {
+    background: #ff4757;
+    color: white !important;
+    padding: 8px 15px;
+    border-radius: 50px;
+    font-weight: bold;
+    animation: pulseRed 1.5s infinite;
+}
+
+@keyframes pulseRed {
+    0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
+}
+
+/* Тугмаи Сабти усто */
+.nav-reg-btn {
+    border: 2px solid #1a73e8;
+    padding: 8px 15px;
+    border-radius: 8px;
+    color: #1a73e8 !important;
+    transition: all 0.3s;
+}
+
+.nav-reg-btn:hover {
+    background: #1a73e8;
+    color: white !important;
+}
+
 /* Экрани асосӣ */
 .hero {
     background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
@@ -242,56 +399,166 @@ details[open] summary::before {
     border: 3px solid #f1c40f;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-.card-header {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-}
-
-.services-section {
-    padding: 50px 20px;
-    background-color: #f4f7f6;
-}
-
+/* Контейнери асосӣ */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    padding: 20px;
 }
 
+/* Стили кортҳо бо аниматсия */
 .service-card {
-    background: white;
-    padding: 30px 20px;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 30px 15px;
     text-align: center;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     cursor: pointer;
-    transition: all 0.3s ease;
-    border-bottom: 4px solid transparent;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
+/* Аниматсия ҳангоми наздик кардани мушак */
 .service-card:hover {
-    transform: translateY(-10px);
-    border-bottom-color: #1a73e8;
+    transform: translateY(-12px) scale(1.05);
+    box-shadow: 0 20px 40px rgba(26, 115, 232, 0.15);
+    border-color: #1a73e8;
 }
 
-.service-card i {
-    font-size: 40px;
-    color: #1a73e8;
+/* Графикаи иконаҳо */
+.card-icon {
+    font-size: 45px;
     margin-bottom: 15px;
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.service-card:hover .card-icon {
+    transform: rotate(15deg) scale(1.2);
+}
+
+/* Хатти ороишӣ дар зери корт */
+.service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #1a73e8, #f1c40f);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.service-card:hover::after {
+    transform: scaleX(1);
 }
 
 .service-card h3 {
-    margin-bottom: 10px;
+    font-size: 18px;
     color: #2c3e50;
+    margin-bottom: 8px;
 }
 
 .service-card p {
     font-size: 13px;
-    color: #777;
+    color: #7f8c8d;
+}
+
+/* Контейнери асосӣ дар марказ */
+.services-header-container {
+    text-align: center;
+    margin: 40px auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Стили сарлавҳа (андозаи миёна) */
+.dynamic-title {
+    font-size: 1.8rem; /* Андозаи мувофиқ ва на онқадар калон */
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: titlePulse 3s infinite ease-in-out; /* Аниматсияи худкор */
+}
+
+/* Аниматсияи иконаи асбоб (Доимӣ) */
+.tool-icon {
+    display: inline-block;
+    animation: wrenchSwing 2s infinite ease-in-out;
+}
+
+@keyframes wrenchSwing {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(15deg); }
+}
+
+/* Аниматсияи сусти сарлавҳа */
+@keyframes titlePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.02); }
+}
+
+/* Хатти Прогресси беохир (дар зери сарлавҳа) */
+.auto-progress-bar {
+    width: 200px; /* Дарозии хатт */
+    height: 4px;
+    background: #e0e0e0;
+    margin: 0 auto;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.shimmer-line {
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #1a73e8, #f1c40f, transparent);
+    position: absolute;
+    left: -60px;
+    animation: autoMove 2.5s infinite linear; /* Ҳаракати беохир бе мушак */
+}
+
+@keyframes autoMove {
+    0% { left: -60px; }
+    100% { left: 100%; }
+}
+
+/* Тексти хурди поёнӣ */
+.sub-text-fade {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 8px;
+    letter-spacing: 1px;
+    animation: fadeInOut 4s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+
+
+/* Аниматсияи логотип */
+.logo:hover .logo-icon {
+    animation: carDrive 0.8s infinite linear;
+}
+
+@keyframes carDrive {
+    0% { transform: translateX(0); }
+    25% { transform: translateY(-2px) translateX(2px); }
+    50% { transform: translateX(0); }
+    75% { transform: translateY(-2px) translateX(-2px); }
+    100% { transform: translateX(0); }
 }
 .vip-section {
     padding: 40px 0;
@@ -462,7 +729,7 @@ details[open] summary::before {
     }
 }
 
-
+/* футуер */
 .main-footer {
     background: #2c3e50;
     color: #ecf0f1;
