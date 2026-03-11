@@ -338,35 +338,52 @@ function sendToWhatsApp() {
 // эвакуатор
 
 function sendLocationToWA(phoneNumber) {
+    // 1. Санҷиш: Оё браузер GPS-ро дастгирӣ мекунад?
     if (!navigator.geolocation) {
-        alert("Браузери шумо GPS-ро дастгирӣ намекунад.");
+        alert("Браузери шумо GPS-ро дастгирӣ намекунад. Лутфан маконро дастӣ нависед.");
+        openWhatsAppWithoutLocation(phoneNumber);
         return;
     }
 
-    alert("Ҷустуҷӯи макон... Лутфан иҷозат диҳед (Allow)");
+    // Танзимоти GPS барои телефон
+    const options = {
+        enableHighAccuracy: true, // Истифодаи дақиқии баланд
+        timeout: 10000,            // Интизорӣ то 10 сония
+        maximumAge: 0
+    };
 
     navigator.geolocation.getCurrentPosition(
         (position) => {
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
-            
-            // Линки 100% коршоям
             const mapLink = `https://www.google.com/maps?q=${lat},${lon}`;
             
             const message = encodeURIComponent(
                 `🚨 Салом! Ба ман эвакуатор лозим аст.\n📍 Макони ман дар харита:\n${mapLink}`
             );
-
-            // Рақами телефонро аз аломатҳои зиёдатӣ тоза мекунем
-            const cleanPhone = phoneNumber.replace(/\D/g, '');
-            window.open(`https://wa.me/${cleanPhone}?text=${message}`, '_blank');
+            
+            executeWhatsApp(phoneNumber, message);
         },
         (error) => {
-            alert("Хатогӣ: Иҷозати GPS дода нашуд. Лутфан танзимотро санҷед.");
-            window.open(`https://wa.me/${phoneNumber.replace(/\D/g, '')}?text=Салом! Мошинам вайрон шуд, ба ман эвакуатор лозим аст.`, '_blank');
+            // Агар корбар "Block" кунад ё GPS хомӯш бошад
+            console.warn("GPS Error:", error.message);
+            alert("Макон ёфт нашуд. WhatsApp кушода мешавад, лутфан номи кӯча ё деҳаро нависед.");
+            openWhatsAppWithoutLocation(phoneNumber);
         },
-        { enableHighAccuracy: true, timeout: 10000 }
+        options
     );
+}
+
+// Функсияи ёрирасон барои кушодани WhatsApp
+function executeWhatsApp(phone, msg) {
+    const cleanPhone = phone.replace(/\D/g, '');
+    window.open(`https://wa.me/${cleanPhone}?text=${msg}`, '_blank');
+}
+
+// Агар локатсия кор накунад
+function openWhatsAppWithoutLocation(phone) {
+    const defaultMsg = encodeURIComponent("🚨 Салом! Ба ман эвакуатор лозим аст. Макони ман:");
+    executeWhatsApp(phone, defaultMsg);
 }
 
 
@@ -379,4 +396,5 @@ window.addEventListener('scroll', function() {
     } else {
         navbar.classList.remove('scrolled');
     }
+
 });
