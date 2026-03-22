@@ -1,113 +1,122 @@
-// ==========================================
-// 1. ИДОРАКУНИИ МЕНЮИ МОБИЛӢ (Instagram Menu)
-// ==========================================
-
-// Функсияи асосӣ барои боз/пинҳон кардани меню
-function toggleMobileMenu() {
-    const dropdown = document.getElementById('mobileDropdown');
-    if (dropdown) {
-        const isHidden = dropdown.style.display === 'none' || dropdown.style.display === '';
-        dropdown.style.display = isHidden ? 'flex' : 'none';
-    }
-}
-
-// Функсия барои зерменюҳо (Accordion) дар дохили меню
-function toggleSubMenu(element) {
-    const content = element.nextElementSibling;
-    const arrow = element.querySelector('.arrow');
-    
-    if (content.style.display === "flex") {
-        content.style.display = "none";
-        element.classList.remove("active-btn");
-        if(arrow) arrow.style.transform = "rotate(0deg)";
-    } else {
-        content.style.display = "flex";
-        element.classList.add("active-btn");
-        if(arrow) arrow.style.transform = "rotate(180deg)";
-    }
-}
-
-// ==========================================
-// 2. ИДОРАКУНИИ МОДАЛ (ФРЕЙМ) ВА ГПС
-// ==========================================
-
+// 1. Функсияҳои идоракунии Модал (Пайдошавӣ ва Пӯшидан)
 function openModal() {
-    document.getElementById("registrationModal").style.display = "block";
+    var modal = document.getElementById("registrationModal");
+    if (modal) modal.style.display = "block";
 }
 
 function closeModal() {
-    document.getElementById("registrationModal").style.display = "none";
+    var modal = document.getElementById("registrationModal");
+    if (modal) modal.style.display = "none";
 }
 
-// Функсияи ГПС
-// 1. Функсияи ГПС (GPS)
+// 2. Идоракунии Рӯйхати Касбҳо (Custom Dropdown)
+function toggleMainDropdown() {
+    var options = document.getElementById('customOptions');
+    if (options) {
+        options.style.display = (options.style.display === 'block') ? 'none' : 'block';
+    }
+}
+
+function toggleCustomSub(element) {
+    var sub = element.nextElementSibling;
+    var arrow = element.querySelector('.arrow');
+    if (sub) {
+        if (sub.style.display === 'flex') {
+            sub.style.display = 'none';
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        } else {
+            sub.style.display = 'flex';
+            if (arrow) arrow.style.transform = 'rotate(90deg)';
+        }
+    }
+}
+
+function selectService(name) {
+    var display = document.getElementById('selectedService');
+    var input = document.getElementById('serviceInput');
+    if (display) display.innerText = name;
+    if (input) input.value = name;
+    
+    var options = document.getElementById('customOptions');
+    if (options) options.style.display = 'none';
+}
+
+// 3. Функсияи ГПС (GPS) - Танҳо бо HTTPS кор мекунад
 function getLocation() {
     var status = document.getElementById('locationStatus');
     var mapInput = document.getElementById('mapUrl');
 
     if (navigator.geolocation) {
         status.innerText = "⌛ Ҷустуҷӯи GPS...";
+        status.style.color = "orange";
+
         navigator.geolocation.getCurrentPosition(function(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-            // Линки оддӣ барои ҳама браузерҳо
+            // Линкаи универсалӣ барои ҳамаи телефонҳо
             var url = "https://www.google.com/maps?q=" + lat + "," + lng;
-            mapInput.value = url;
+            if (mapInput) mapInput.value = url;
             status.innerText = "✅ Мавқеъ муайян шуд!";
             status.style.color = "green";
         }, function() {
-            status.innerText = "❌ GPS ёфт нашуд";
+            status.innerText = "❌ GPS ёфт нашуд ё баста аст";
             status.style.color = "red";
         }, { enableHighAccuracy: true });
+    } else {
+        status.innerText = "❌ Браузер GPS-ро дастгирӣ намекунад";
     }
 }
 
-// 2. Фиристодан ба WhatsApp
+// 4. ФИРИСТОДАН БА WHATSAPP (Мантиқи асосӣ)
 var regForm = document.getElementById('regForm');
 
 if (regForm) {
     regForm.onsubmit = function(e) {
         e.preventDefault();
 
-        // Гирифтани маълумот (Шакли классикӣ барои Chrome-и телефон)
-        var nameEl = document.getElementById('fullName');
-        var yearEl = document.getElementById('birthYear');
-        var phoneEl = document.getElementById('userPhone');
-        var workEl = document.getElementById('workPlace');
-        var jobEl = document.getElementById('userJob');
-        var expEl = document.getElementById('experience');
-        var srvEl = document.getElementById('serviceInput');
-        var mapEl = document.getElementById('mapUrl');
+        // 1. Пайдо кардани тугма ва иловаи лоадинг
+        var submitBtn = document.querySelector('.btn-submit');
+        if (submitBtn) {
+            submitBtn.classList.add('loading');
+            submitBtn.innerText = "Дар ҳоли фиристодан..."; // Барои бехатарӣ матнро ҳам иваз мекунем
+        }
 
-        var name = nameEl ? nameEl.value : "Нишон дода нашудааст";
-        var year = yearEl ? yearEl.value : "-";
-        var phone = phoneEl ? phoneEl.value : "-";
-        var work = workEl ? workEl.value : "-";
-        var job = jobEl ? jobEl.value : "";
-        var exp = expEl ? expEl.value : "0";
-        var srv = srvEl ? srvEl.value : "";
-        var map = mapEl ? mapEl.value : "Фиристода нашуд";
+        // 2. Гирифтани маълумот
+        var name = document.getElementById('fullName') ? document.getElementById('fullName').value : "Н/Н";
+        var year = document.getElementById('birthYear') ? document.getElementById('birthYear').value : "-";
+        var phone = document.getElementById('userPhone') ? document.getElementById('userPhone').value : "-";
+        var work = document.getElementById('workPlace') ? document.getElementById('workPlace').value : "-";
+        var exp = document.getElementById('experience') ? document.getElementById('experience').value : "0";
+        var srv = document.getElementById('serviceInput') ? document.getElementById('serviceInput').value : "Интихоб нашудааст";
+        var map = document.getElementById('mapUrl') ? document.getElementById('mapUrl').value : "Фиристода нашуд";
 
-        var adminPhone = "992933099029"; 
+        var adminPhone = "992933099029";
 
-        // Сохтани матни паём (бо аломати + ба ҷои нохунакҳои каҷ)
+        // 3. Омода кардани матн
         var message = "🛡️ *ВЕРИФИКАЦИЯИ УСТО*" + "%0A%0A" +
                       "👤 *Усто:* " + name + "%0A" +
                       "📅 *Таваллуд:* " + year + "%0A" +
                       "📞 *Тел:* " + phone + "%0A" +
                       "📍 *Ҷои кор:* " + work + "%0A" +
-                      "🛠️ *Касб:* " + job + " (" + srv + ")%0A" +
+                      "🛠️ *Касб:* " + srv + "%0A" +
                       "⏳ *Таҷриба:* " + exp + " сол" + "%0A" +
-                      "🗺️ *Харита:* " + map + "%0A%0A" +
-                      "⚠️ _Лутфан акси шиносномаро замима кунед!_";
+                      "🗺️ *Харита:* " + map;
 
         var whatsappUrl = "https://wa.me/" + adminPhone + "?text=" + message;
-        
-        // Кушодани WhatsApp
-        window.open(whatsappUrl, '_blank');
-        
-        if (typeof closeModal === "function") {
-            closeModal();
-        }
+
+        // 4. Баъд аз 1 сония WhatsApp-ро мекушоем (барои намоиши эффект)
+        setTimeout(function() {
+            window.open(whatsappUrl, '_blank');
+            
+            // Тоза кардани лоадинг пас аз фиристодан
+            if (submitBtn) {
+                submitBtn.classList.remove('loading');
+                submitBtn.innerText = "Фиристодан ба WhatsApp";
+            }
+            
+            if (typeof closeModal === "function") {
+                closeModal();
+            }
+        }, 1200); 
     };
 }

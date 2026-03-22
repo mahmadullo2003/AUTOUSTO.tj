@@ -620,3 +620,31 @@ option {
     background: #ccc;
     border-radius: 10px;
 }
+
+
+/* Стили тугма ҳангоми боршавӣ */
+.btn-submit.loading {
+    background-color: #ccc !important;
+    pointer-events: none; /* Тугмаро ғайрифаъол мекунад */
+    position: relative;
+    color: transparent !important; /* Матнро пинҳон мекунад */
+}
+
+/* Сохтани доираи чархзананда (Spinner) */
+.btn-submit.loading::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -10px;
+    border: 3px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
