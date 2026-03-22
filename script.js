@@ -40,88 +40,74 @@ function closeModal() {
 }
 
 // Функсияи ГПС
+// 1. Функсияи ГПС (GPS)
 function getLocation() {
-    const status = document.getElementById('locationStatus');
-    const mapInput = document.getElementById('mapUrl');
+    var status = document.getElementById('locationStatus');
+    var mapInput = document.getElementById('mapUrl');
 
     if (navigator.geolocation) {
         status.innerText = "⌛ Ҷустуҷӯи GPS...";
-        status.style.color = "orange";
-
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const lat = position.coords.latitude;
-                const lng = position.coords.longitude;
-                // Линки дуруст барои Google Maps
-                const url = `https://www.google.com/maps?q=${lat},${lng}`;
-                mapInput.value = url;
-                status.innerText = "✅ Мавқеъ муайян шуд!";
-                status.style.color = "green";
-            },
-            () => {
-                status.innerText = "❌ GPS ёфт нашуд";
-                status.style.color = "red";
-            },
-            { enableHighAccuracy: true }
-        );
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            // Линки оддӣ барои ҳама браузерҳо
+            var url = "https://www.google.com/maps?q=" + lat + "," + lng;
+            mapInput.value = url;
+            status.innerText = "✅ Мавқеъ муайян шуд!";
+            status.style.color = "green";
+        }, function() {
+            status.innerText = "❌ GPS ёфт нашуд";
+            status.style.color = "red";
+        }, { enableHighAccuracy: true });
     }
 }
 
-// ==========================================
-// 3. ФИРИСТОДАН БА WHATSAPP
-// ==========================================
-
-const regForm = document.getElementById('regForm');
+// 2. Фиристодан ба WhatsApp
+var regForm = document.getElementById('regForm');
 
 if (regForm) {
-    regForm.addEventListener('submit', function(e) {
+    regForm.onsubmit = function(e) {
         e.preventDefault();
 
-        // Гирифтани маълумот
-        const name = document.getElementById('fullName')?.value || "Нишон дода нашудааст";
-        const year = document.getElementById('birthYear')?.value || "-";
-        const phone = document.getElementById('userPhone')?.value || "-";
-        const work = document.getElementById('workPlace')?.value || "Нишон дода нашудааст";
-        const job = document.getElementById('userJob')?.value || "";
-        const exp = document.getElementById('experience')?.value || "0";
-        const selectedSrv = document.getElementById('serviceInput')?.value || "Интихоб нашудааст";
-        const map = document.getElementById('mapUrl')?.value || "Фиристода нашуд";
+        // Гирифтани маълумот (Шакли классикӣ барои Chrome-и телефон)
+        var nameEl = document.getElementById('fullName');
+        var yearEl = document.getElementById('birthYear');
+        var phoneEl = document.getElementById('userPhone');
+        var workEl = document.getElementById('workPlace');
+        var jobEl = document.getElementById('userJob');
+        var expEl = document.getElementById('experience');
+        var srvEl = document.getElementById('serviceInput');
+        var mapEl = document.getElementById('mapUrl');
 
-        const adminPhone = "992933099029"; 
+        var name = nameEl ? nameEl.value : "Нишон дода нашудааст";
+        var year = yearEl ? yearEl.value : "-";
+        var phone = phoneEl ? phoneEl.value : "-";
+        var work = workEl ? workEl.value : "-";
+        var job = jobEl ? jobEl.value : "";
+        var exp = expEl ? expEl.value : "0";
+        var srv = srvEl ? srvEl.value : "";
+        var map = mapEl ? mapEl.value : "Фиристода нашуд";
 
-        // Сохтани матни паём
-        const message = `🛡️ *ВЕРИФИКАЦИЯИ УСТО* %0A%0A` +
-                        `👤 *Усто:* ${name}%0A` +
-                        `📅 *Таваллуд:* ${year}%0A` +
-                        `📞 *Тел:* ${phone}%0A` +
-                        `📍 *Ҷои кор:* ${work}%0A` +
-                        `🛠️ *Касб:* ${job} (${selectedSrv})%0A` +
-                        `⏳ *Таҷриба:* ${exp} сол%0A` +
-                        `🗺️ *Харита:* ${map}%0A%0A` +
-                        `⚠️ _Лутфан акси шиносномаро замима кунед!_`;
+        var adminPhone = "992933099029"; 
 
-        const whatsappUrl = `https://wa.me/${adminPhone}?text=${message}`;
+        // Сохтани матни паём (бо аломати + ба ҷои нохунакҳои каҷ)
+        var message = "🛡️ *ВЕРИФИКАЦИЯИ УСТО*" + "%0A%0A" +
+                      "👤 *Усто:* " + name + "%0A" +
+                      "📅 *Таваллуд:* " + year + "%0A" +
+                      "📞 *Тел:* " + phone + "%0A" +
+                      "📍 *Ҷои кор:* " + work + "%0A" +
+                      "🛠️ *Касб:* " + job + " (" + srv + ")%0A" +
+                      "⏳ *Таҷриба:* " + exp + " сол" + "%0A" +
+                      "🗺️ *Харита:* " + map + "%0A%0A" +
+                      "⚠️ _Лутфан акси шиносномаро замима кунед!_";
+
+        var whatsappUrl = "https://wa.me/" + adminPhone + "?text=" + message;
+        
+        // Кушодани WhatsApp
         window.open(whatsappUrl, '_blank');
-        closeModal();
-    });
-}
-
-// Функсияҳои иловагӣ барои Custom Select дар дохили форма
-function toggleMainDropdown() {
-    const options = document.getElementById('customOptions');
-    if(options) options.style.display = (options.style.display === 'block') ? 'none' : 'block';
-}
-
-function toggleCustomSub(element) {
-    const sub = element.nextElementSibling;
-    if(sub) sub.style.display = (sub.style.display === 'flex') ? 'none' : 'flex';
-}
-
-function selectService(name) {
-    const display = document.getElementById('selectedService');
-    const input = document.getElementById('serviceInput');
-    if(display) display.innerText = name;
-    if(input) input.value = name;
-    const options = document.getElementById('customOptions');
-    if(options) options.style.display = 'none';
+        
+        if (typeof closeModal === "function") {
+            closeModal();
+        }
+    };
 }
