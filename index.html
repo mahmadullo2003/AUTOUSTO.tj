@@ -90,7 +90,15 @@
 
                 <hr>
 
-                <a href="#" class="single-link">Таъмири Мотор</a>
+                <div class="mobile-collapsible">
+                    <div class="collapse-btn" onclick="toggleSubMenu(this)">
+                        <i class="fa-solid fa-car"></i> Ходовой <i class="fa-solid fa-chevron-down arrow"></i>
+                    </div>
+                    <div class="collapse-content">
+                        <a href="#">Развал-схождение</a>
+                        <a href="#">Таъмири амортизатор</a>
+                    </div>
+                </div>
 
                 <hr>
             </div>
@@ -100,7 +108,7 @@
             <div class="sos-circle">🚨</div>
         </div>
 
-        <a href="#" class="inst-item">
+        <a href="javascript:void(0)" class="inst-item" onclick="openModal()">
             <i class="fa-solid fa-plus-square"></i>
             <span>Сабт</span>
         </a>
@@ -111,6 +119,73 @@
         </a>
     </div>
 
+
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>📝 Навбат барои сабт</h2>
+            
+            <form id="regForm">
+                <input type="text" id="fullName" placeholder="Ном ва Насаб" required>
+                <input type="number" id="birthYear" placeholder="Соли таваллуд (м: 1990)" required>
+                <input type="tel" id="userPhone" placeholder="Рақами телефон" required>
+                <input type="text" id="workPlace" placeholder="Ҷои кор (Суроға ё номи сервис)">
+                
+                <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    
+                    <input type="number" id="experience" placeholder="Таҷриба (сол)" required style="flex: 1;">
+                </div>
+    
+                <div class="custom-select-wrapper" style="margin-bottom: 15px;">
+                    <div class="select-trigger" onclick="toggleMainDropdown()" style="padding: 12px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; background: #f9f9f9;">
+                        <span id="selectedService">Интихоби касб аз рӯйхат...</span>
+                        <i class="fa fa-chevron-down"></i>
+                    </div>
+                    
+                    <div class="custom-options" id="customOptions" style="display: none; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; background: white;">
+                        <div class="option-group">
+                            <div class="group-title" onclick="toggleCustomSub(this)" style="padding: 10px; background: #eee; cursor: pointer; display: flex; justify-content: space-between;">
+                                <span><i class="fa fa-bolt"></i> Автоэлектрик</span>
+                                <i class="fa fa-chevron-right arrow"></i>
+                            </div>
+                            <div class="sub-options" style="display: none; flex-direction: column;">
+                                <div onclick="selectService('Диагностика')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Диагностика</div>
+                                <div onclick="selectService('Таъмири стартер')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Таъмири стартер</div>
+                                <div onclick="selectService('Насби камера')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Насби камера</div>
+                            </div>
+                        </div>
+    
+                        <div class="option-group">
+                            <div class="group-title" onclick="toggleCustomSub(this)" style="padding: 10px; background: #eee; cursor: pointer; display: flex; justify-content: space-between;">
+                                <span><i class="fa fa-car"></i> Ходовой</span>
+                                <i class="fa fa-chevron-right arrow"></i>
+                            </div>
+                            <div class="sub-options" style="display: none; flex-direction: column;">
+                                <div onclick="selectService('Развал-схождение')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Развал-схождение</div>
+                                <div onclick="selectService('Таъмири амортизатор')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Таъмири амортизатор</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="location-box" style="margin-bottom: 15px;">
+                    <button type="button" onclick="getLocation()" class="btn-location" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                        <i class="fa-solid fa-location-dot"></i> Ирсоли мавқеъ (GPS)
+                    </button>
+                    <p id="locationStatus" style="font-size: 11px; margin-top: 5px; color: #666;"></p>
+                    <input type="hidden" id="mapUrl">
+                </div>
+    
+                <div class="file-upload" style="border: 1px dashed #ccc; padding: 10px; border-radius: 8px; margin-bottom: 15px;">
+                    <label style="font-size: 13px; display: block; margin-bottom: 5px;">📷 Акс бо шиноснома:</label>
+                    <input type="file" id="passportImg" accept="image/*" required>
+                </div>
+    
+                <input type="hidden" id="serviceInput" name="service" required>
+                <button type="submit" class="btn-submit" style="width: 100%; padding: 15px; background: #007AFF; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Фиристодан ба WhatsApp</button>
+            </form>
+        </div>
+    </div>
 
 
 </body>
