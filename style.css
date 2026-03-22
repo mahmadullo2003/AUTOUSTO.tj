@@ -1,934 +1,354 @@
-/* Танзимоти умумӣ */
+/* --- Танзимоти асосӣ ва Рангҳо --- */
+
+:root {
+    --primary: #007AFF;
+    --dark: #1d1d1f;
+    --glass: rgba(255, 255, 255, 0.9);
+    --border: rgba(0, 0, 0, 0.08);
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-    background-color: #f4f7f6;
-    color: #333;
+    background-color: thistle;
+    color: var(--dark);
 }
 
-/* Навигатсия */
+
+/* --- 1. NAVBAR БАРОИ КОМПЮТЕР (DESKTOP) --- */
+
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #2c3e50;
-    padding: 15px 5%;
-    color: white;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
     z-index: 1000;
+    padding: 12px 0;
 }
-.count-badge {
-    background-color: #e74c3c; /* Ранги сурх */
-    color: white;
-    padding: 2px 8px;
-    border-radius: 12px;
-    font-size: 14px;
-    margin-left: 10px;
-    font-weight: bold;
-    display: inline-block;
-    vertical-align: middle;
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -1px;
+}
+
+.logo span {
+    color: var(--primary);
 }
 
 .nav-links {
     display: flex;
     list-style: none;
-}
-
-.nav-links li {
-    margin-left: 20px;
+    gap: 8px;
 }
 
 .nav-links a {
-    color: white;
     text-decoration: none;
-    font-weight: 500;
-}
-
-.burger {
-    display: none;
-    cursor: pointer;
-}
-
-.line {
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin: 5px;
-    transition: 0.3s;
-}
-
-/* Танзимоти Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(15, 23, 42, 0.9); /* Торики шаффоф */
-    backdrop-filter: blur(12px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-/* Контейнери Прогресс дар зери Навбар */
-.nav-bottom-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 3px; /* Ғафсии хатт */
-    background: rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-}
-
-/* Аниматсияи Хатти Дурахшон */
-.nav-progress-line {
-    width: 30%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, #3b82f6, #f1c40f, transparent);
-    position: absolute;
-    left: -30%;
-    animation: navFlow 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 0 10px rgba(59, 130, 246, 0.8);
-}
-
-@keyframes navFlow {
-    0% { left: -30%; }
-    100% { left: 110%; }
-}
-
-/* Стили текстҳо дар Навбар */
-.logo-text {
-    color: #ffffff;
-    font-weight: 800;
-    font-size: 20px;
-}
-
-.logo-text span {
-    color: #3b82f6; /* Ранги кабуд барои .TJ */
-}
-
-.nav-item {
-    color: #e2e8f0 !important;
-    text-decoration: none;
-    font-weight: 500;
-    margin: 0 15px;
-    transition: 0.3s;
-}
-
-.nav-item:hover {
-    color: #3b82f6 !important;
-    text-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
-}
-
-
-/* 1. Заминаи асосии бахш - ранги мулоими техникӣ */
-.services-section {
-    padding: 100px 0;
-    background: radial-gradient(circle at top, #f8faff 0%, #eef2f7 100%);
-    position: relative;
-}
-
-/* 2. Сарлавҳаи "Хизматрасониҳои касбӣ" - бо эффектҳои металлӣ */
-.dynamic-title {
-    font-size: 2.2rem;
-    font-weight: 900;
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 20px;
-    text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
-}
-
-/* 3. Дизайни кортҳо - бо сояи амиқ ва градиенти мулоим */
-.service-card {
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    border: none;
-    border-radius: 24px;
-    padding: 40px 20px;
-    box-shadow: 20px 20px 60px #d1d9e6, 
-               -20px -20px 60px #ffffff; /* Эффекти Neumorphism */
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.service-card:hover {
-    transform: translateY(-15px) scale(1.02);
-    background: #ffffff;
-    box-shadow: 0 30px 60px rgba(26, 115, 232, 0.15);
-}
-
-/* 4. Иконаҳо - бо рангҳои равшан */
-.card-icon {
-    font-size: 55px;
-    background: linear-gradient(135deg, #1a73e8, #00d2ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 5px 10px rgba(26, 115, 232, 0.3));
-    margin-bottom: 20px;
-}
-
-/* 5. Хатти прогресси зери сарлавҳа - дурахшон */
-.auto-progress-bar {
-    width: 150px;
-    height: 6px;
-    background: #dbe4f0;
-    border-radius: 10px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.shimmer-line {
-    background: linear-gradient(90deg, #1a73e8, #f1c40f, #1a73e8);
-    box-shadow: 0 0 15px rgba(26, 115, 232, 0.6);
-}
-
-
-/* Тугмаи SOS (Эвакуатор) */
-.nav-sos-btn {
-    background: #ff4757;
-    color: white !important;
-    padding: 8px 15px;
-    border-radius: 50px;
-    font-weight: bold;
-    animation: pulseRed 1.5s infinite;
-}
-
-@keyframes pulseRed {
-    0% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0.7); }
-    70% { box-shadow: 0 0 0 10px rgba(255, 71, 87, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(255, 71, 87, 0); }
-}
-
-/* Тугмаи Сабти усто */
-.nav-reg-btn {
-    border: 2px solid #1a73e8;
-    padding: 8px 15px;
-    border-radius: 8px;
-    color: #1a73e8 !important;
-    transition: all 0.3s;
-}
-
-.nav-reg-btn:hover {
-    background: #1a73e8;
-    color: white !important;
-}
-
-/* Экрани асосӣ */
-.hero {
-    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
-                url('https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?auto=format&fit=crop&q=80');
-    background-size: cover;
-    background-position: center;
-    color: white;
-    padding: 80px 20px;
-    text-align: center;
-}
-
-.search-container {
-    margin-top: 25px;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.search-container input, .search-container select {
-    padding: 12px;
-    border-radius: 5px;
-    border: none;
-    width: 250px;
-}
-
-.search-container button {
-    padding: 12px 30px;
-    background: #27ae60;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-/* Сеткаи устоҳо */
-.masters-list {
-    padding: 40px 5%;
-}
-
-/* Контейнери асосӣ */
-.grid {
-    display: grid;
-    /* Дар компютер 3 корт дар як қатор, дар планшет 2 ва дар телефон 1 */
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 25px;
-    padding: 20px;
-    align-items: start; /* Кортҳо аз боло баробар мешаванд */
-}
-
-/* Стили корт */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    display: flex;
-    flex-direction: column;
-    height: 100%; /* Ҳамаи кортҳо дар як қатор қадашон баробар мешавад */
-    transition: transform 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px); /* Сабук боло рафтан ҳангоми наздик кардани муш */
-}
-
-/* Қисми маълумоти дарунӣ */
-.card-content {
-    flex-grow: 1; /* Ин қисм ҷойи холиро мегирад, то тугмаҳо дар поён баробар истанд */
-}
-
-/* Махсус барои компютер (вақте экран аз 1000px калон аст) */
-@media (min-width: 1000px) {
-    .grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-}
-/* Модал */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-    z-index: 2000;
-}
-
-.modal-content {
-    background: white;
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    width: 320px;
-}
-
-.star {
-    font-size: 35px;
-    cursor: pointer;
-    color: #ccc;
-    transition: 0.2s;
-}
-
-.star.active {
-    color: #f1c40f;
-}
-
-/* Адаптивнокӣ */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        position: absolute;
-        top: 60px; left: 0;
-        width: 100%;
-        background: #2c3e50;
-        padding: 20px;
-    }
-    .nav-links.active { display: flex; }
-    .burger { display: block; }
-}
-
-
-.card a, .card button {
-    transition: transform 0.2s, background 0.2s;
+    color: #444;
+    font-weight: 600;
     font-size: 14px;
+    padding: 10px 15px;
+    border-radius: 10px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    gap: 8px;
+    transition: 0.3s;
 }
 
-.card a:active, .card button:active {
-    transform: scale(0.95);
+.nav-links a:hover {
+    background: rgba(0, 122, 255, 0.08);
+    color: var(--primary);
 }
 
-.card a[href^="tel"] {
-    animation: pulse 2s infinite;
-}
 
-@keyframes pulse {
-    0% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(39, 174, 96, 0); }
-}
-details {
-    transition: all 0.3s ease;
-}
+/* --- ДРОПДАУНИ БИСЁРЗИНАГӢ (MULTI-LEVEL) --- */
 
-details[open] summary {
-    margin-bottom: 10px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 5px;
-}
-
-details summary::-webkit-details-marker {
-    display: none; /* Пинҳон кардани тирчаи стандартии браузер */
-}
-
-details summary::before {
-    content: "▼ ";
-    font-size: 10px;
-    margin-right: 5px;
-}
-
-details[open] summary::before {
-    content: "▲ ";
-}
-.master-photo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%; /* Доираи комил */
-    object-fit: cover; /* Ин муҳим аст: аксро намекашад, балки дар дохили доира мувофиқ мекунад */
-    border: 3px solid #f1c40f;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-/* Контейнери асосӣ */
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 25px;
-    padding: 20px;
-}
-
-/* Стили кортҳо бо аниматсия */
-.service-card {
-    background: #ffffff;
-    border-radius: 20px;
-    padding: 30px 15px;
-    text-align: center;
+.dropdown {
     position: relative;
-    overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    cursor: pointer;
-    border: 1px solid #f0f0f0;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-/* Аниматсия ҳангоми наздик кардани мушак */
-.service-card:hover {
-    transform: translateY(-12px) scale(1.05);
-    box-shadow: 0 20px 40px rgba(26, 115, 232, 0.15);
-    border-color: #1a73e8;
-}
-
-/* Графикаи иконаҳо */
-.card-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
-    display: inline-block;
-    transition: transform 0.3s ease;
-}
-
-.service-card:hover .card-icon {
-    transform: rotate(15deg) scale(1.2);
-}
-
-/* Хатти ороишӣ дар зери корт */
-.service-card::after {
-    content: '';
+.dropdown-menu {
     position: absolute;
-    bottom: 0;
+    top: 100%;
     left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, #1a73e8, #f1c40f);
-    transform: scaleX(0);
-    transition: transform 0.4s ease;
-}
-
-.service-card:hover::after {
-    transform: scaleX(1);
-}
-
-.service-card h3 {
-    font-size: 18px;
-    color: #2c3e50;
-    margin-bottom: 8px;
-}
-
-.service-card p {
-    font-size: 13px;
-    color: #7f8c8d;
-}
-
-/* Контейнери асосӣ дар марказ */
-.services-header-container {
-    text-align: center;
-    margin: 40px auto;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Стили сарлавҳа (андозаи миёна) */
-.dynamic-title {
-    font-size: 1.8rem; /* Андозаи мувофиқ ва на онқадар калон */
-    font-weight: 800;
-    color: #2c3e50;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    animation: titlePulse 3s infinite ease-in-out; /* Аниматсияи худкор */
-}
-
-/* Аниматсияи иконаи асбоб (Доимӣ) */
-.tool-icon {
-    display: inline-block;
-    animation: wrenchSwing 2s infinite ease-in-out;
-}
-
-@keyframes wrenchSwing {
-    0%, 100% { transform: rotate(-10deg); }
-    50% { transform: rotate(15deg); }
-}
-
-/* Аниматсияи сусти сарлавҳа */
-@keyframes titlePulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.9; transform: scale(1.02); }
-}
-
-/* Хатти Прогресси беохир (дар зери сарлавҳа) */
-.auto-progress-bar {
-    width: 200px; /* Дарозии хатт */
-    height: 4px;
-    background: #e0e0e0;
-    margin: 0 auto;
-    border-radius: 5px;
-    position: relative;
-    overflow: hidden;
-}
-
-.shimmer-line {
-    width: 60px;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, #1a73e8, #f1c40f, transparent);
-    position: absolute;
-    left: -60px;
-    animation: autoMove 2.5s infinite linear; /* Ҳаракати беохир бе мушак */
-}
-
-@keyframes autoMove {
-    0% { left: -60px; }
-    100% { left: 100%; }
-}
-
-/* Тексти хурди поёнӣ */
-.sub-text-fade {
-    font-size: 0.9rem;
-    color: #888;
-    margin-top: 8px;
-    letter-spacing: 1px;
-    animation: fadeInOut 4s infinite;
-}
-
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-
-
-/* Аниматсияи логотип */
-.logo:hover .logo-icon {
-    animation: carDrive 0.8s infinite linear;
-}
-
-@keyframes carDrive {
-    0% { transform: translateX(0); }
-    25% { transform: translateY(-2px) translateX(2px); }
-    50% { transform: translateX(0); }
-    75% { transform: translateY(-2px) translateX(-2px); }
-    100% { transform: translateX(0); }
-}
-.vip-section {
-    padding: 40px 0;
-    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-}
-
-.vip-slider {
-    display: flex;
-    overflow-x: auto; /* Имконияти варақ задан дар телефон */
-    gap: 20px;
-    padding: 20px 10px;
-    scroll-behavior: smooth;
-}
-
-.vip-card {
-    min-width: 280px;
-    background: white;
-    border-radius: 20px;
-    padding: 25px;
-    text-align: center;
-    border: 2px solid #f1c40f; /* Ранги тиллоӣ */
-    box-shadow: 0 10px 20px rgba(241, 196, 15, 0.2);
-    position: relative;
-}
-
-.vip-badge {
-    position: absolute;
-    top: -10px;
-    right: 20px;
-    background: #f1c40f;
-    color: #000;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 12px;
-}
-
-.vip-photo {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 4px solid #f1c40f;
-    object-fit: cover;
-}
-
-
-
-/* Бахши асосии Тамос */
-.contact-section {
-    padding: 100px 20px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Контейнери форма бо эффекти аниматсия */
-.contact-wrapper {
-    max-width: 500px;
-    width: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px); /* Эффекти шишагӣ */
-    padding: 40px;
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    transform: translateY(30px);
-    opacity: 0;
-    animation: fadeInUp 0.8s ease forwards;
-}
-
-/* Аниматсияи пайдоиш */
-@keyframes fadeInUp {
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-.contact-section h2 {
-    color: #2c3e50;
-    font-size: 2rem;
-    position: relative;
-    display: inline-block;
-    margin-bottom: 40px;
-}
-
-.contact-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 4px;
-    background: #25D366;
-    border-radius: 2px;
-}
-
-/* Стилҳои майдонҳои вуруд (Input) */
-#masterRegistrationForm input, 
-#masterRegistrationForm select {
-    width: 100%;
-    padding: 15px;
-    margin-bottom: 20px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    background: #f8f9fa;
-    font-size: 16px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
-}
-
-/* Эффект ҳангоми пахш кардан ба input */
-#masterRegistrationForm input:focus, 
-#masterRegistrationForm select:focus {
-    border-color: #25D366;
     background: #fff;
-    box-shadow: 0 0 15px rgba(37, 211, 102, 0.2);
-    outline: none;
-    transform: scale(1.02);
+    min-width: 230px;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    list-style: none;
+    display: none;
+    /* Пинҳон */
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
 }
 
-/* Тугмаи WhatsApp бо аниматсияи ҷунбиш */
-.send-btn {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3);
-}
-
-.send-btn:hover {
-    background: #1eb954 !important;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 25px rgba(37, 211, 102, 0.4);
-}
-
-.send-btn:active {
+.dropdown:hover>.dropdown-menu {
+    display: block;
+    opacity: 1;
     transform: translateY(0);
 }
 
-/* Аниматсия барои иконаи WhatsApp */
-.send-btn i {
-    font-size: 22px;
-    animation: pulse 2s infinite;
+.dropdown-menu li {
+    position: relative;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-/* Мутобиқшавӣ ба телефон */
-@media (max-width: 480px) {
-    .contact-wrapper {
-        padding: 25px;
-    }
-}
-
-/* футуер */
-.main-footer {
-    background: #2c3e50;
-    color: #ecf0f1;
-    padding: 60px 0 20px;
-    font-family: 'Poppins', sans-serif;
-}
-
-.footer-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 40px;
-    padding: 0 20px;
-}
-
-.footer-section h3, .footer-logo {
-    color: #25D366; /* Ранги бренди мо */
-    margin-bottom: 20px;
-}
-
-.footer-section p {
-    line-height: 1.6;
+.dropdown-menu li a {
+    padding: 12px 15px;
     font-size: 14px;
-    color: #bdc3c7;
-}
-
-.footer-section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.footer-section ul li {
-    margin-bottom: 10px;
-}
-
-.footer-section ul li a {
-    color: #bdc3c7;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-section ul li a:hover {
-    color: #25D366;
-    padding-left: 10px;
-}
-
-.footer-socials {
-    margin-top: 20px;
-}
-
-.footer-socials a {
-    color: #ecf0f1;
-    font-size: 20px;
-    margin-right: 15px;
-    transition: 0.3s;
-}
-
-.footer-socials a:hover {
-    color: #25D366;
-}
-
-.footer-bottom {
-    text-align: center;
-    margin-top: 50px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    font-size: 13px;
-    color: #95a5a6;
+    justify-content: space-between;
 }
 
 
-/* эвакуатор */
+/*танзимоти HR*/
 
-.evacuator-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 10px;
+hr {
+    color: aqua;
+    border: #ff3b30 2px solid;
 }
 
-.evacuator-card {
-    background: #fff;
-    border: 2px solid #eee;
-    border-radius: 15px;
-    padding: 20px;
-    text-align: center;
-    transition: 0.3s;
+
+/* Зерменюи паҳлӯӣ (Зерқисмҳо) */
+
+.dropdown-menu .submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    margin-left: 5px;
+    display: none;
 }
 
-.evacuator-card:hover {
-    border-color: #ff4757;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+.dropdown-menu li:hover>.submenu {
+    display: block;
 }
 
-.comp-icon {
-    font-size: 40px;
-    margin-bottom: 10px;
-}
-
-.sos-action-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.btn-loc-mini {
-    background: #1a73e8;
+.btn-login {
+    background: var(--primary);
     color: white;
     border: none;
-    padding: 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.btn-call-mini {
-    background: #27ae60;
-    color: white;
-    text-decoration: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-}
-
-.sos-action-buttons {
-    display: flex;
-    flex-direction: column; /* Дар телефон тугмаҳо зери ҳам мешаванд */
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.btn-loc-mini {
-    background: #25D366; /* Ранги WhatsApp */
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 700;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.btn-call-mini {
-    background: #3498db;
-    color: white;
-    text-decoration: none;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: bold;
-    text-align: center;
+
+/* --- 2. МЕНЮИ ИНСТАГРАМ БАРОИ ТЕЛЕФОН --- */
+
+.instagram-menu {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    display: none;
+    /* Танҳо дар мобилӣ намоён мешавад */
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    z-index: 2000;
 }
 
-.btn-loc-mini:hover {
-    background: #128C7E;
-    transform: scale(1.02);
-}
-/* Контейнере, ки кортҳоро дар як саф мечинад */
-.evacuator-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    padding: 20px 0;
-}
-
-.evacuator-card {
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 15px;
-    padding: 25px;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-}
-
-.comp-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
-}
-
-.sos-action-buttons {
+.inst-item {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: center;
+    text-decoration: none;
+    color: #8e8e93;
+    font-size: 10px;
+    gap: 4px;
+    cursor: pointer;
+    flex: 1;
 }
 
-/* Маҳдуд кардани андозаи тугмаҳо */
-.btn-loc-mini, .btn-call-mini {
-    width: 100%;
-    max-width: 280px; /* Намегузорад, ки тугма аз ҳад дароз шавад */
-    margin: 0 auto;
-    padding: 12px;
-    border-radius: 10px;
-    font-weight: bold;
+.inst-item i {
+    font-size: 22px;
+}
+
+.inst-item.active {
+    color: var(--primary);
+}
+
+
+/* Тугмаи SOS */
+
+.sos-circle {
+    width: 58px;
+    height: 58px;
+    background: linear-gradient(45deg, #ff3b30, #ff2d55);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -35px;
+    border: 5px solid #f5f5f7;
+    font-size: 24px;
+    box-shadow: 0 8px 20px rgba(255, 59, 48, 0.3);
+}
+
+
+/* Мобилӣ Dropdown (Popup) */
+
+.mobile-dropdown {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    width: 220px;
+    border-radius: 20px;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.15);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+.mobile-dropdown a {
+    padding: 15px;
     text-decoration: none;
-    border: none;
+    color: var(--dark);
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    font-weight: 600;
+}
+
+
+/* --- 3. RESPONSIVE (Мутобиқсозӣ) --- */
+
+@media (max-width: 1024px) {
+    .navbar {
+        display: none;
+    }
+    /* Навбари болоро дар телефон пинҳон мекунем */
+    .instagram-menu {
+        display: flex;
+    }
+    /* Менюи поёнро намоён мекунем */
+}
+
+
+/* Пинҳон кардани зерменю дар ҳолати оддӣ */
+
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    /* Онро ба тарафи рости менюи асосӣ мебарад */
+    top: 0;
+    background-color: #fff;
+    min-width: 200px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+    list-style: none;
+}
+
+
+/* Вақте мушро ба болои .has-submenu меорем, .submenu-ро нишон деҳ */
+
+.has-submenu:hover>.submenu {
+    display: block;
+}
+
+
+/* Услуби умумии Dropdown дар мобилӣ */
+
+.mobile-dropdown {
+    display: none;
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 280px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    flex-direction: column;
+    z-index: 3000;
+}
+
+
+/* Тугмаи бахшҳо (Масалан: Автоэлектрик) */
+
+.collapse-btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 15px;
+    font-weight: 600;
+    color: #333;
     cursor: pointer;
 }
 
-.btn-loc-mini { background-color: #25D366; color: white; }
-.btn-call-mini { background-color: #3498db; color: white; }
+.collapse-btn i:first-child {
+    width: 25px;
+    color: #007AFF;
+}
+
+
+/* Ранги иконкаҳо */
+
+
+/* Контенти зерменю (дар аввал пинҳон) */
+
+.collapse-content {
+    display: none;
+    flex-direction: column;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.collapse-content a {
+    padding: 10px 40px !important;
+    /* Фосила аз чап */
+    font-size: 14px !important;
+    text-align: left !important;
+    color: #555 !important;
+    border: none !important;
+}
+
+
+/* Аниматсияи тирча */
+
+.arrow {
+    font-size: 12px;
+    transition: 0.3s;
+    color: #ccc;
+}
+
+.active-btn .arrow {
+    transform: rotate(180deg);
+    color: #007AFF;
+}
+
+
+/* Хатти ҷудокунанда */
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 2px 0;
+}
