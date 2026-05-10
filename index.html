@@ -1,190 +1,813 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="tg">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AUTOUSTOTJ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css">
-    <script src="script.js"></script>
-</head>
+    <title>AutoUsto TJ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+        :root {
+            --green: #1D9E75;
+            --green-dark: #0F6E56;
+            --green-light: #E1F5EE;
+            --amber: #d97706;
+            --red: #ef4444;
+            --text: #111827;
+            --muted: #6b7280;
+            --bg: #ffffff;
+            --bg2: #f9fafb;
+            --border: #e5e7eb;
+            --radius: 12px;
+            --radius-lg: 18px;
+        }
+
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* NAVBAR */
+        .navbar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            background: rgba(255,255,255,0.96); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1100px; margin: 0 auto; padding: 0 24px;
+            height: 64px; display: flex; align-items: center; gap: 24px;
+        }
+        .logo {
+            font-family: 'Unbounded', sans-serif; font-size: 15px; font-weight: 900;
+            white-space: nowrap; letter-spacing: -0.5px;
+        }
+        .logo span { color: var(--green); }
+
+        .nav-links { display: flex; gap: 4px; list-style: none; flex: 1; }
+        .nav-links a {
+            padding: 8px 14px; border-radius: 8px; font-size: 14px;
+            color: var(--muted); font-weight: 500; transition: all 0.2s; display: block;
+        }
+        .nav-links a:hover { background: var(--bg2); color: var(--text); }
+
+        .dropdown { position: relative; }
+        .dropdown-menu {
+            display: none; position: absolute; top: calc(100% + 8px); left: 0;
+            background: white; border: 1px solid var(--border); border-radius: var(--radius);
+            min-width: 200px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); z-index: 999;
+        }
+        .dropdown:hover .dropdown-menu { display: block; }
+        .dropdown-menu li { list-style: none; }
+        .dropdown-menu a { padding: 10px 16px; font-size: 14px; display: flex; gap: 10px; border-radius: 0; }
+        .dropdown-menu a:hover { background: var(--green-light); color: var(--green-dark); }
+
+        .nav-btns { display: flex; gap: 10px; }
+        .btn-nav-main {
+            padding: 9px 20px; background: var(--green); color: white; border: none;
+            border-radius: 8px; font-size: 14px; font-weight: 600; font-family: 'Manrope', sans-serif;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-nav-main:hover { background: var(--green-dark); }
+        .btn-nav-sec {
+            padding: 9px 20px; background: transparent; color: var(--text);
+            border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
+            font-weight: 500; font-family: 'Manrope', sans-serif; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-nav-sec:hover { border-color: var(--green); color: var(--green); }
+
+        .hamburger {
+            display: none; background: none; border: none; font-size: 22px;
+            cursor: pointer; color: var(--text); margin-left: auto;
+        }
+
+        /* MOBILE NAV */
+        .mob-nav {
+            display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 950;
+            background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+            justify-content: space-around; align-items: center;
+            padding: 6px 0 10px;
+        }
+        .mob-nav a, .mob-sos {
+            display: flex; flex-direction: column; align-items: center; gap: 3px;
+            font-size: 11px; color: var(--muted); padding: 4px 10px; cursor: pointer;
+            text-decoration: none; transition: color 0.2s;
+        }
+        .mob-nav a i { font-size: 22px; }
+        .mob-nav a.active { color: var(--green); }
+        .sos-circle {
+            width: 48px; height: 48px; background: #ef4444; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
+            box-shadow: 0 0 0 5px rgba(239,68,68,0.2); animation: sos-pulse 2s infinite;
+        }
+        @keyframes sos-pulse {
+            0%,100% { box-shadow: 0 0 0 5px rgba(239,68,68,0.2); }
+            50% { box-shadow: 0 0 0 12px rgba(239,68,68,0.05); }
+        }
+
+        /* HERO */
+        body { padding-top: 64px; }
+        .hero {
+            display: flex; align-items: center; gap: 48px;
+            max-width: 1100px; margin: 0 auto;
+            padding: 72px 24px 60px; position: relative;
+        }
+        .hero-content { flex: 1; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--green-light); color: var(--green-dark);
+            padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .badge-dot { width: 8px; height: 8px; background: var(--green); border-radius: 50%; display: inline-block; }
+        .hero h1 {
+            font-family: 'Unbounded', sans-serif;
+            font-size: clamp(26px, 4vw, 46px); font-weight: 900;
+            line-height: 1.15; letter-spacing: -1px; margin-bottom: 20px;
+        }
+        .hero h1 .accent { color: var(--green); }
+        .hero p { font-size: 16px; color: var(--muted); margin-bottom: 32px; line-height: 1.7; max-width: 440px; }
+        .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+        .btn-primary {
+            padding: 14px 28px; background: var(--green); color: white; border: none;
+            border-radius: var(--radius); font-size: 15px; font-weight: 700;
+            font-family: 'Manrope', sans-serif; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .btn-primary:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(29,158,117,0.3); }
+        .btn-secondary {
+            padding: 14px 28px; background: transparent; color: var(--text);
+            border: 1.5px solid var(--border); border-radius: var(--radius);
+            font-size: 15px; font-weight: 500; font-family: 'Manrope', sans-serif;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--green); color: var(--green); }
+
+        .hero-stats { display: flex; align-items: center; gap: 24px; }
+        .hstat { display: flex; flex-direction: column; gap: 2px; }
+        .hstat strong { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700; }
+        .hstat span { font-size: 12px; color: var(--muted); }
+        .hstat-div { width: 1px; height: 32px; background: var(--border); }
+
+        /* Hero Card */
+        .hero-visual { flex: 0 0 320px; position: relative; }
+        .master-card-hero {
+            background: white; border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 20px; box-shadow: 0 12px 40px rgba(0,0,0,0.12); position: relative; z-index: 2;
+        }
+        .mc-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+        .mc-avatar {
+            width: 44px; height: 44px; border-radius: 50%; background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-weight: 700; font-size: 14px; flex-shrink: 0;
+        }
+        .mc-name { font-weight: 600; font-size: 14px; }
+        .mc-spec { font-size: 12px; color: var(--muted); }
+        .mc-rating { margin-left: auto; font-weight: 700; color: var(--amber); font-size: 14px; }
+        .mc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+        .mc-tag { background: var(--green-light); color: var(--green-dark); padding: 4px 10px; border-radius: 100px; font-size: 12px; font-weight: 500; }
+        .mc-foot { display: flex; align-items: center; justify-content: space-between; }
+        .mc-avail { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #22c55e; font-weight: 500; }
+        .mc-avail-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; display: inline-block; }
+        .btn-contact {
+            padding: 8px 16px; background: var(--green); color: white; border: none;
+            border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Manrope', sans-serif;
+        }
+        .float-badge {
+            position: absolute; background: white; border: 1px solid var(--border);
+            border-radius: 100px; padding: 6px 14px; font-size: 12px; font-weight: 600;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+        .fb1 { top: -14px; right: -14px; color: var(--green); animation: float 3s ease-in-out infinite; }
+        .fb2 { bottom: -14px; left: -14px; animation: float 3s ease-in-out infinite 1.5s; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+        /* SECTIONS */
+        .section-head { text-align: center; margin-bottom: 48px; }
+        .section-head h2 { font-family: 'Unbounded', sans-serif; font-size: clamp(20px,3vw,30px); font-weight: 900; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .section-head p { font-size: 16px; color: var(--muted); }
+
+        /* SERVICES */
+        .services-sec { padding: 80px 0; background: var(--bg2); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+        .svc-card {
+            background: white; border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 24px 20px; text-align: center; transition: all 0.25s; cursor: pointer;
+        }
+        .svc-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: var(--green); }
+        .svc-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin: 0 auto 14px; font-size: 22px; }
+        .svc-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+        .svc-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+        /* HOW */
+        .how-sec { padding: 80px 0; }
+        .steps-row { display: flex; align-items: center; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .step-card {
+            background: white; border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 32px 24px; text-align: center; flex: 1; min-width: 200px; max-width: 260px;
+            transition: all 0.25s;
+        }
+        .step-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: var(--green); }
+        .step-num {
+            font-family: 'Unbounded', sans-serif; font-size: 36px; font-weight: 900;
+            color: transparent; -webkit-text-stroke: 2px var(--green); margin-bottom: 14px; display: block;
+        }
+        .step-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+        .step-card p { font-size: 13px; color: var(--muted); }
+        .step-arrow { color: var(--green); font-size: 20px; flex-shrink: 0; }
+
+        /* VIP MASTERS */
+        .vip-sec { padding: 80px 0; background: var(--bg2); }
+        .masters-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .vip-card {
+            background: white; border: 1px solid var(--border); border-radius: var(--radius-lg);
+            padding: 24px; transition: all 0.25s;
+        }
+        .vip-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+        .vip-card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 16px; }
+        .v-avatar { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px; }
+        .vip-badge { background: linear-gradient(135deg,#f59e0b,#d97706); color: white; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+        .vip-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .v-spec { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+        .v-rating { font-size: 13px; color: var(--amber); font-weight: 600; margin-bottom: 12px; }
+        .v-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px; }
+        .v-tags span { background: var(--bg2); color: var(--muted); padding: 3px 10px; border-radius: 100px; font-size: 12px; border: 1px solid var(--border); }
+        .v-foot { display: flex; align-items: center; justify-content: space-between; }
+        .v-city { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+        .btn-wa { padding: 8px 14px; background: #25D366; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Manrope', sans-serif; transition: all 0.2s; }
+        .btn-wa:hover { background: #1da851; }
+
+        /* MODAL */
+        .modal {
+            display: none; position: fixed; inset: 0; z-index: 1000;
+            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+            align-items: center; justify-content: center; padding: 16px;
+        }
+        .modal.open { display: flex; }
+        .modal-box {
+            background: white; border-radius: var(--radius-lg); padding: 32px;
+            max-width: 520px; width: 100%; max-height: 90vh; overflow-y: auto;
+            position: relative; animation: modal-in 0.3s ease;
+        }
+        @keyframes modal-in { from { opacity:0; transform: scale(0.95) translateY(20px); } to { opacity:1; transform: scale(1) translateY(0); } }
+        .modal-close {
+            position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+            background: var(--bg2); border: 1px solid var(--border); border-radius: 50%;
+            cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; color: var(--muted);
+        }
+        .modal-close:hover { background: var(--red); color: white; border-color: var(--red); }
+        .modal-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+        .modal-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+        .fg { display: flex; flex-direction: column; gap: 5px; }
+        .fg.full { grid-column: 1/-1; }
+        label { font-size: 13px; font-weight: 600; color: var(--muted); }
+        input, select, textarea {
+            padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px;
+            font-size: 14px; font-family: 'Manrope', sans-serif; color: var(--text);
+            background: var(--bg2); outline: none; transition: all 0.2s; width: 100%;
+        }
+        input:focus, select:focus, textarea:focus { border-color: var(--green); background: white; box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+        textarea { resize: vertical; min-height: 80px; }
+
+        .phone-row { display: flex; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg2); transition: all 0.2s; }
+        .phone-row:focus-within { border-color: var(--green); background: white; box-shadow: 0 0 0 3px rgba(29,158,117,0.1); }
+        .phone-pfx { padding: 10px 12px; font-size: 14px; font-weight: 600; color: var(--muted); border-right: 1px solid var(--border); white-space: nowrap; }
+        .phone-row input { border: none; background: transparent; box-shadow: none; flex: 1; }
+        .phone-row input:focus { border: none; box-shadow: none; }
+
+        .multi-sel { display: flex; flex-wrap: wrap; gap: 8px; }
+        .ms-opt {
+            padding: 7px 14px; border: 1.5px solid var(--border); border-radius: 100px;
+            font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+            background: var(--bg2); user-select: none;
+        }
+        .ms-opt.on { background: var(--green); color: white; border-color: var(--green); }
+
+        .btn-gps {
+            width: 100%; padding: 11px; background: var(--green-light); color: var(--green-dark);
+            border: 1.5px dashed var(--green); border-radius: 10px; font-size: 14px;
+            font-weight: 600; cursor: pointer; font-family: 'Manrope', sans-serif;
+            display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+        }
+        .btn-gps:hover { background: var(--green); color: white; border-style: solid; }
+        .gps-status { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+        .btn-send {
+            width: 100%; padding: 14px; background: var(--green); color: white; border: none;
+            border-radius: 10px; font-size: 15px; font-weight: 700; font-family: 'Manrope', sans-serif;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s;
+        }
+        .btn-send:hover { background: var(--green-dark); transform: translateY(-1px); box-shadow: 0 6px 16px rgba(29,158,117,0.3); }
+        .btn-send.wa { background: #25D366; }
+        .btn-send.wa:hover { background: #1da851; box-shadow: 0 6px 16px rgba(37,211,102,0.3); }
+
+        .modal-link { text-align: center; margin-top: 14px; font-size: 13px; color: var(--muted); }
+        .modal-link a { color: var(--green); font-weight: 600; }
+
+        /* SOS */
+        .sos-modal-box { border-top: 4px solid var(--red); }
+        .sos-head { text-align: center; margin-bottom: 24px; }
+        .sos-emoji { font-size: 48px; margin-bottom: 8px; }
+        .sos-head h2 { color: #dc2626; }
+
+        /* TOAST */
+        .toast {
+            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(10px);
+            background: var(--text); color: white; padding: 12px 24px; border-radius: 100px;
+            font-size: 14px; font-weight: 500; opacity: 0; transition: all 0.3s;
+            z-index: 9999; pointer-events: none; white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* FOOTER */
+        .footer { background: #111827; color: rgba(255,255,255,0.7); padding: 56px 0 28px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+        .footer-grid > div { display: flex; flex-direction: column; gap: 10px; }
+        .footer-logo { color: white !important; margin-bottom: 4px; }
+        .footer-grid p { font-size: 14px; line-height: 1.6; }
+        .footer-grid h4 { font-size: 14px; font-weight: 700; color: white; }
+        .footer-grid a { font-size: 14px; transition: color 0.2s; display: flex; align-items: center; gap: 8px; }
+        .footer-grid a:hover { color: var(--green); }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; text-align: center; font-size: 13px; color: rgba(255,255,255,0.3); }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; padding: 40px 24px 80px; }
+            .hero-visual { width: 100%; max-width: 340px; }
+            .steps-row { flex-direction: column; align-items: stretch; }
+            .step-card { max-width: 100%; }
+            .step-arrow { transform: rotate(90deg); }
+            .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+        }
+        @media (max-width: 768px) {
+            .nav-links, .nav-btns { display: none; }
+            .hamburger { display: block; }
+            .mob-nav { display: flex; }
+            body { padding-bottom: 72px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .fg.full { grid-column: 1; }
+            .modal-box { padding: 24px; }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .masters-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 24px; }
+            .hero-stats { gap: 14px; }
+            .hstat strong { font-size: 17px; }
+        }
+    </style>
+</head>
 <body>
 
-
-
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">AUTO<span>USTOTJ</span></div>
-            <ul class="nav-links">
-                <li><a href="#"><i class="fa fa-home"></i> Асосӣ</a></li>
-
-                <li class="dropdown">
-                    <a href="#"><i class="fa fa-tools"></i> Хизматрасониҳо <i class="fa fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#"><i class="fa fa-microchip"></i> Диагностика</a>
-                            <ul class="submenu">
-                                <li><a href="#">Диагностика</a></li>
-                                <li><a href="#">Таъмири мотор</a></li>
-                                <li><a href="#">Ходовой</a></li>
-                            </ul>
-                        </li>
-
-                </li>
-                <hr>
-                <li><a href="#"><i class="fa fa-engine"></i> Мотор</a></li>
-                <li><a href="#"><i class="fa fa-car"></i> Ходовой</a></li>
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="nav-inner">
+        <div class="logo">AUTO<span>USTO TJ</span></div>
+        <ul class="nav-links">
+            <li><a href="#">Асосӣ</a></li>
+            <li class="dropdown">
+                <a href="#">Хизматҳо <i class="fa fa-chevron-down" style="font-size:10px"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#"><i class="fa fa-microchip"></i> Диагностика</a></li>
+                    <li><a href="#"><i class="fa fa-bolt"></i> Автоэлектрик</a></li>
+                    <li><a href="#"><i class="fa fa-cog"></i> Таъмири мотор</a></li>
+                    <li><a href="#"><i class="fa fa-car"></i> Ходовой</a></li>
+                    <li><a href="#"><i class="fa fa-paint-brush"></i> Покраска</a></li>
                 </ul>
-                </li>
-
-
-                <li><a href="#"><i class="fa fa-star"></i> VIP-Устоҳо</a></li>
-                <li><a href="#"><i class="fa fa-envelope"></i> Тамос</a></li>
-            </ul>
-            <button class="btn-login">Ворид шудан</button>
+            </li>
+            <li><a href="#">VIP-Устоҳо</a></li>
+            <li><a href="#">Тамос</a></li>
+        </ul>
+        <div class="nav-btns">
+            <button class="btn-nav-main" onclick="openRegModal()">Усто сабт шавед</button>
+            <button class="btn-nav-sec" onclick="openLoginModal()">Ворид шудан</button>
         </div>
-    </nav>
+        <button class="hamburger" onclick="toggleHam()"><i class="fa fa-bars"></i></button>
+    </div>
+</nav>
 
+<!-- MOBILE NAV -->
+<div class="mob-nav">
+    <a href="#" class="active"><i class="fa-solid fa-house"></i><span>Асосӣ</span></a>
+    <a href="#services"><i class="fa-solid fa-tools"></i><span>Хизматҳо</span></a>
+    <div class="mob-sos" onclick="openSOSModal()">
+        <div class="sos-circle">🚨</div>
+        <span style="font-size:11px;color:#6b7280;margin-top:3px;">SOS</span>
+    </div>
+    <a href="#" onclick="openRegModal(); return false;"><i class="fa-solid fa-user-plus"></i><span>Сабт</span></a>
+    <a href="#" onclick="openLoginModal(); return false;"><i class="fa-solid fa-user"></i><span>Профил</span></a>
+</div>
 
-
-
-    <div class="instagram-menu">
-        <a href="#" class="inst-item active">
-            <i class="fa-solid fa-house"></i>
-            <span>Асосӣ</span>
-        </a>
-
-        <div class="inst-item" onclick="toggleMobileMenu()">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <span>Хизматҳо</span>
-
-            <div class="mobile-dropdown" id="mobileDropdown" onclick="event.stopPropagation()">
-
-                <div class="mobile-collapsible">
-                    <div class="collapse-btn" onclick="toggleSubMenu(this)">
-                        <i class="fa-solid fa-bolt"></i> Автоэлектрик <i class="fa-solid fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="collapse-content">
-                        <hr>
-                        <a href="#">Компютерная диагностика</a>
-                        <hr>
-                        <a href="#">Таъмири стартер</a>
-                        <hr>
-                        <a href="#">Насби видеокамера</a>
-                        <hr>
-                    </div>
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge"><span class="badge-dot"></span> 500+ устоҳои тасдиқшуда</div>
+        <h1>Беҳтарин<br><span class="accent">Устои Автомобил</span><br>дар Тоҷикистон</h1>
+        <p>Платформаи рақами №1 барои пайваст кардани мизоҷон бо устоҳои касбӣ. Зуд. Боэтимод. Дар ҳама ҷо.</p>
+        <div class="hero-btns">
+            <button class="btn-primary" onclick="openRegModal()">Усто сабт шавед <i class="fa fa-arrow-right"></i></button>
+            <button class="btn-secondary" onclick="openSOSModal()">🚨 SOS кӯмак</button>
+        </div>
+        <div class="hero-stats">
+            <div class="hstat"><strong>500+</strong><span>Устоҳо</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><strong>12</strong><span>Шаҳрҳо</span></div>
+            <div class="hstat-div"></div>
+            <div class="hstat"><strong>4.8★</strong><span>Рейтинг</span></div>
+        </div>
+    </div>
+    <div class="hero-visual">
+        <div class="master-card-hero">
+            <div class="mc-head">
+                <div class="mc-avatar">АУ</div>
+                <div>
+                    <div class="mc-name">Алишер Усмонов</div>
+                    <div class="mc-spec">Автоэлектрик · Душанбе</div>
                 </div>
-
-                <hr>
-
-                <div class="mobile-collapsible">
-                    <div class="collapse-btn" onclick="toggleSubMenu(this)">
-                        <i class="fa-solid fa-car"></i> Ходовой <i class="fa-solid fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="collapse-content">
-                        <a href="#">Развал-схождение</a>
-                        <a href="#">Таъмири амортизатор</a>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="mobile-collapsible">
-                    <div class="collapse-btn" onclick="toggleSubMenu(this)">
-                        <i class="fa-solid fa-car"></i> Ходовой <i class="fa-solid fa-chevron-down arrow"></i>
-                    </div>
-                    <div class="collapse-content">
-                        <a href="#">Развал-схождение</a>
-                        <a href="#">Таъмири амортизатор</a>
-                    </div>
-                </div>
-
-                <hr>
+                <div class="mc-rating">★ 4.9</div>
+            </div>
+            <div class="mc-tags">
+                <span class="mc-tag">Диагностика</span>
+                <span class="mc-tag">Стартер</span>
+                <span class="mc-tag">GPS насб</span>
+            </div>
+            <div class="mc-foot">
+                <span class="mc-avail"><span class="mc-avail-dot"></span> Холӣ аст</span>
+                <button class="btn-contact" onclick="openWA('992900000001')">Тамос</button>
             </div>
         </div>
-
-        <div class="inst-item sos-box">
-            <div class="sos-circle">🚨</div>
-        </div>
-
-        <a href="javascript:void(0)" class="inst-item" onclick="openModal()">
-            <i class="fa-solid fa-plus-square"></i>
-            <span>Сабт</span>
-        </a>
-
-        <a href="#" class="inst-item">
-            <i class="fa-solid fa-user"></i>
-            <span>Профил</span>
-        </a>
+        <div class="float-badge fb1">✓ Тасдиқшуда</div>
+        <div class="float-badge fb2">📍 1.2 км</div>
     </div>
+</section>
 
-
-    <div id="registrationModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>📝 Навбат барои сабт</h2>
-            
-            <form id="regForm">
-                <input type="text" id="fullName" placeholder="Ном ва Насаб" required>
-                <input type="number" id="birthYear" placeholder="Соли таваллуд (м: 1990)" required>
-                <input type="tel" id="userPhone" placeholder="Рақами телефон" required>
-                <input type="text" id="workPlace" placeholder="Ҷои кор (Суроға ё номи сервис)">
-                
-                <div class="form-row" style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    
-                    <input type="number" id="experience" placeholder="Таҷриба (сол)" required style="flex: 1;">
-                </div>
-    
-                <div class="custom-select-wrapper" style="margin-bottom: 15px;">
-                    <div class="select-trigger" onclick="toggleMainDropdown()" style="padding: 12px; border: 1px solid #ccc; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; background: #f9f9f9;">
-                        <span id="selectedService">Интихоби касб аз рӯйхат...</span>
-                        <i class="fa fa-chevron-down"></i>
-                    </div>
-                    
-                    <div class="custom-options" id="customOptions" style="display: none; border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto; background: white;">
-                        <div class="option-group">
-                            <div class="group-title" onclick="toggleCustomSub(this)" style="padding: 10px; background: #eee; cursor: pointer; display: flex; justify-content: space-between;">
-                                <span><i class="fa fa-bolt"></i> Автоэлектрик</span>
-                                <i class="fa fa-chevron-right arrow"></i>
-                            </div>
-                            <div class="sub-options" style="display: none; flex-direction: column;">
-                                <div onclick="selectService('Диагностика')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Диагностика</div>
-                                <div onclick="selectService('Таъмири стартер')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Таъмири стартер</div>
-                                <div onclick="selectService('Насби камера')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Насби камера</div>
-                            </div>
-                        </div>
-    
-                        <div class="option-group">
-                            <div class="group-title" onclick="toggleCustomSub(this)" style="padding: 10px; background: #eee; cursor: pointer; display: flex; justify-content: space-between;">
-                                <span><i class="fa fa-car"></i> Ходовой</span>
-                                <i class="fa fa-chevron-right arrow"></i>
-                            </div>
-                            <div class="sub-options" style="display: none; flex-direction: column;">
-                                <div onclick="selectService('Развал-схождение')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Развал-схождение</div>
-                                <div onclick="selectService('Таъмири амортизатор')" style="padding: 10px 25px; cursor: pointer; border-bottom: 1px solid #eee;">Таъмири амортизатор</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="location-box" style="margin-bottom: 15px;">
-                    <button type="button" onclick="getLocation()" class="btn-location" style="width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                        <i class="fa-solid fa-location-dot"></i> Ирсоли мавқеъ (GPS)
-                    </button>
-                    <p id="locationStatus" style="font-size: 11px; margin-top: 5px; color: #666;"></p>
-                    <input type="hidden" id="mapUrl">
-                </div>
-    
-                
-    
-                <input type="hidden" id="serviceInput" name="service" required>
-                <button type="submit" class="btn-submit" style="width: 100%; padding: 15px; background: #007AFF; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer;">Фиристодан ба WhatsApp</button>
-            </form>
+<!-- SERVICES -->
+<section class="services-sec" id="services">
+    <div class="container">
+        <div class="section-head"><h2>Хизматҳои мо</h2><p>Ҳама гуна таъмири автомобил дар як ҷо</p></div>
+        <div class="services-grid">
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#E8F5E9"><i class="fa fa-microchip" style="color:#2E7D32"></i></div>
+                <h3>Диагностика</h3><p>Компютерная диагностика ва аниқ ёфтани мушкил</p>
+            </div>
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#E3F2FD"><i class="fa fa-bolt" style="color:#1565C0"></i></div>
+                <h3>Автоэлектрик</h3><p>Таъмири ҳама гуна электрикаи автомобил</p>
+            </div>
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#FFF3E0"><i class="fa fa-cog" style="color:#E65100"></i></div>
+                <h3>Таъмири мотор</h3><p>Капитальный ва текущий таъмири мотор</p>
+            </div>
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#F3E5F5"><i class="fa fa-car" style="color:#6A1B9A"></i></div>
+                <h3>Ходовой</h3><p>Развал, амортизатор, подшипник ва ғайра</p>
+            </div>
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#FCE4EC"><i class="fa fa-paint-brush" style="color:#880E4F"></i></div>
+                <h3>Покраска</h3><p>Покраска ва баркарорсозии бадани автомобил</p>
+            </div>
+            <div class="svc-card">
+                <div class="svc-icon" style="background:#E0F2F1"><i class="fa fa-snowflake" style="color:#00695C"></i></div>
+                <h3>Кондитсионер</h3><p>Насб, таъмир ва пур кардани кондитсионер</p>
+            </div>
         </div>
     </div>
+</section>
 
+<!-- HOW IT WORKS -->
+<section class="how-sec">
+    <div class="container">
+        <div class="section-head"><h2>Чӣ гуна кор мекунад?</h2><p>Се қадами осон</p></div>
+        <div class="steps-row">
+            <div class="step-card">
+                <span class="step-num">01</span>
+                <h3>Усторо ёбед</h3>
+                <p>Намуди таъмир ва шаҳри худро интихоб кунед</p>
+            </div>
+            <div class="step-arrow"><i class="fa fa-arrow-right"></i></div>
+            <div class="step-card">
+                <span class="step-num">02</span>
+                <h3>Профилро бубинед</h3>
+                <p>Рейтинг, баҳо ва баррасиҳоро тафтиш кунед</p>
+            </div>
+            <div class="step-arrow"><i class="fa fa-arrow-right"></i></div>
+            <div class="step-card">
+                <span class="step-num">03</span>
+                <h3>Пайваст шавед</h3>
+                <p>Мустақиман бо усто тамос гиред</p>
+            </div>
+        </div>
+    </div>
+</section>
 
+<!-- VIP MASTERS -->
+<section class="vip-sec">
+    <div class="container">
+        <div class="section-head"><h2>VIP-Устоҳо</h2><p>Беҳтарин мутахассисон бо рейтинги баланд</p></div>
+        <div class="masters-grid">
+            <div class="vip-card">
+                <div class="vip-card-top">
+                    <div class="v-avatar" style="background:#1D9E75">АУ</div>
+                    <div class="vip-badge">VIP</div>
+                </div>
+                <h4>Алишер Усмонов</h4>
+                <p class="v-spec">Автоэлектрик</p>
+                <div class="v-rating">★★★★★ 4.9</div>
+                <div class="v-tags"><span>Диагностика</span><span>Стартер</span></div>
+                <div class="v-foot">
+                    <span class="v-city"><i class="fa fa-map-pin"></i> Душанбе</span>
+                    <button class="btn-wa" onclick="openWA('992900000001')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                </div>
+            </div>
+            <div class="vip-card">
+                <div class="vip-card-top">
+                    <div class="v-avatar" style="background:#185FA5">БР</div>
+                    <div class="vip-badge">VIP</div>
+                </div>
+                <h4>Баҳром Рашидов</h4>
+                <p class="v-spec">Моторист</p>
+                <div class="v-rating">★★★★★ 4.8</div>
+                <div class="v-tags"><span>Мотор</span><span>Ходовой</span></div>
+                <div class="v-foot">
+                    <span class="v-city"><i class="fa fa-map-pin"></i> Хуҷанд</span>
+                    <button class="btn-wa" onclick="openWA('992900000002')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                </div>
+            </div>
+            <div class="vip-card">
+                <div class="vip-card-top">
+                    <div class="v-avatar" style="background:#854F0B">СН</div>
+                    <div class="vip-badge">VIP</div>
+                </div>
+                <h4>Санҷар Назаров</h4>
+                <p class="v-spec">Покраскачӣ</p>
+                <div class="v-rating">★★★★★ 4.9</div>
+                <div class="v-tags"><span>Покраска</span><span>Кузов</span></div>
+                <div class="v-foot">
+                    <span class="v-city"><i class="fa fa-map-pin"></i> Бохтар</span>
+                    <button class="btn-wa" onclick="openWA('992900000003')"><i class="fa-brands fa-whatsapp"></i> WhatsApp</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- REGISTRATION MODAL (MASTER ONLY) -->
+<div id="regModal" class="modal" onclick="bgClose(event,'regModal')">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal('regModal')"><i class="fa fa-times"></i></button>
+        <div class="modal-title">Бақайдгирии усто</div>
+        <div class="modal-sub">Профили худро созед ва мизоҷон ёбед</div>
+        <div class="form-grid">
+            <div class="fg">
+                <label>Ном ва Насаб</label>
+                <input type="text" id="mName" placeholder="Исми пурра">
+            </div>
+            <div class="fg">
+                <label>Рақами телефон</label>
+                <div class="phone-row">
+                    <span class="phone-pfx">🇹🇯 +992</span>
+                    <input type="tel" id="mPhone" placeholder="900 000 000">
+                </div>
+            </div>
+            <div class="fg">
+                <label>Таҷриба (сол)</label>
+                <input type="number" id="mExp" placeholder="Масалан: 5" min="0" max="50">
+            </div>
+            <div class="fg">
+                <label>Шаҳр</label>
+                <select id="mCity">
+                    <option value="">Интихоб кунед...</option>
+                    <option>Душанбе</option>
+                    <option>Хуҷанд</option>
+                    <option>Бохтар</option>
+                    <option>Кӯлоб</option>
+                    <option>Истаравшан</option>
+                    <option>Ваҳдат</option>
+                    <option>Хоруғ</option>
+                </select>
+            </div>
+            <div class="fg full">
+                <label>Касб (якчанд интихоб кардан мумкин)</label>
+                <div class="multi-sel" id="mServices">
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Диагностика</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Автоэлектрик</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Таъмири мотор</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Ходовой</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Покраска</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Кондитсионер</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Шиномонтаж</div>
+                    <div class="ms-opt" onclick="this.classList.toggle('on')">Развал</div>
+                </div>
+            </div>
+            <div class="fg full">
+                <label>Мавқеи кории шумо (GPS)</label>
+                <button class="btn-gps" onclick="getGPS('m')"><i class="fa fa-location-dot"></i> Ирсоли мавқеъ</button>
+                <p class="gps-status" id="mGpsStatus"></p>
+            </div>
+        </div>
+        <button class="btn-send wa" onclick="submitMaster()">
+            <i class="fa-brands fa-whatsapp"></i> Фиристодан ба WhatsApp
+        </button>
+    </div>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" class="modal" onclick="bgClose(event,'loginModal')">
+    <div class="modal-box" style="max-width:400px">
+        <button class="modal-close" onclick="closeModal('loginModal')"><i class="fa fa-times"></i></button>
+        <div class="modal-title">Ворид шудан</div>
+        <div class="modal-sub">Ба ҳисоби худ ворид шавед</div>
+        <div class="form-grid">
+            <div class="fg full">
+                <label>Рақами телефон</label>
+                <div class="phone-row">
+                    <span class="phone-pfx">🇹🇯 +992</span>
+                    <input type="tel" id="lPhone" placeholder="900 000 000">
+                </div>
+            </div>
+            <div class="fg full">
+                <label>Парол</label>
+                <input type="password" id="lPass" placeholder="Паролро ворид кунед">
+            </div>
+        </div>
+        <button class="btn-send" onclick="submitLogin()">Ворид шудан</button>
+        <p class="modal-link">Бор аввал? <a href="#" onclick="closeModal('loginModal'); openRegModal();">Сабт шавед</a></p>
+    </div>
+</div>
+
+<!-- SOS MODAL -->
+<div id="sosModal" class="modal" onclick="bgClose(event,'sosModal')">
+    <div class="modal-box sos-modal-box" style="max-width:400px">
+        <button class="modal-close" onclick="closeModal('sosModal')"><i class="fa fa-times"></i></button>
+        <div class="sos-head">
+            <div class="sos-emoji">🚨</div>
+            <h2>Кӯмаки фаврӣ</h2>
+            <p style="color:var(--muted);font-size:14px;margin-top:4px">Мо ба шумо зуд кӯмак мерасонем</p>
+        </div>
+        <div class="form-grid">
+            <div class="fg full">
+                <label>Рақами телефон</label>
+                <div class="phone-row">
+                    <span class="phone-pfx">🇹🇯 +992</span>
+                    <input type="tel" id="sPhone" placeholder="900 000 000">
+                </div>
+            </div>
+            <div class="fg full">
+                <label>Мавқеи шумо (GPS)</label>
+                <button class="btn-gps" style="border-color:#ef4444;color:#dc2626;background:#fef2f2" onclick="getGPS('s')"><i class="fa fa-location-dot"></i> Мавқеъро ирсол кунед</button>
+                <p class="gps-status" id="sGpsStatus"></p>
+            </div>
+        </div>
+        <button class="btn-send" style="background:#ef4444" onclick="submitSOS()">
+            <i class="fa-brands fa-whatsapp"></i> SOS — Фиристодан
+        </button>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div>
+                <div class="logo footer-logo">AUTO<span>USTO TJ</span></div>
+                <p>Платформаи рақами №1 барои устоҳои автомобил дар Тоҷикистон</p>
+            </div>
+            <div>
+                <h4>Хизматҳо</h4>
+                <a href="#">Диагностика</a>
+                <a href="#">Автоэлектрик</a>
+                <a href="#">Таъмири мотор</a>
+                <a href="#">Ходовой</a>
+            </div>
+            <div>
+                <h4>Тамос</h4>
+                <a href="tel:+992000000000"><i class="fa fa-phone"></i> +992 00 000 00 00</a>
+                <a href="#"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                <a href="#"><i class="fa-brands fa-instagram"></i> Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2025 AutoUsto TJ. Ҳама ҳуқуқҳо ҳифз шудаанд.</div>
+    </div>
+</footer>
+
+<script>
+const ADMIN_WA = '992000000000'; // ← Рақами WhatsApp-и худро ин ҷо гузоред
+const gpsData = {};
+
+function openRegModal() { openModal('regModal'); }
+function openLoginModal() { openModal('loginModal'); }
+function openSOSModal() { openModal('sosModal'); }
+
+function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+}
+function bgClose(e, id) {
+    if (e.target === document.getElementById(id)) closeModal(id);
+}
+
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') ['regModal','loginModal','sosModal'].forEach(closeModal);
+});
+
+function getGPS(prefix) {
+    const statusEl = document.getElementById(prefix + 'GpsStatus');
+    statusEl.textContent = '⏳ Муайян карда мешавад...';
+    if (!navigator.geolocation) { statusEl.textContent = '❌ GPS дастгирӣ намешавад'; return; }
+    navigator.geolocation.getCurrentPosition(
+        pos => {
+            const lat = pos.coords.latitude.toFixed(6);
+            const lng = pos.coords.longitude.toFixed(6);
+            gpsData[prefix] = `https://maps.google.com/?q=${lat},${lng}`;
+            statusEl.innerHTML = `✅ Ёфт шуд! <a href="${gpsData[prefix]}" target="_blank" style="color:var(--green)">Харита</a>`;
+        },
+        err => {
+            const m = {1:'Иҷозат дода нашуд',2:'Ёфт нашуд',3:'Вақт тамом шуд'};
+            statusEl.textContent = '❌ ' + (m[err.code] || 'Хато рӯй дод');
+        },
+        { timeout: 10000, enableHighAccuracy: true }
+    );
+}
+
+function openWA(num) { window.open(`https://wa.me/${num}`, '_blank'); }
+
+function sendWA(msg) {
+    window.open(`https://wa.me/${ADMIN_WA}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function val(id, label) {
+    const v = document.getElementById(id)?.value?.trim();
+    if (!v) { toast('⚠️ ' + label + ' ворид кунед'); document.getElementById(id)?.focus(); return null; }
+    return v;
+}
+
+function submitMaster() {
+    const name = val('mName', 'Ном ва Насаб'); if (!name) return;
+    const phone = val('mPhone', 'Рақами телефон'); if (!phone) return;
+    const exp = document.getElementById('mExp').value.trim() || '—';
+    const city = document.getElementById('mCity').value || '—';
+    const svcs = [...document.querySelectorAll('#mServices .ms-opt.on')].map(e => e.textContent).join(', ') || '—';
+    if (svcs === '—') { toast('⚠️ Касбро интихоб кунед'); return; }
+    const loc = gpsData['m'] ? gpsData['m'] : '—';
+
+    const msg = `🔧 *УСТОИ НАВИ AUTOUSTO TJ*\n\n👤 Ном: ${name}\n📞 Телефон: +992${phone}\n📅 Таҷриба: ${exp} сол\n🏙️ Шаҳр: ${city}\n⚙️ Хизматҳо: ${svcs}\n📍 Мавқеъ: ${loc}\n\n_AutoUsto TJ орқали_`;
+    sendWA(msg);
+    closeModal('regModal');
+    toast('✅ Муваффақ! WhatsApp-га фиристода шуд');
+}
+
+function submitLogin() {
+    const phone = val('lPhone', 'Рақами телефон'); if (!phone) return;
+    const pass = val('lPass', 'Парол'); if (!pass) return;
+    toast('⏳ Тафтиш карда мешавад...');
+    setTimeout(() => { closeModal('loginModal'); toast('✅ Хуш омадед!'); }, 1500);
+}
+
+function submitSOS() {
+    const phone = val('sPhone', 'Рақами телефон'); if (!phone) return;
+    if (!gpsData['s']) { toast('⚠️ Мавқеъро ирсол кунед'); return; }
+    const msg = `🚨 *SOS — КӮМАКИ ФАВРӢ*\n\n📞 Телефон: +992${phone}\n📍 Мавқеъ: ${gpsData['s']}\n⏰ Вақт: ${new Date().toLocaleTimeString()}\n\n_❗ Зуд тамос гиред!_`;
+    sendWA(msg);
+    closeModal('sosModal');
+    toast('🚨 SOS фиристода шуд!');
+}
+
+function toast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+function toggleHam() {
+    document.querySelector('.nav-links').style.display =
+        document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Animate on scroll
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.svc-card, .step-card, .vip-card').forEach((el, i) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = `opacity 0.5s ease ${i*0.07}s, transform 0.5s ease ${i*0.07}s`;
+    obs.observe(el);
+});
+</script>
 </body>
-
 </html>
