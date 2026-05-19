@@ -64,32 +64,41 @@
             max-width: 1100px; margin: 0 auto; padding: 0 16px;
             height: 100%; display: flex; align-items: center; justify-content: space-between;
         }
-        .logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; }
+        .logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; text-decoration: none; color: var(--text); }
         .logo span { color: var(--green); }
         
         .client-tag { font-size: 13px; background: var(--green-light); padding: 6px 12px; border-radius: 100px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-        .btn-logout-small { background: none; border: none; color: var(--red); cursor: pointer; font-size: 14px; margin-left: 4px; display: flex; align-items: center; }
 
         /* МЕНЮИ БУРГЕР - ТАНҲО БАРОИ ТЕЛЕФОН */
         .hamburger { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text); display: none; }
+        
         .sidebar {
             position: fixed; top: 0; right: -280px; bottom: 0; width: 280px; background: var(--bg);
             border-left: 1px solid var(--border); z-index: 1000; transition: right 0.3s ease; padding: 24px;
-            display: flex; flex-direction: column; gap: 20px;
+            display: flex; flex-direction: column; gap: 15px;
         }
         .sidebar.open { right: 0; }
         .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 950; }
         .sidebar-overlay.open { display: block; }
         .sidebar-close { align-self: flex-end; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); }
-        .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .sidebar-menu a { padding: 12px; display: block; border-radius: 8px; font-weight: 500; text-decoration: none; color: var(--text); }
-        .sidebar-menu a:hover { background: var(--bg2); color: var(--green); }
-        .sidebar-menu a.logout-link { color: var(--red); }
-        .sidebar-menu a.logout-link:hover { background: #fef2f2; color: var(--red); }
+        
+        .sidebar-user-info {
+            background: var(--bg2); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);
+            margin-bottom: 10px; font-size: 14px;
+        }
+        .sidebar-user-info strong { color: var(--green); display: block; margin-top: 4px; font-size: 15px; }
 
-        .nav-desktop-links { display: flex; gap: 20px; list-style: none; align-items: center; }
-        .nav-desktop-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; }
-        .nav-desktop-links a:hover { color: var(--green); }
+        .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-menu a { padding: 12px; display: flex; align-items: center; gap: 10px; border-radius: 8px; font-weight: 500; text-decoration: none; color: var(--text); font-size: 14px; }
+        .sidebar-menu a:hover { background: var(--bg2); color: var(--green); }
+        .sidebar-menu a.btn-logout-link { color: var(--red); }
+        .sidebar-menu a.btn-logout-link:hover { background: #fee2e2; color: var(--red); }
+
+        .nav-desktop-links { display: flex; gap: 15px; list-style: none; align-items: center; }
+        .nav-desktop-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; }
+        .nav-desktop-links a:hover { background: var(--bg2); color: var(--green); }
+        .nav-desktop-links a.btn-logout-desktop { color: var(--red); }
+        .nav-desktop-links a.btn-logout-desktop:hover { background: #fee2e2; }
 
         /* АСЛИИ САҲИФА */
         main { padding-top: 80px; max-width: 1100px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
@@ -101,19 +110,39 @@
         .search-box-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); }
         .search-input { width: 100%; padding: 11px 14px 11px 40px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); outline: none; color: var(--text); }
         
-        .filter-grid-top { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .filter-grid-top select { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; background: var(--bg); outline: none; font-family: inherit; color: var(--text); }
+        .filter-conditional-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .filter-conditional-grid select { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; background: var(--bg); outline: none; font-family: inherit; color: var(--text); }
+        .hidden-filter { display: none; }
 
-        /* СЕКЦИЯҲОИ УСТОҲО */
-        .section-head { margin-bottom: 12px; margin-top: 10px; display: flex; align-items: center; justify-content: space-between; }
-        .section-head h2 { font-family: 'Unbounded', sans-serif; font-size: 15px; font-weight: 900; }
-        .section-head h2 span { color: var(--green); }
+        /* ЗЕРМЕНЮҲОИ НАВИ УСТОҲО (ACCORDION SYSTEM) */
+        .category-accordion { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); }
+        .accordion-header { background: var(--bg2); padding: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; transition: background 0.2s; }
+        .accordion-header:hover { background: var(--green-light); }
+        .accordion-header h3 { font-family: 'Unbounded', sans-serif; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .accordion-header h3 span { color: var(--muted); font-size: 12px; font-family: 'Manrope', sans-serif; font-weight: normal; }
+        .accordion-header .arrow-icon { transition: transform 0.3s; color: var(--muted); }
+        .category-accordion.open .accordion-header .arrow-icon { transform: rotate(180deg); color: var(--green); }
+        
+        .accordion-content { display: none; padding: 12px; background: var(--bg); border-top: 1px solid var(--border); }
+        .category-accordion.open .accordion-content { display: block; }
 
-        .masters-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        /* Шаҳрҳо дар дохили касб */
+        .city-sub-accordion { margin-bottom: 8px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+        .city-header { background: var(--bg); padding: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 13px; font-weight: 700; }
+        .city-header:hover { background: var(--bg2); }
+        .city-sub-accordion.open .city-header { background: var(--bg2); border-bottom: 1px solid var(--border); }
+        .city-content { display: none; padding: 10px; background: var(--bg2); }
+        .city-sub-accordion.open .city-content { display: block; }
+
+        /* Грӯҳбандии VIP ва Оддӣ */
+        .group-title { font-size: 11px; font-family: 'Unbounded', sans-serif; font-weight: 900; text-transform: uppercase; margin: 10px 0 6px 0; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+        .group-title.vip-title { color: var(--amber); }
+
+        .masters-list { display: flex; flex-direction: column; gap: 10px; }
 
         /* КАРТАИ УСТО */
         .master-row-card {
-            background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+            background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
             padding: 14px; display: flex; flex-direction: column; gap: 10px; position: relative;
         }
         .card-main-info { display: flex; gap: 12px; align-items: center; }
@@ -145,7 +174,7 @@
         }
 
         /* БЛОКИ ҲАЛЛИ МУШКИЛОТ (HELP/FAQ) */
-        .help-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 32px; }
+        .help-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 32px; margin-top: 20px; }
         .help-title { font-family: 'Unbounded', sans-serif; font-size: 14px; margin-bottom: 12px; color: var(--blue); }
         .help-item { background: var(--bg); border: 1px solid var(--border); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
         .help-item strong { color: var(--red); display: block; margin-bottom: 2px; }
@@ -212,7 +241,7 @@
         <div class="policy-text">
             <strong>Созишномаи сиёсати истифодабарӣ:</strong><br>
             1. Ҳамчун муштарӣ, шумо ҳуқуқ доред маълумоти устоҳоро кобед ва бо онҳо мустақим тамос гиред.<br>
-            2. Маълумоти воридкардаи шумо (Ном ва Насаб) танҳо барои муаррифии шумо ба устоҳо истифода мешавад.<br>
+            2. Маълумоти воридкардаи шумо (Номи шумо) танҳо барои муаррифии шумо ба устоҳо истифода мешавад.<br>
             3. Ҷойгиршавии GPS-и шумо танҳо бо хоҳиши шумо барои ёфтани наздиктарин хидматрасонӣ истифода мегардад.<br>
             4. Ҳама гуна истифодаи ғайриқонунӣ ё паҳн кардани маълумоти барнома манъ аст.<br>
             5. Бақайдгирии устоҳо танҳо пас аз тасдиқи администратор фаъол мешавад.
@@ -224,8 +253,8 @@
         </label>
 
         <div class="fg" style="margin-bottom:16px;">
-            <label>Ном ва Насаби шумо (ҳамчун муштарӣ) *</label>
-            <input type="text" id="clientNameInput" placeholder="Масалан: Сомон Назаров">
+            <label>Номи шумо (ҳамчун муштарӣ) *</label>
+            <input type="text" id="clientNameInput" placeholder="Масалан: Сомон">
         </div>
 
         <button class="btn-submit" onclick="acceptAndEnter()">Қабул ва ворид шудан</button>
@@ -234,18 +263,16 @@
 
 <nav class="navbar">
     <div class="nav-inner">
-        <div class="logo">AUTO<span>USTO TJ</span></div>
+        <a href="#" class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">AUTO<span>USTO TJ</span></a>
         <ul class="nav-desktop-links">
-            <li><a href="#">Асосӣ</a></li>
-            <li><a href="#" onclick="openRegModal(); return false;">Усто шудан</a></li>
+            <li><a href="#"><i class="fa fa-home"></i> Асосӣ</a></li>
+            <li><a href="#" onclick="openRegModal(); return false;"><i class="fa fa-wrench"></i> Усто шудан</a></li>
             <li><a href="#" onclick="toggleTheme(); return false;"><i class="fa fa-moon"></i></a></li>
-            <li><a href="#" onclick="logout(); return false;" style="color:var(--red); font-weight:bold;"><i class="fa fa-sign-out-alt"></i> Баромад</a></li>
+            <li id="desktopUserNav" style="display: flex; align-items: center; gap: 10px;">
+                <div class="client-tag"><i class="fa fa-user"></i> <span class="clientNameTxtSlot"></span></div>
+                <a href="#" onclick="logoutClient(); return false;" class="btn-logout-desktop" title="Баромад"><i class="fa fa-sign-out-alt"></i></a>
+            </li>
         </ul>
-        <div id="clientBadge" class="client-tag" style="display:none;">
-            <i class="fa fa-user"></i> 
-            <span id="clientNameTxt"></span>
-            <button class="btn-logout-small" onclick="logout()" title="Баромад аз профил"><i class="fa fa-times-circle"></i></button>
-        </div>
         <button class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
     </div>
 </nav>
@@ -253,40 +280,50 @@
 <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
 <div class="sidebar" id="sidebar">
     <button class="sidebar-close" onclick="toggleSidebar()"><i class="fa fa-times"></i></button>
-    <div class="logo" style="margin-bottom:20px;">AUTO<span>USTO TJ</span></div>
+    <div class="logo" style="margin-bottom:10px;">AUTO<span>USTO TJ</span></div>
+    
+    <div class="sidebar-user-info">
+        <i class="fa fa-user-circle"></i> Муштарӣ:
+        <strong class="clientNameTxtSlot">...</strong>
+    </div>
+
     <ul class="sidebar-menu">
-        <li><a href="#" onclick="toggleSidebar()">Асосӣ</a></li>
-        <li><a href="#" onclick="toggleSidebar(); openRegModal();">Ҳамчун усто сабт шудан</a></li>
+        <li><a href="#" onclick="toggleSidebar()"><i class="fa fa-home"></i> Асосӣ</a></li>
+        <li><a href="#" onclick="toggleSidebar(); openRegModal();"><i class="fa fa-user-plus"></i> Ҳамчун усто сабт шудан</a></li>
         <li><a href="#" onclick="toggleTheme(); toggleSidebar();"><i class="fa fa-moon"></i> Режими шабона</a></li>
-        <li><a href="#" onclick="logout();" class="logout-link"><i class="fa fa-sign-out-alt"></i> Баромад (Reset)</a></li>
+        <li style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
+            <a href="#" onclick="logoutClient(); return false;" class="btn-logout-link"><i class="fa fa-sign-out-alt"></i> Баромадан аз профил</a>
+        </li>
     </ul>
 </div>
 
 <main>
 
     <section class="search-section">
-        <div class="search-title"><i class="fa fa-sliders" style="color:var(--green)"></i> Интихоби усто (Шаҳр, Ноҳия, Касб)</div>
+        <div class="search-title"><i class="fa fa-sliders" style="color:var(--green)"></i> Интихоби босуръати усто</div>
         <div class="search-box-wrapper">
             <i class="fa fa-search"></i>
             <input type="text" id="searchKeyword" class="search-input" placeholder="Ҷустуҷӯ бо номи усто..." oninput="performLiveFilter()">
         </div>
-        <div class="filter-grid-top">
-            <select id="filterCategory" onchange="performLiveFilter()">
-                <option value="">Ҳама касбҳо</option>
+        <div class="filter-conditional-grid">
+            <select id="filterCategory" onchange="handleCategoryFilterChange()">
+                <option value="">1. Касбро интихоб кунед</option>
                 <option value="Автоэлектрик">Автоэлектрик</option>
                 <option value="Моторист">Моторист</option>
                 <option value="Ходовой">Ходовой</option>
                 <option value="Покраска">Покраска</option>
                 <option value="Диагностика">Диагностика</option>
             </select>
-            <select id="filterCity" onchange="performLiveFilter()">
-                <option value="">Ҳама шаҳрҳо</option>
+            
+            <select id="filterCity" class="hidden-filter" onchange="handleCityFilterChange()">
+                <option value="">2. Шаҳрро интихоб кунед</option>
                 <option value="Душанбе">Душанбе</option>
                 <option value="Хуҷанд">Хуҷанд</option>
                 <option value="Бохтар">Бохтар</option>
             </select>
-            <select id="filterDistrict" onchange="performLiveFilter()">
-                <option value="">Ҳама ноҳияҳо</option>
+            
+            <select id="filterDistrict" class="hidden-filter" onchange="performLiveFilter()">
+                <option value="">ҳама ноҳия</option>
                 <option value="Сино">Сино</option>
                 <option value="Фирдавсӣ">Фирдавсӣ</option>
                 <option value="Шоҳмансур">Шоҳмансур</option>
@@ -295,81 +332,124 @@
         </div>
     </section>
 
-    <section>
+    <section id="mastersAccordionContainer">
         <div class="section-head">
-            <h2>👑 VIP <span>Устоҳо</span></h2>
+            <h2>🔧 Категорияҳои <span>Устоҳо</span></h2>
         </div>
-        <div class="masters-list" id="vipContainer">
-            <div class="master-row-card" data-type="vip" data-spec="Автоэлектрик" data-city="Душанбе" data-district="Сино" data-name="Алишер Усмонов">
-                <div class="card-main-info">
-                    <div class="m-avatar">АУ</div>
-                    <div class="m-details">
-                        <div class="m-name-row"><span class="m-name">Алишер Усмонов</span><span class="badge-vip">VIP</span></div>
-                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.9</span><span>·</span><span>Таҷриба: 7 сол</span></div>
-                    </div>
-                </div>
-                <div class="m-tags"><span class="m-tag">Автоэлектрик</span><span class="m-tag">Компютерӣ</span></div>
-                <div class="card-action-row">
-                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Сино</span>
-                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section>
-        <div class="section-head">
-            <h2>🏆 Беҳтарини <span>ҳафта</span></h2>
-        </div>
-        <div class="masters-list" id="weekContainer">
-            <div class="master-row-card" data-type="week" data-spec="Ходовой" data-city="Душанбе" data-district="Фирдавсӣ" data-name="Мақсуд Раҳимов">
-                <div class="card-main-info">
-                    <div class="m-avatar" style="color:var(--blue)">МР</div>
-                    <div class="m-details">
-                        <div class="m-name-row"><span class="m-name">Мақсуд Раҳимов</span><span class="badge-week">ТОП ҲАФТА</span></div>
-                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 5.0</span><span>·</span><span>Таҷриба: 5 сол</span></div>
+        <div class="category-accordion" data-accordion-spec="Автоэлектрик">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3><i class="fa fa-bolt" style="color:var(--amber)"></i> Автоэлектрик <span>(Зерменю)</span></h3>
+                <i class="fa fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="city-sub-accordion" data-accordion-city="Душанбе">
+                    <div class="city-header" onclick="toggleCityAccordion(this)">
+                        <span>📍 Шаҳри Душанбе</span>
+                        <i class="fa fa-angle-down"></i>
                     </div>
-                </div>
-                <div class="m-tags"><span class="m-tag">Ходовой</span><span class="m-tag">Развал</span></div>
-                <div class="card-action-row">
-                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Фирдавсӣ</span>
-                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
+                    <div class="city-content">
+                        <div class="group-title vip-title"><i class="fa fa-crown"></i> VIP Устоҳо</div>
+                        <div class="masters-list">
+                            <div class="master-row-card" data-spec="Автоэлектрик" data-city="Душанбе" data-district="Сино" data-name="Алишер Усмонов">
+                                <div class="card-main-info">
+                                    <div class="m-avatar">АУ</div>
+                                    <div class="m-details">
+                                        <div class="m-name-row"><span class="m-name">Алишер Усмонов</span><span class="badge-vip">VIP</span></div>
+                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.9</span><span>·</span><span>Таҷриба: 7 сол</span></div>
+                                    </div>
+                                </div>
+                                <div class="m-tags"><span class="m-tag">Автоэлектрик</span><span class="m-tag">Компютерӣ</span></div>
+                                <div class="card-action-row">
+                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Сино</span>
+                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <section>
-        <div class="section-head">
-            <h2>🔧 Устоҳои <span>оддӣ</span></h2>
-        </div>
-        <div class="masters-list" id="normalContainer">
-            <div class="master-row-card" data-type="normal" data-spec="Моторист" data-city="Хуҷанд" data-district="Б.Ғафуров" data-name="Парвиз Ҳакимов">
-                <div class="card-main-info">
-                    <div class="m-avatar" style="color:#555">ПҲ</div>
-                    <div class="m-details">
-                        <div class="m-name-row"><span class="m-name">Парвиз Ҳакимов</span><span class="badge-normal">Оддӣ</span></div>
-                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.5</span><span>·</span><span>Таҷриба: 4 сол</span></div>
+        <div class="category-accordion" data-accordion-spec="Ходовой">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3><i class="fa fa-car-crush" style="color:var(--blue)"></i> Ходовой <span>(Зерменю)</span></h3>
+                <i class="fa fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="city-sub-accordion" data-accordion-city="Душанбе">
+                    <div class="city-header" onclick="toggleCityAccordion(this)">
+                        <span>📍 Шаҳри Душанбе</span>
+                        <i class="fa fa-angle-down"></i>
                     </div>
-                </div>
-                <div class="m-tags"><span class="m-tag">Мотор</span><span class="m-tag">Ороиш</span></div>
-                <div class="card-action-row">
-                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Хуҷанд, Б.Ғафуров</span>
-                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
+                    <div class="city-content">
+                        <div class="group-title vip-title"><i class="fa fa-star"></i> Беҳтарини ҳафта</div>
+                        <div class="masters-list">
+                            <div class="master-row-card" data-spec="Ходовой" data-city="Душанбе" data-district="Фирдавсӣ" data-name="Мақсуд Раҳимов">
+                                <div class="card-main-info">
+                                    <div class="m-avatar" style="color:var(--blue)">МР</div>
+                                    <div class="m-details">
+                                        <div class="m-name-row"><span class="m-name">Мақсуд Раҳимов</span><span class="badge-week">ТОП ҲАФТА</span></div>
+                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 5.0</span><span>·</span><span>Таҷриба: 5 сол</span></div>
+                                    </div>
+                                </div>
+                                <div class="m-tags"><span class="m-tag">Ходовой</span><span class="m-tag">Развал</span></div>
+                                <div class="card-action-row">
+                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Фирдавсӣ</span>
+                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="category-accordion" data-accordion-spec="Моторист">
+            <div class="accordion-header" onclick="toggleAccordion(this)">
+                <h3><i class="fa fa-cogs" style="color:var(--muted)"></i> Моторист <span>(Зерменю)</span></h3>
+                <i class="fa fa-chevron-down arrow-icon"></i>
+            </div>
+            <div class="accordion-content">
+                <div class="city-sub-accordion" data-accordion-city="Хуҷанд">
+                    <div class="city-header" onclick="toggleCityAccordion(this)">
+                        <span>📍 Шаҳри Хуҷанд</span>
+                        <i class="fa fa-angle-down"></i>
+                    </div>
+                    <div class="city-content">
+                        <div class="group-title"><i class="fa fa-tools"></i> Устоҳои оддӣ</div>
+                        <div class="masters-list">
+                            <div class="master-row-card" data-spec="Моторист" data-city="Хуҷанд" data-district="Б.Ғафуров" data-name="Парвиз Ҳакимов">
+                                <div class="card-main-info">
+                                    <div class="m-avatar" style="color:#555">ПҲ</div>
+                                    <div class="m-details">
+                                        <div class="m-name-row"><span class="m-name">Парвиз Ҳакимов</span><span class="badge-normal">Оддӣ</span></div>
+                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.5</span><span>·</span><span>Таҷриба: 4 сол</span></div>
+                                    </div>
+                                </div>
+                                <div class="m-tags"><span class="m-tag">Мотор</span><span class="m-tag">Ороиш</span></div>
+                                <div class="card-action-row">
+                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Хуҷанд, Б.Ғафуров</span>
+                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section class="help-section">
         <div class="help-title"><i class="fa fa-info-circle"></i> Maълумотномаи тезбахшо барои ронандагон</div>
         <div class="help-item">
             <strong>Матор дуд карда истодааст ё "Чек" рӯшан шуд?</strong>
-            Дарҳол филтри категорияи <span style="color:var(--green);font-weight:bold">"Диагностика"</span> ё <span style="color:var(--green);font-weight:bold">"Моторист"</span>-ро интихоб карда, ба устои наздиктарин занг занед.
+            Интихоби касби <span style="color:var(--green);font-weight:bold">"Моторист"</span> кунед, шаҳри худро ёфта ба устои наздик занг занед.
         </div>
         <div class="help-item">
             <strong>Аккумулятор хоб рафт ё чароғҳо намесӯзанд?</strong>
-            Мушкили барқии мошинро танҳо <span style="color:var(--green);font-weight:bold">"Автоэлектрик"</span> ҳал мекунад. Аз блоки боло устои барқро филтр кунед.
+            Мушкили барқии мошинро танҳо <span style="color:var(--green);font-weight:bold">"Автоэлектрик"</span> ҳал мекунад.
         </div>
     </section>
 
@@ -383,7 +463,7 @@
         <div class="sos-btn-main">SOS</div>
     </button>
     <button class="b-nav-btn" onclick="openRegModal()">
-        <i class="fa fa-wrench"></i><span>Усто шудан</span>
+        <div class="fa fa-wrench"></i><span>Усто шудан</span>
     </button>
 </div>
 
@@ -446,56 +526,61 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const MY_WHATSAPP = '992933099029'; // Рақами ватсапи шумо
+const MY_WHATSAPP = '992933099029'; // Рақами ватсапи администратор
 
 window.onload = function() {
+    initApp();
+}
+
+function initApp() {
     const isAccepted = localStorage.getItem('autoUstoAccepted');
     const clientName = localStorage.getItem('autoUstoClientName');
     if(isAccepted && clientName) {
         document.getElementById('welcomeOverlay').style.display = 'none';
-        showClientBadge(clientName);
+        updateClientUI(clientName);
+    } else {
+        document.getElementById('welcomeOverlay').style.display = 'flex';
     }
+    performLiveFilter();
 }
 
 function acceptAndEnter() {
     const isChecked = document.getElementById('policyCheck').checked;
-    const fullName = document.getElementById('clientNameInput').value.trim();
+    const clientName = document.getElementById('clientNameInput').value.trim();
     
     if(!isChecked) { 
         showToast('⚠️ Лутфан аввал шартҳо ва сиёсати истифодабариро қабул кунед!'); 
         return; 
     }
     
-    // Санҷиши ворид кардани ҳам Ном ва ҳам Насаб (бояд камаш як фосила дошта бошад)
-    if(fullName.length < 5 || !fullName.includes(' ')) { 
-        showToast('⚠️ Лутфан Ном ва Насаби худро пурра ворид кунед (масалан: Сомон Назаров)!'); 
+    if(clientName.length < 2) { 
+        showToast('⚠️ Лутфан номи худро дуруст ворид кунед!'); 
         return; 
     }
 
     localStorage.setItem('autoUstoAccepted', 'true');
-    localStorage.setItem('autoUstoClientName', fullName);
+    localStorage.setItem('autoUstoClientName', clientName);
     
     document.getElementById('welcomeOverlay').style.display = 'none';
-    showClientBadge(fullName);
-    showToast(`👋 Хуш омадед, ${fullName}!`);
+    updateClientUI(clientName);
+    showToast(`👋 Хуш омадед, ${clientName}!`);
 }
 
-function showClientBadge(name) {
-    const badge = document.getElementById('clientBadge');
-    document.getElementById('clientNameTxt').textContent = name;
-    badge.style.display = 'flex';
+function updateClientUI(name) {
+    const slots = document.querySelectorAll('.clientNameTxtSlot');
+    slots.forEach(slot => {
+        slot.textContent = name;
+    });
 }
 
-// ФУНКСИЯИ БАРОМАД ВА ТОЗА КАРДАНИ МАЪЛУМОТ
-function logout() {
-    if(confirm('Оё дар ҳақиқат мехоҳед аз профил бароед ва маълумотро аз нав ворид кунед?')) {
-        localStorage.removeItem('autoUstoAccepted');
-        localStorage.removeItem('autoUstoClientName');
-        showToast('⏳ Маълумот тоза карда шуд. Саҳифа аз нав бор мешавад...');
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
-    }
+// Функсияи БАРОМАДАН аз профил
+function logoutClient() {
+    localStorage.removeItem('autoUstoAccepted');
+    localStorage.removeItem('autoUstoClientName');
+    showToast('🚪 Шумо аз барнома баромадед.');
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
 }
 
 function toggleSidebar() {
@@ -510,6 +595,70 @@ function toggleTheme() {
     showToast(next === 'dark' ? '🌙 Режими шабона фаъол шуд' : '☀️ Режими рӯзона фаъол шуд');
 }
 
+/* ФУНКСИЯҲОИ НАВИ ФИЛТР (КАСКАДНЫЙ ФИЛЬТР) */
+function handleCategoryFilterChange() {
+    const cat = document.getElementById('filterCategory').value;
+    const citySelect = document.getElementById('filterCity');
+    const distSelect = document.getElementById('filterDistrict');
+    
+    if(cat) {
+        citySelect.classList.remove('hidden-filter');
+    } else {
+        citySelect.classList.add('hidden-filter');
+        citySelect.value = "";
+        distSelect.classList.add('hidden-filter');
+        distSelect.value = "";
+    }
+    
+    // Агар категория иваз шавад, аккордеони ҳамон касбро худкор мекушоем
+    const accordions = document.querySelectorAll('.category-accordion');
+    accordions.forEach(acc => {
+        if(cat && acc.getAttribute('data-accordion-spec') === cat) {
+            acc.classList.add('open');
+        } else {
+            acc.classList.remove('open');
+        }
+    });
+
+    performLiveFilter();
+}
+
+function handleCityFilterChange() {
+    const city = document.getElementById('filterCity').value;
+    const distSelect = document.getElementById('filterDistrict');
+    
+    if(city) {
+        distSelect.classList.remove('hidden-filter');
+    } else {
+        distSelect.classList.add('hidden-filter');
+        distSelect.value = "";
+    }
+
+    // Худ кушодани зерменюи шаҳр дар дохили аккордеони фаъол
+    const cityAccs = document.querySelectorAll('.city-sub-accordion');
+    cityAccs.forEach(cAcc => {
+        if(city && cAcc.getAttribute('data-accordion-city') === city) {
+            cAcc.classList.add('open');
+        } else {
+            cAcc.classList.remove('open');
+        }
+    });
+
+    performLiveFilter();
+}
+
+/* СИСТЕМАИ АККОРДЕОН (ЗЕРМЕНЮҲО) БО ПАХШ КУНИ */
+function toggleAccordion(element) {
+    const parent = element.parentElement;
+    parent.classList.toggle('open');
+}
+
+function toggleCityAccordion(element) {
+    const parent = element.parentElement;
+    parent.classList.toggle('open');
+}
+
+/* ФИЛТРИ УМУМИИ ЗИНДА ВА АСОСӢ */
 function performLiveFilter() {
     const keyword = document.getElementById('searchKeyword').value.toLowerCase();
     const cat = document.getElementById('filterCategory').value;
@@ -531,10 +680,29 @@ function performLiveFilter() {
 
         if(matchKeyword && matchCat && matchCity && matchDist) {
             card.style.display = 'flex';
+            card.classList.add('matched-card');
         } else {
             card.style.display = 'none';
+            card.classList.remove('matched-card');
         }
     });
+
+    // Агар ҷустуҷӯ аз рӯи калима бошад, аккордеонҳоеро, ки усто доранд, худкор нишон медиҳем
+    if(keyword) {
+        const accordions = document.querySelectorAll('.category-accordion');
+        accordions.forEach(acc => {
+            const hasMatch = acc.querySelectorAll('.master-row-card.matched-card').length > 0;
+            if(hasMatch) {
+                acc.classList.add('open');
+                const cityAccs = acc.querySelectorAll('.city-sub-accordion');
+                cityAccs.forEach(cAcc => {
+                    if(cAcc.querySelectorAll('.master-row-card.matched-card').length > 0) {
+                        cAcc.classList.add('open');
+                    }
+                });
+            }
+        });
+    }
 }
 
 function getLocationGPS() {
@@ -548,7 +716,7 @@ function getLocationGPS() {
         pos => {
             const lat = pos.coords.latitude.toFixed(6);
             const lng = pos.coords.longitude.toFixed(6);
-            const link = `http://maps.google.com/?q=${lat},${lng}`;
+            const link = `https://www.google.com/maps?q=${lat},${lng}`;
             document.getElementById('regGpsLink').value = link;
             btn.style.background = '#dcfce7';
             btn.style.borderColor = '#22c55e';
@@ -600,7 +768,6 @@ function sendSOS() {
     closeModal('sosModal');
 }
 
-// Муайянкунии кушодашавии модалҳо
 function openRegModal() { document.getElementById('regModal').classList.add('open'); }
 function openSOSModal() { document.getElementById('sosModal').classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
