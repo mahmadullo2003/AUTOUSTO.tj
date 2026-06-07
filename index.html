@@ -1,782 +1,363 @@
 ﻿<!DOCTYPE html>
-<html lang="tg">
+<html lang="tg" dir="ltr">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AutoUsto TJ — Платформаи Устоҳо</title>
-    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        :root {
-            --green: #1D9E75;
-            --green-dark: #0F6E56;
-            --green-light: #E1F5EE;
-            --amber: #d97706;
-            --red: #ef4444;
-            --blue: #2563eb;
-            --text: #111827;
-            --muted: #6b7280;
-            --bg: #ffffff;
-            --bg2: #f9fafb;
-            --border: #e5e7eb;
-            --radius: 12px;
-            --radius-lg: 18px;
-        }
-
-        [data-theme="dark"] {
-            --bg: #0f172a;
-            --bg2: #1e293b;
-            --text: #f8fafc;
-            --muted: #94a3b8;
-            --border: #334155;
-            --green-light: #064e3b;
-        }
-
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Manrope', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
-        
-        /* ЭКРАНИ ОМАДАН ВА РОЗИГӢ (WELCOME OVERLAY) */
-        #welcomeOverlay {
-            position: fixed; inset: 0; background: var(--bg); z-index: 9999;
-            display: flex; align-items: center; justify-content: center; padding: 16px;
-        }
-        .welcome-box {
-            background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg);
-            padding: 28px; max-width: 440px; width: 100%; box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-        }
-        .welcome-title { font-family: 'Unbounded', sans-serif; font-size: 18px; margin-bottom: 12px; text-align: center; }
-        .welcome-title span { color: var(--green); }
-        .policy-text {
-            height: 130px; overflow-y: auto; background: var(--bg); border: 1px solid var(--border);
-            padding: 12px; border-radius: 8px; font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.6;
-        }
-        .check-row { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; font-size: 13px; cursor: pointer; user-select: none; }
-        .check-row input { width: 18px; height: 18px; accent-color: var(--green); cursor: pointer; margin-top: 2px; }
-        
-        /* NAVBAR */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-            background: var(--bg); border-bottom: 1px solid var(--border); height: 64px;
-        }
-        .nav-inner {
-            max-width: 1100px; margin: 0 auto; padding: 0 16px;
-            height: 100%; display: flex; align-items: center; justify-content: space-between;
-        }
-        .logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; text-decoration: none; color: var(--text); }
-        .logo span { color: var(--green); }
-        
-        .client-tag { font-size: 13px; background: var(--green-light); padding: 6px 12px; border-radius: 100px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-
-        /* МЕНЮИ БУРГЕР - ТАНҲО БАРОИ ТЕЛЕФОН */
-        .hamburger { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text); display: none; }
-        
-        .sidebar {
-            position: fixed; top: 0; right: -280px; bottom: 0; width: 280px; background: var(--bg);
-            border-left: 1px solid var(--border); z-index: 1000; transition: right 0.3s ease; padding: 24px;
-            display: flex; flex-direction: column; gap: 15px;
-        }
-        .sidebar.open { right: 0; }
-        .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 950; }
-        .sidebar-overlay.open { display: block; }
-        .sidebar-close { align-self: flex-end; background: none; border: none; font-size: 20px; cursor: pointer; color: var(--muted); }
-        
-        .sidebar-user-info {
-            background: var(--bg2); padding: 12px; border-radius: var(--radius); border: 1px solid var(--border);
-            margin-bottom: 10px; font-size: 14px;
-        }
-        .sidebar-user-info strong { color: var(--green); display: block; margin-top: 4px; font-size: 15px; }
-
-        .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .sidebar-menu a { padding: 12px; display: flex; align-items: center; gap: 10px; border-radius: 8px; font-weight: 500; text-decoration: none; color: var(--text); font-size: 14px; }
-        .sidebar-menu a:hover { background: var(--bg2); color: var(--green); }
-        .sidebar-menu a.btn-logout-link { color: var(--red); }
-        .sidebar-menu a.btn-logout-link:hover { background: #fee2e2; color: var(--red); }
-
-        .nav-desktop-links { display: flex; gap: 15px; list-style: none; align-items: center; }
-        .nav-desktop-links a { text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; display: flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; }
-        .nav-desktop-links a:hover { background: var(--bg2); color: var(--green); }
-        .nav-desktop-links a.btn-logout-desktop { color: var(--red); }
-        .nav-desktop-links a.btn-logout-desktop:hover { background: #fee2e2; }
-
-        /* АСЛИИ САҲИФА */
-        main { padding-top: 80px; max-width: 1100px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
-
-        /* ҚИСМИ ҶУСТУҶӮ ВА ФИЛТР ДАР АВВАЛ */
-        .search-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 24px; }
-        .search-title { font-family: 'Unbounded', sans-serif; font-size: 14px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .search-box-wrapper { position: relative; margin-bottom: 12px; }
-        .search-box-wrapper i { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); }
-        .search-input { width: 100%; padding: 11px 14px 11px 40px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; background: var(--bg); outline: none; color: var(--text); }
-        
-        .filter-conditional-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .filter-conditional-grid select { width: 100%; padding: 10px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; background: var(--bg); outline: none; font-family: inherit; color: var(--text); }
-        .hidden-filter { display: none; }
-
-        /* ЗЕРМЕНЮҲОИ НАВИ УСТОҲО (ACCORDION SYSTEM) */
-        .category-accordion { margin-bottom: 12px; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); }
-        .accordion-header { background: var(--bg2); padding: 16px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; user-select: none; transition: background 0.2s; }
-        .accordion-header:hover { background: var(--green-light); }
-        .accordion-header h3 { font-family: 'Unbounded', sans-serif; font-size: 14px; display: flex; align-items: center; gap: 10px; }
-        .accordion-header h3 span { color: var(--muted); font-size: 12px; font-family: 'Manrope', sans-serif; font-weight: normal; }
-        .accordion-header .arrow-icon { transition: transform 0.3s; color: var(--muted); }
-        .category-accordion.open .accordion-header .arrow-icon { transform: rotate(180deg); color: var(--green); }
-        
-        .accordion-content { display: none; padding: 12px; background: var(--bg); border-top: 1px solid var(--border); }
-        .category-accordion.open .accordion-content { display: block; }
-
-        /* Шаҳрҳо дар дохили касб */
-        .city-sub-accordion { margin-bottom: 8px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-        .city-header { background: var(--bg); padding: 12px; display: flex; align-items: center; justify-content: space-between; cursor: pointer; font-size: 13px; font-weight: 700; }
-        .city-header:hover { background: var(--bg2); }
-        .city-sub-accordion.open .city-header { background: var(--bg2); border-bottom: 1px solid var(--border); }
-        .city-content { display: none; padding: 10px; background: var(--bg2); }
-        .city-sub-accordion.open .city-content { display: block; }
-
-        /* Грӯҳбандии VIP ва Оддӣ */
-        .group-title { font-size: 11px; font-family: 'Unbounded', sans-serif; font-weight: 900; text-transform: uppercase; margin: 10px 0 6px 0; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-        .group-title.vip-title { color: var(--amber); }
-
-        .masters-list { display: flex; flex-direction: column; gap: 10px; }
-
-        /* КАРТАИ УСТО */
-        .master-row-card {
-            background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 14px; display: flex; flex-direction: column; gap: 10px; position: relative;
-        }
-        .card-main-info { display: flex; gap: 12px; align-items: center; }
-        .m-avatar {
-            width: 46px; height: 46px; border-radius: 50%; background: var(--green-light);
-            display: flex; align-items: center; justify-content: center; font-family: 'Unbounded', sans-serif;
-            font-size: 13px; font-weight: 700; color: var(--green); flex-shrink: 0;
-        }
-        .m-details { flex: 1; min-width: 0; }
-        .m-name-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; }
-        .m-name { font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        
-        .badge-vip { background: linear-gradient(135deg,#f59e0b,#d97706); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        .badge-week { background: var(--blue); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        .badge-normal { background: var(--muted); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px; }
-        
-        .m-meta { font-size: 12px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-        .m-rating { color: var(--amber); font-weight: 700; display: flex; align-items: center; gap: 2px; }
-
-        .m-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-        .m-tag { background: var(--bg2); border: 1px solid var(--border); padding: 3px 8px; border-radius: 100px; font-size: 11px; }
-
-        .card-action-row { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border); padding-top: 10px; }
-        .m-loc { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
-        
-        .btn-call {
-            padding: 6px 12px; background: #25D366; color: white; border: none; border-radius: 8px;
-            font-size: 12px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: inherit;
-        }
-
-        /* БЛОКИ ҲАЛЛИ МУШКИЛОТ (HELP/FAQ) */
-        .help-section { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 32px; margin-top: 20px; }
-        .help-title { font-family: 'Unbounded', sans-serif; font-size: 14px; margin-bottom: 12px; color: var(--blue); }
-        .help-item { background: var(--bg); border: 1px solid var(--border); padding: 10px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; }
-        .help-item strong { color: var(--red); display: block; margin-bottom: 2px; }
-
-        /* MODAL */
-        .modal {
-            display: none; position: fixed; inset: 0; z-index: 1000;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
-            align-items: center; justify-content: center; padding: 16px;
-        }
-        .modal.open { display: flex; }
-        .modal-box {
-            background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px;
-            max-width: 420px; width: 100%; position: relative;
-        }
-        .modal-close { position: absolute; top: 14px; right: 14px; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--muted); }
-        
-        .fg { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-        .fg label { font-size: 12px; font-weight: 600; color: var(--muted); }
-        .fg input, .fg select { padding: 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; background: var(--bg2); outline: none; width: 100%; color: var(--text); }
-        .btn-gps { padding: 8px; background: var(--green-light); border: 1.5px dashed var(--green); border-radius: 8px; font-size: 12px; cursor: pointer; font-weight: 600; margin-bottom: 10px; text-align: center; }
-
-        .btn-submit { width: 100%; padding: 12px; background: var(--green); color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
-
-        /* TOAST */
-        .toast {
-            position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(10px);
-            background: #111827; color: white; padding: 8px 16px; border-radius: 100px;
-            font-size: 12px; font-weight: 500; opacity: 0; transition: all 0.3s; z-index: 9999;
-        }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-        /* НАВИГАТСИЯИ ПОЁН БАРОИ ТЕЛЕФОН */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border);
-            height: 56px; display: none; justify-content: space-around; align-items: center; z-index: 800;
-        }
-        .b-nav-btn { display: flex; flex-direction: column; align-items: center; font-size: 10px; color: var(--muted); background: none; border: none; cursor: pointer; font-family: inherit; }
-        .b-nav-btn.active { color: var(--green); }
-        .b-nav-btn i { font-size: 16px; margin-bottom: 2px; }
-        
-        .sos-btn-main {
-            width: 46px; height: 46px; background: var(--red); color: white; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900;
-            margin-top: -16px; border: 3px solid var(--bg); box-shadow: 0 4px 8px rgba(239,68,68,0.2);
-        }
-
-        /* RESPONSIVE МУТОБИҚШАВӢ */
-        @media (max-width: 768px) {
-            .nav-desktop-links { display: none; }
-            .hamburger { display: block; }
-            .bottom-nav { display: flex; }
-            body { padding-bottom: 60px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AUTOUSTATJ — Устоҳои Касбӣ</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
 
-<div id="welcomeOverlay">
-    <div class="welcome-box">
-        <div class="welcome-title">Хуш омадед ба <span>AutoUsto TJ</span></div>
-        <p style="font-size:13px; color:var(--muted); text-align:center; margin-bottom:12px;">Барои ворид шудан ба барнома шартҳоро қабул кунед.</p>
-        
+  <!-- ===== ONBOARDING SCREEN ===== -->
+  <div id="onboarding-screen" class="screen active">
+    <div class="onboard-bg">
+      <div class="ob-circle c1"></div>
+      <div class="ob-circle c2"></div>
+      <div class="ob-circle c3"></div>
+    </div>
+    <div class="onboard-content">
+      <div class="logo-wrap">
+        <div class="logo-icon"><i class="fa-solid fa-hammer"></i></div>
+        <h1 class="logo-text">AUTOUSTATJ</h1>
+        <p class="logo-sub">Платформаи устоҳои касбии Тоҷикистон</p>
+      </div>
+
+      <div class="onboard-card" id="policy-step">
+        <h2><i class="fa-solid fa-shield-halved"></i> Сиёсати истифода</h2>
         <div class="policy-text">
-            <strong>Созишномаи сиёсати истифодабарӣ:</strong><br>
-            1. Ҳамчун муштарӣ, шумо ҳуқуқ доред маълумоти устоҳоро кобед ва бо онҳо мустақим тамос гиред.<br>
-            2. Маълумоти воридкардаи шумо (Номи шумо) танҳо барои муаррифии шумо ба устоҳо истифода мешавад.<br>
-            3. Ҷойгиршавии GPS-и шумо танҳо бо хоҳиши шумо барои ёфтани наздиктарин хидматрасонӣ истифода мегардад.<br>
-            4. Ҳама гуна истифодаи ғайриқонунӣ ё паҳн кардани маълумоти барнома манъ аст.<br>
-            5. Бақайдгирии устоҳо танҳо пас аз тасдиқи администратор фаъол мешавад.
+          <p>Хуш омадед ба <strong>AUTOUSTATJ</strong> — платформаи рақамии устоҳои касбии Тоҷикистон.</p>
+          <ul>
+            <li>Маълумоти шахсии шумо бехатар нигоҳ дошта мешавад.</li>
+            <li>Шумо масъулияти дурустии иттилооте, ки ворид мекунед, доред.</li>
+            <li>Истифодаи платформа барои мақсадҳои ғайриқонунӣ манъ аст.</li>
+            <li>Баҳодиҳии нодуруст ва спам иҷозат дода намешавад.</li>
+            <li>Маълумоти тамос бо розигии усто нишон дода мешавад.</li>
+          </ul>
         </div>
-
-        <label class="check-row">
-            <input type="checkbox" id="policyCheck">
-            <span>Ман шартҳо ва сиёсати истифодабариро пурра қабул мекунам *</span>
+        <label class="policy-check">
+          <input type="checkbox" id="policy-cb" />
+          <span class="checkmark"></span>
+          Ман бо шартҳои истифода розиям
         </label>
+        <button class="btn-primary" id="policy-next-btn" disabled>
+          Давом додан <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
 
-        <div class="fg" style="margin-bottom:16px;">
-            <label>Номи шумо (ҳамчун муштарӣ) *</label>
-            <input type="text" id="clientNameInput" placeholder="Масалан: Сомон">
+      <div class="onboard-card hidden" id="name-step">
+        <h2><i class="fa-solid fa-user"></i> Маълумоти шумо</h2>
+        <div class="input-group">
+          <label>Номи шумо</label>
+          <input type="text" id="user-name-input" placeholder="Масалан: Алишер" />
         </div>
-
-        <button class="btn-submit" onclick="acceptAndEnter()">Қабул ва ворид шудан</button>
+        <div class="input-group">
+          <label>Насаби шумо</label>
+          <input type="text" id="user-surname-input" placeholder="Масалан: Назаров" />
+        </div>
+        <button class="btn-primary" id="name-next-btn">
+          Дохил шудан <i class="fa-solid fa-right-to-bracket"></i>
+        </button>
+      </div>
     </div>
-</div>
+  </div>
 
-<nav class="navbar">
-    <div class="nav-inner">
-        <a href="#" class="logo" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">AUTO<span>USTO TJ</span></a>
-        <ul class="nav-desktop-links">
-            <li><a href="#"><i class="fa fa-home"></i> Асосӣ</a></li>
-            <li><a href="#" onclick="openRegModal(); return false;"><i class="fa fa-wrench"></i> Усто шудан</a></li>
-            <li><a href="#" onclick="toggleTheme(); return false;"><i class="fa fa-moon"></i></a></li>
-            <li id="desktopUserNav" style="display: flex; align-items: center; gap: 10px;">
-                <div class="client-tag"><i class="fa fa-user"></i> <span class="clientNameTxtSlot"></span></div>
-                <a href="#" onclick="logoutClient(); return false;" class="btn-logout-desktop" title="Баромад"><i class="fa fa-sign-out-alt"></i></a>
-            </li>
-        </ul>
-        <button class="hamburger" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+  <!-- ===== MAIN APP ===== -->
+  <div id="app-screen" class="screen">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="burger-btn" id="burger-btn" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="topbar-logo">
+        <i class="fa-solid fa-hammer"></i> AUTOUSTATJ
+      </div>
+      <button class="topbar-search-btn" id="topbar-search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </header>
+
+    <!-- SIDEBAR MENU -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebar-avatar-text">А</div>
+          <div>
+            <div class="sidebar-username" id="sidebar-username-display">Истифодабаранда</div>
+            <div class="sidebar-role">Меҳмон</div>
+          </div>
+        </div>
+        <button class="sidebar-close" id="sidebar-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-page="home">
+          <i class="fa-solid fa-house"></i> Саҳифаи асосӣ
+        </a>
+        <a href="#" class="nav-item" data-page="about">
+          <i class="fa-solid fa-circle-info"></i> Дар бораи мо
+        </a>
+        <a href="#" class="nav-item" data-page="masters">
+          <i class="fa-solid fa-users"></i> Устоҳо
+        </a>
+        <a href="#" class="nav-item" data-page="weekly">
+          <i class="fa-solid fa-trophy"></i> Устои беҳтарини ҳафта
+        </a>
+        <a href="#" class="nav-item" data-page="vip">
+          <i class="fa-solid fa-crown"></i> ВИП Усто
+        </a>
+        <a href="#" class="nav-item" data-page="favorites">
+          <i class="fa-solid fa-heart"></i> Писандидаҳо
+          <span class="nav-badge" id="fav-badge">0</span>
+        </a>
+        <hr class="nav-divider" />
+        <a href="#" class="nav-item" data-page="register-master">
+          <i class="fa-solid fa-user-plus"></i> Бақайдгирии усто
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <small>AUTOUSTATJ v1.0 &copy; 2025</small>
+      </div>
+    </aside>
+
+    <!-- SEARCH BAR -->
+    <div class="search-bar-wrap hidden" id="search-bar-wrap">
+      <div class="search-bar">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="search-input" placeholder="Ҷустуҷӯи усто..." />
+        <button id="search-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
     </div>
-</nav>
 
-<div class="sidebar-overlay" onclick="toggleSidebar()"></div>
-<div class="sidebar" id="sidebar">
-    <button class="sidebar-close" onclick="toggleSidebar()"><i class="fa fa-times"></i></button>
-    <div class="logo" style="margin-bottom:10px;">AUTO<span>USTO TJ</span></div>
-    
-    <div class="sidebar-user-info">
-        <i class="fa fa-user-circle"></i> Муштарӣ:
-        <strong class="clientNameTxtSlot">...</strong>
-    </div>
+    <!-- PAGE CONTENT -->
+    <main class="page-content">
 
-    <ul class="sidebar-menu">
-        <li><a href="#" onclick="toggleSidebar()"><i class="fa fa-home"></i> Асосӣ</a></li>
-        <li><a href="#" onclick="toggleSidebar(); openRegModal();"><i class="fa fa-user-plus"></i> Ҳамчун усто сабт шудан</a></li>
-        <li><a href="#" onclick="toggleTheme(); toggleSidebar();"><i class="fa fa-moon"></i> Режими шабона</a></li>
-        <li style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 15px;">
-            <a href="#" onclick="logoutClient(); return false;" class="btn-logout-link"><i class="fa fa-sign-out-alt"></i> Баромадан аз профил</a>
-        </li>
-    </ul>
-</div>
+      <!-- HOME PAGE -->
+      <div class="page active" id="page-home">
+        <section class="hero-section">
+          <div class="hero-text">
+            <h2 id="hero-greeting">Салом!</h2>
+            <p>Устои мувофиқро ёбед</p>
+          </div>
+          <div class="hero-img"><i class="fa-solid fa-toolbox"></i></div>
+        </section>
 
-<main>
+        <!-- CATEGORY FILTER -->
+        <section class="categories-section">
+          <h3 class="section-title">🚗 Касбҳои мошин</h3>
+          <div class="categories-scroll">
+            <button class="cat-btn active" data-cat="all">Ҳама</button>
+            <button class="cat-btn" data-cat="Автоэлектрик">🔌 Автоэлектрик</button>
+            <button class="cat-btn" data-cat="Механик">🔧 Механик</button>
+            <button class="cat-btn" data-cat="Кузовщик">🚘 Кузовщик</button>
+            <button class="cat-btn" data-cat="Малярщик">🎨 Малярщик</button>
+            <button class="cat-btn" data-cat="Шиноменщик">🛞 Шиноменщик</button>
+            <button class="cat-btn" data-cat="Диагностик">💻 Диагностик</button>
+            <button class="cat-btn" data-cat="Сварщик">🔥 Сварщик</button>
+            <button class="cat-btn" data-cat="Мойщик">🧼 Мойщик</button>
+            <button class="cat-btn" data-cat="Тонировщик">🪟 Тонировщик</button>
+            <button class="cat-btn" data-cat="Аккумуляторщик">🔋 Аккумуляторщик</button>
+          </div>
+        </section>
 
-    <section class="search-section">
-        <div class="search-title"><i class="fa fa-sliders" style="color:var(--green)"></i> Интихоби босуръати усто</div>
-        <div class="search-box-wrapper">
-            <i class="fa fa-search"></i>
-            <input type="text" id="searchKeyword" class="search-input" placeholder="Ҷустуҷӯ бо номи усто..." oninput="performLiveFilter()">
+        <!-- CITY FILTER -->
+        <section class="city-section">
+          <h3 class="section-title">Шаҳр / Ноҳия</h3>
+          <div class="city-scroll">
+            <button class="city-btn active" data-city="all">Ҳама</button>
+            <button class="city-btn" data-city="Душанбе">Душанбе</button>
+            <button class="city-btn" data-city="Хуҷанд">Хуҷанд</button>
+            <button class="city-btn" data-city="Кӯлоб">Кӯлоб</button>
+            <button class="city-btn" data-city="Бохтар">Бохтар</button>
+            <button class="city-btn" data-city="Айни">Айни</button>
+            <button class="city-btn" data-city="Панҷакент">Панҷакент</button>
+            <button class="city-btn" data-city="Исфара">Исфара</button>
+            <button class="city-btn" data-city="Конибодом">Конибодом</button>
+          </div>
+        </section>
+
+        <!-- MASTERS GRID -->
+        <section class="masters-section">
+          <h3 class="section-title" id="masters-count-label">Устоҳо</h3>
+          <div class="masters-grid" id="masters-grid"></div>
+          <div class="empty-state hidden" id="empty-state">
+            <i class="fa-solid fa-user-slash"></i>
+            <p>Усто ёфт нашуд</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- ABOUT PAGE -->
+      <div class="page hidden" id="page-about">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-circle-info"></i> Дар бораи мо</h2>
+          <div class="about-card">
+            <div class="about-icon"><i class="fa-solid fa-hammer"></i></div>
+            <h3>AUTOUSTATJ</h3>
+            <p>AUTOUSTATJ — платформаи рақамии Тоҷикистон барои пайвасткунии устоҳои касбӣ бо муштариён. Мо ба ҳар хонавода кӯмак мекунем, ки дар кӯтоҳтарин муддат устои мувофиқ ёбад.</p>
+          </div>
+          <div class="about-stats">
+            <div class="stat-item"><span class="stat-num">500+</span><span>Устоҳо</span></div>
+            <div class="stat-item"><span class="stat-num">20+</span><span>Касбҳо</span></div>
+            <div class="stat-item"><span class="stat-num">8</span><span>Шаҳрҳо</span></div>
+            <div class="stat-item"><span class="stat-num">2000+</span><span>Муштариён</span></div>
+          </div>
+          <div class="about-mission">
+            <h3>Миссияи мо</h3>
+            <p>Мо мехоҳем, ки ҳар усто дар Тоҷикистон имконияти намоиши касби худро дошта бошад ва ҳар оила бе мушкил устои боэтимод пайдо кунад.</p>
+          </div>
+          <div class="contact-info">
+            <h3>Тамос бо мо</h3>
+            <a href="https://wa.me/992933099029" class="contact-btn whatsapp" target="_blank">
+              <i class="fa-brands fa-whatsapp"></i> +992 933 099 029
+            </a>
+            <a href="mailto:mahmadullokomilzod@gmail.com" class="contact-btn email">
+              <i class="fa-solid fa-envelope"></i> mahmadullokomilzod@gmail.com
+            </a>
+          </div>
         </div>
-        <div class="filter-conditional-grid">
-            <select id="filterCategory" onchange="handleCategoryFilterChange()">
-                <option value="">1. Касбро интихоб кунед</option>
-                <option value="Автоэлектрик">Автоэлектрик</option>
-                <option value="Моторист">Моторист</option>
-                <option value="Ходовой">Ходовой</option>
-                <option value="Покраска">Покраска</option>
-                <option value="Диагностика">Диагностика</option>
-            </select>
-            
-            <select id="filterCity" class="hidden-filter" onchange="handleCityFilterChange()">
-                <option value="">2. Шаҳрро интихоб кунед</option>
-                <option value="Душанбе">Душанбе</option>
-                <option value="Хуҷанд">Хуҷанд</option>
-                <option value="Бохтар">Бохтар</option>
-            </select>
-            
-            <select id="filterDistrict" class="hidden-filter" onchange="performLiveFilter()">
-                <option value="">ҳама ноҳия</option>
-                <option value="Сино">Сино</option>
-                <option value="Фирдавсӣ">Фирдавсӣ</option>
-                <option value="Шоҳмансур">Шоҳмансур</option>
-                <option value="Б.Ғафуров">Б.Ғафуров</option>
-            </select>
-        </div>
-    </section>
+      </div>
 
-    <section id="mastersAccordionContainer">
-        <div class="section-head">
-            <h2>🔧 Категорияҳои <span>Устоҳо</span></h2>
+      <!-- MASTERS LIST PAGE -->
+      <div class="page hidden" id="page-masters">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-users"></i> Ҳамаи устоҳо</h2>
+          <div class="masters-grid" id="all-masters-grid"></div>
         </div>
+      </div>
 
-        <div class="category-accordion" data-accordion-spec="Автоэлектрик">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <h3><i class="fa fa-bolt" style="color:var(--amber)"></i> Автоэлектрик <span>(Зерменю)</span></h3>
-                <i class="fa fa-chevron-down arrow-icon"></i>
+      <!-- WEEKLY BEST PAGE -->
+      <div class="page hidden" id="page-weekly">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-trophy"></i> Устои беҳтарини ҳафта</h2>
+          <div class="weekly-banner">
+            <div class="weekly-crown"><i class="fa-solid fa-crown"></i></div>
+            <p>Беҳтаринҳо бар асоси баҳодиҳии муштариён интихоб мешаванд</p>
+          </div>
+          <div class="masters-grid" id="weekly-grid"></div>
+        </div>
+      </div>
+
+      <!-- VIP PAGE -->
+      <div class="page hidden" id="page-vip">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-crown"></i> ВИП Устоҳо</h2>
+          <div class="vip-banner">
+            <i class="fa-solid fa-star"></i>
+            <p>Устоҳои тасдиқшуда бо баҳои олӣ</p>
+          </div>
+          <div class="masters-grid" id="vip-grid"></div>
+        </div>
+      </div>
+
+      <!-- FAVORITES PAGE -->
+      <div class="page hidden" id="page-favorites">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-heart"></i> Писандидаҳо</h2>
+          <div class="masters-grid" id="fav-grid"></div>
+          <div class="empty-state hidden" id="fav-empty">
+            <i class="fa-regular fa-heart"></i>
+            <p>Шумо ҳанӯз усто писанд накардаед</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- REGISTER MASTER PAGE -->
+      <div class="page hidden" id="page-register-master">
+        <div class="inner-page">
+          <h2 class="page-heading"><i class="fa-solid fa-user-plus"></i> Бақайдгирии усто</h2>
+          <p class="reg-info">Барои бақайдгирӣ, маълумоти зеринро пур кунед ва ба WhatsApp ё почтаи администратор равон кунед.</p>
+          <form class="reg-form" id="reg-form">
+            <div class="input-group">
+              <label><i class="fa-solid fa-user"></i> Ном ва насаб</label>
+              <input type="text" id="reg-fullname" placeholder="Ном Насаб Падарон" required />
             </div>
-            <div class="accordion-content">
-                <div class="city-sub-accordion" data-accordion-city="Душанбе">
-                    <div class="city-header" onclick="toggleCityAccordion(this)">
-                        <span>📍 Шаҳри Душанбе</span>
-                        <i class="fa fa-angle-down"></i>
-                    </div>
-                    <div class="city-content">
-                        <div class="group-title vip-title"><i class="fa fa-crown"></i> VIP Устоҳо</div>
-                        <div class="masters-list">
-                            <div class="master-row-card" data-spec="Автоэлектрик" data-city="Душанбе" data-district="Сино" data-name="Алишер Усмонов">
-                                <div class="card-main-info">
-                                    <div class="m-avatar">АУ</div>
-                                    <div class="m-details">
-                                        <div class="m-name-row"><span class="m-name">Алишер Усмонов</span><span class="badge-vip">VIP</span></div>
-                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.9</span><span>·</span><span>Таҷриба: 7 сол</span></div>
-                                    </div>
-                                </div>
-                                <div class="m-tags"><span class="m-tag">Автоэлектрик</span><span class="m-tag">Компютерӣ</span></div>
-                                <div class="card-action-row">
-                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Сино</span>
-                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-cake-candles"></i> Соли таваллуд</label>
+              <input type="number" id="reg-birth" placeholder="Масалан: 1990" min="1960" max="2005" required />
             </div>
-        </div>
-
-        <div class="category-accordion" data-accordion-spec="Ходовой">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <h3><i class="fa fa-car-crush" style="color:var(--blue)"></i> Ходовой <span>(Зерменю)</span></h3>
-                <i class="fa fa-chevron-down arrow-icon"></i>
-            </div>
-            <div class="accordion-content">
-                <div class="city-sub-accordion" data-accordion-city="Душанбе">
-                    <div class="city-header" onclick="toggleCityAccordion(this)">
-                        <span>📍 Шаҳри Душанбе</span>
-                        <i class="fa fa-angle-down"></i>
-                    </div>
-                    <div class="city-content">
-                        <div class="group-title vip-title"><i class="fa fa-star"></i> Беҳтарини ҳафта</div>
-                        <div class="masters-list">
-                            <div class="master-row-card" data-spec="Ходовой" data-city="Душанбе" data-district="Фирдавсӣ" data-name="Мақсуд Раҳимов">
-                                <div class="card-main-info">
-                                    <div class="m-avatar" style="color:var(--blue)">МР</div>
-                                    <div class="m-details">
-                                        <div class="m-name-row"><span class="m-name">Мақсуд Раҳимов</span><span class="badge-week">ТОП ҲАФТА</span></div>
-                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 5.0</span><span>·</span><span>Таҷриба: 5 сол</span></div>
-                                    </div>
-                                </div>
-                                <div class="m-tags"><span class="m-tag">Ходовой</span><span class="m-tag">Развал</span></div>
-                                <div class="card-action-row">
-                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Душанбе, Фирдавсӣ</span>
-                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-accordion" data-accordion-spec="Моторист">
-            <div class="accordion-header" onclick="toggleAccordion(this)">
-                <h3><i class="fa fa-cogs" style="color:var(--muted)"></i> Моторист <span>(Зерменю)</span></h3>
-                <i class="fa fa-chevron-down arrow-icon"></i>
-            </div>
-            <div class="accordion-content">
-                <div class="city-sub-accordion" data-accordion-city="Хуҷанд">
-                    <div class="city-header" onclick="toggleCityAccordion(this)">
-                        <span>📍 Шаҳри Хуҷанд</span>
-                        <i class="fa fa-angle-down"></i>
-                    </div>
-                    <div class="city-content">
-                        <div class="group-title"><i class="fa fa-tools"></i> Устоҳои оддӣ</div>
-                        <div class="masters-list">
-                            <div class="master-row-card" data-spec="Моторист" data-city="Хуҷанд" data-district="Б.Ғафуров" data-name="Парвиз Ҳакимов">
-                                <div class="card-main-info">
-                                    <div class="m-avatar" style="color:#555">ПҲ</div>
-                                    <div class="m-details">
-                                        <div class="m-name-row"><span class="m-name">Парвиз Ҳакимов</span><span class="badge-normal">Оддӣ</span></div>
-                                        <div class="m-meta"><span class="m-rating"><i class="fa fa-star"></i> 4.5</span><span>·</span><span>Таҷриба: 4 сол</span></div>
-                                    </div>
-                                </div>
-                                <div class="m-tags"><span class="m-tag">Мотор</span><span class="m-tag">Ороиш</span></div>
-                                <div class="card-action-row">
-                                    <span class="m-loc"><i class="fa fa-map-marker-alt"></i> Хуҷанд, Б.Ғафуров</span>
-                                    <button class="btn-call" onclick="contactMaster('992933099029')"><i class="fab fa-whatsapp"></i> Тамос</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-
-    <section class="help-section">
-        <div class="help-title"><i class="fa fa-info-circle"></i> Maълумотномаи тезбахшо барои ронандагон</div>
-        <div class="help-item">
-            <strong>Матор дуд карда истодааст ё "Чек" рӯшан шуд?</strong>
-            Интихоби касби <span style="color:var(--green);font-weight:bold">"Моторист"</span> кунед, шаҳри худро ёфта ба устои наздик занг занед.
-        </div>
-        <div class="help-item">
-            <strong>Аккумулятор хоб рафт ё чароғҳо намесӯзанд?</strong>
-            Мушкили барқии мошинро танҳо <span style="color:var(--green);font-weight:bold">"Автоэлектрик"</span> ҳал мекунад.
-        </div>
-    </section>
-
-</main>
-
-<div class="bottom-nav">
-    <button class="b-nav-btn active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <i class="fa fa-home"></i><span>Асосӣ</span>
-    </button>
-    <button class="b-nav-btn" onclick="openSOSModal()">
-        <div class="sos-btn-main">SOS</div>
-    </button>
-    <button class="b-nav-btn" onclick="openRegModal()">
-        <div class="fa fa-wrench"></i><span>Усто шудан</span>
-    </button>
-</div>
-
-<div id="regModal" class="modal" onclick="if(event.target===this) closeModal('regModal')">
-    <div class="modal-box">
-        <button class="modal-close" onclick="closeModal('regModal')"><i class="fa fa-times"></i></button>
-        <h3 style="margin-bottom:12px;"><i class="fa fa-user-plus" style="color:var(--green)"></i> Сабти усто ба WhatsApp</h3>
-        
-        <div class="fg">
-            <label>Ном ва Насаб *</label>
-            <input type="text" id="regName" placeholder="Масалан: Орзу Назаров">
-        </div>
-        <div class="fg">
-            <label>Рақами телефон (WhatsApp) *</label>
-            <input type="tel" id="regPhone" placeholder="933099029" maxlength="9">
-        </div>
-        <div class="fg">
-            <label>Соли таввалуд *</label>
-            <input type="number" id="regBirthYear" placeholder="Масалан: 1992" min="1950" max="2010">
-        </div>
-        <div class="fg">
-            <label>Касб (Категория) *</label>
-            <select id="regSpec">
+            <div class="input-group">
+              <label><i class="fa-solid fa-briefcase"></i> Касб</label>
+              <select id="reg-profession" required>
+                <option value="">— Интихоб кунед —</option>
                 <option>Автоэлектрик</option>
-                <option>Моторист</option>
-                <option>Ходовой</option>
-                <option>Покраска</option>
-                <option>Диагностика</option>
-            </select>
+                <option>Механик</option>
+                <option>Кузовщик</option>
+                <option>Малярщик</option>
+                <option>Шиноменщик</option>
+                <option>Диагностик</option>
+                <option>Сварщик</option>
+                <option>Мойщик</option>
+                <option>Тонировщик</option>
+                <option>Аккумуляторщик</option>
+              </select>
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-building"></i> Ҷои кор</label>
+              <input type="text" id="reg-workplace" placeholder="Ном ё суроғаи ҷои кор" required />
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-calendar-days"></i> Собиқаи корӣ (сол)</label>
+              <input type="number" id="reg-experience" placeholder="Масалан: 5" min="0" max="50" required />
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-phone"></i> Рақами телефон</label>
+              <input type="tel" id="reg-phone" placeholder="+992 XX XXX XXXX" required />
+            </div>
+            <div class="input-group">
+              <label><i class="fa-solid fa-location-dot"></i> Суроға (местоположение)</label>
+              <div class="location-row">
+                <input type="text" id="reg-location" placeholder="Шаҳр ва маҳалла" readonly />
+                <button type="button" class="btn-loc" id="get-location-btn">
+                  <i class="fa-solid fa-location-crosshairs"></i>
+                </button>
+              </div>
+              <small id="location-status"></small>
+            </div>
+            <div class="reg-actions">
+              <button type="button" class="btn-send whatsapp" id="send-whatsapp-btn">
+                <i class="fa-brands fa-whatsapp"></i> WhatsApp орастан
+              </button>
+              <button type="button" class="btn-send email" id="send-email-btn">
+                <i class="fa-solid fa-envelope"></i> Почта орастан
+              </button>
+            </div>
+          </form>
         </div>
-        <div class="fg">
-            <label>Шаҳр *</label>
-            <select id="regCity">
-                <option>Душанбе</option>
-                <option>Хуҷанд</option>
-                <option>Бохтар</option>
-            </select>
-        </div>
-        
-        <label style="font-size:12px; font-weight:600; color:var(--muted); display:block; margin-bottom:4px;">Ҷойгиршавӣ (GPS)</label>
-        <div class="btn-gps" id="gpsBtn" onclick="getLocationGPS()">📍 Пахш кунед ва мавқеъро гиред</div>
-        <input type="hidden" id="regGpsLink" value="Нафиристодааст">
+      </div>
 
-        <button class="btn-submit" onclick="sendMasterToWhatsApp()"><i class="fab fa-whatsapp"></i> Фиристодан ба Администратор</button>
+    </main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav">
+      <button class="bn-item active" data-page="home">
+        <i class="fa-solid fa-house"></i><span>Асосӣ</span>
+      </button>
+      <button class="bn-item" data-page="masters">
+        <i class="fa-solid fa-users"></i><span>Устоҳо</span>
+      </button>
+      <button class="bn-item" data-page="weekly">
+        <i class="fa-solid fa-trophy"></i><span>Беҳтарин</span>
+      </button>
+      <button class="bn-item" data-page="favorites">
+        <i class="fa-solid fa-heart"></i><span>Писандида</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MASTER DETAIL MODAL -->
+  <div class="modal-overlay hidden" id="master-modal">
+    <div class="modal-card" id="modal-card">
+      <button class="modal-close" id="modal-close"><i class="fa-solid fa-xmark"></i></button>
+      <div id="modal-content"></div>
     </div>
-</div>
+  </div>
 
-<div id="sosModal" class="modal" onclick="if(event.target===this) closeModal('sosModal')">
-    <div class="modal-box" style="border-top: 4px solid var(--red);">
-        <button class="modal-close" onclick="closeModal('sosModal')"><i class="fa fa-times"></i></button>
-        <h3 style="color:var(--red); margin-bottom:12px;"><i class="fa fa-bolt"></i> Кӯмаки фаврии роҳ SOS</h3>
-        <div class="fg">
-            <label>Рақами телефони шумо</label>
-            <input type="tel" id="sosPhone" placeholder="933099029">
-        </div>
-        <button class="btn-submit" style="background:var(--red)" onclick="sendSOS()">Ирсоли SOS ба WhatsApp</button>
-    </div>
-</div>
+  <!-- TOAST -->
+  <div class="toast hidden" id="toast"></div>
 
-<div class="toast" id="toast"></div>
-
-<script>
-const MY_WHATSAPP = '992933099029'; // Рақами ватсапи администратор
-
-window.onload = function() {
-    initApp();
-}
-
-function initApp() {
-    const isAccepted = localStorage.getItem('autoUstoAccepted');
-    const clientName = localStorage.getItem('autoUstoClientName');
-    if(isAccepted && clientName) {
-        document.getElementById('welcomeOverlay').style.display = 'none';
-        updateClientUI(clientName);
-    } else {
-        document.getElementById('welcomeOverlay').style.display = 'flex';
-    }
-    performLiveFilter();
-}
-
-function acceptAndEnter() {
-    const isChecked = document.getElementById('policyCheck').checked;
-    const clientName = document.getElementById('clientNameInput').value.trim();
-    
-    if(!isChecked) { 
-        showToast('⚠️ Лутфан аввал шартҳо ва сиёсати истифодабариро қабул кунед!'); 
-        return; 
-    }
-    
-    if(clientName.length < 2) { 
-        showToast('⚠️ Лутфан номи худро дуруст ворид кунед!'); 
-        return; 
-    }
-
-    localStorage.setItem('autoUstoAccepted', 'true');
-    localStorage.setItem('autoUstoClientName', clientName);
-    
-    document.getElementById('welcomeOverlay').style.display = 'none';
-    updateClientUI(clientName);
-    showToast(`👋 Хуш омадед, ${clientName}!`);
-}
-
-function updateClientUI(name) {
-    const slots = document.querySelectorAll('.clientNameTxtSlot');
-    slots.forEach(slot => {
-        slot.textContent = name;
-    });
-}
-
-// Функсияи БАРОМАДАН аз профил
-function logoutClient() {
-    localStorage.removeItem('autoUstoAccepted');
-    localStorage.removeItem('autoUstoClientName');
-    showToast('🚪 Шумо аз барнома баромадед.');
-    setTimeout(() => {
-        location.reload();
-    }, 1000);
-}
-
-function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
-    document.querySelector('.sidebar-overlay').classList.toggle('open');
-}
-
-function toggleTheme() {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    showToast(next === 'dark' ? '🌙 Режими шабона фаъол шуд' : '☀️ Режими рӯзона фаъол шуд');
-}
-
-/* ФУНКСИЯҲОИ НАВИ ФИЛТР (КАСКАДНЫЙ ФИЛЬТР) */
-function handleCategoryFilterChange() {
-    const cat = document.getElementById('filterCategory').value;
-    const citySelect = document.getElementById('filterCity');
-    const distSelect = document.getElementById('filterDistrict');
-    
-    if(cat) {
-        citySelect.classList.remove('hidden-filter');
-    } else {
-        citySelect.classList.add('hidden-filter');
-        citySelect.value = "";
-        distSelect.classList.add('hidden-filter');
-        distSelect.value = "";
-    }
-    
-    // Агар категория иваз шавад, аккордеони ҳамон касбро худкор мекушоем
-    const accordions = document.querySelectorAll('.category-accordion');
-    accordions.forEach(acc => {
-        if(cat && acc.getAttribute('data-accordion-spec') === cat) {
-            acc.classList.add('open');
-        } else {
-            acc.classList.remove('open');
-        }
-    });
-
-    performLiveFilter();
-}
-
-function handleCityFilterChange() {
-    const city = document.getElementById('filterCity').value;
-    const distSelect = document.getElementById('filterDistrict');
-    
-    if(city) {
-        distSelect.classList.remove('hidden-filter');
-    } else {
-        distSelect.classList.add('hidden-filter');
-        distSelect.value = "";
-    }
-
-    // Худ кушодани зерменюи шаҳр дар дохили аккордеони фаъол
-    const cityAccs = document.querySelectorAll('.city-sub-accordion');
-    cityAccs.forEach(cAcc => {
-        if(city && cAcc.getAttribute('data-accordion-city') === city) {
-            cAcc.classList.add('open');
-        } else {
-            cAcc.classList.remove('open');
-        }
-    });
-
-    performLiveFilter();
-}
-
-/* СИСТЕМАИ АККОРДЕОН (ЗЕРМЕНЮҲО) БО ПАХШ КУНИ */
-function toggleAccordion(element) {
-    const parent = element.parentElement;
-    parent.classList.toggle('open');
-}
-
-function toggleCityAccordion(element) {
-    const parent = element.parentElement;
-    parent.classList.toggle('open');
-}
-
-/* ФИЛТРИ УМУМИИ ЗИНДА ВА АСОСӢ */
-function performLiveFilter() {
-    const keyword = document.getElementById('searchKeyword').value.toLowerCase();
-    const cat = document.getElementById('filterCategory').value;
-    const city = document.getElementById('filterCity').value;
-    const dist = document.getElementById('filterDistrict').value;
-
-    const cards = document.querySelectorAll('.master-row-card');
-
-    cards.forEach(card => {
-        const mName = card.getAttribute('data-name').toLowerCase();
-        const mSpec = card.getAttribute('data-spec');
-        const mCity = card.getAttribute('data-city');
-        const mDist = card.getAttribute('data-district');
-
-        const matchKeyword = !keyword || mName.includes(keyword);
-        const matchCat = !cat || mSpec === cat;
-        const matchCity = !city || mCity === city;
-        const matchDist = !dist || mDist === dist;
-
-        if(matchKeyword && matchCat && matchCity && matchDist) {
-            card.style.display = 'flex';
-            card.classList.add('matched-card');
-        } else {
-            card.style.display = 'none';
-            card.classList.remove('matched-card');
-        }
-    });
-
-    // Агар ҷустуҷӯ аз рӯи калима бошад, аккордеонҳоеро, ки усто доранд, худкор нишон медиҳем
-    if(keyword) {
-        const accordions = document.querySelectorAll('.category-accordion');
-        accordions.forEach(acc => {
-            const hasMatch = acc.querySelectorAll('.master-row-card.matched-card').length > 0;
-            if(hasMatch) {
-                acc.classList.add('open');
-                const cityAccs = acc.querySelectorAll('.city-sub-accordion');
-                cityAccs.forEach(cAcc => {
-                    if(cAcc.querySelectorAll('.master-row-card.matched-card').length > 0) {
-                        cAcc.classList.add('open');
-                    }
-                });
-            }
-        });
-    }
-}
-
-function getLocationGPS() {
-    const btn = document.getElementById('gpsBtn');
-    btn.textContent = '⏳ Муайянкунии GPS...';
-    if (!navigator.geolocation) {
-        btn.textContent = '❌ GPS дар телефон кор намекунад';
-        return;
-    }
-    navigator.geolocation.getCurrentPosition(
-        pos => {
-            const lat = pos.coords.latitude.toFixed(6);
-            const lng = pos.coords.longitude.toFixed(6);
-            const link = `https://www.google.com/maps?q=${lat},${lng}`;
-            document.getElementById('regGpsLink').value = link;
-            btn.style.background = '#dcfce7';
-            btn.style.borderColor = '#22c55e';
-            btn.textContent = '✅ Мавқеи GPS бомуваффақият сабт шуд!';
-        },
-        () => { btn.textContent = '❌ Иҷозати GPS дода нашуд'; }
-    );
-}
-
-function sendMasterToWhatsApp() {
-    const name = document.getElementById('regName').value.trim();
-    const phone = document.getElementById('regPhone').value.trim();
-    const birthYear = document.getElementById('regBirthYear').value.trim();
-    const spec = document.getElementById('regSpec').value;
-    const city = document.getElementById('regCity').value;
-    const gps = document.getElementById('regGpsLink').value;
-
-    if(!name || !phone || !birthYear) {
-        showToast('⚠️ Лутфан ҳамаи майдонҳоро пур кунед!');
-        return;
-    }
-
-    const message = `🚀 *ЗАЯВКАИ УСТОИ НАВ БА САЙТ*\n\n` +
-                    `👤 *Ном ва Насаб:* ${name}\n` +
-                    `📞 *Телефон:* +992 ${phone}\n` +
-                    `📅 *Соли таваллуд:* ${birthYear}\n` +
-                    `🛠️ *Касб:* ${spec}\n` +
-                    `🏙️ *Шаҳр:* ${city}\n` +
-                    `📍 *Мавқеи GPS:* ${gps}`;
-
-    window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(message)}`, '_blank');
-    closeModal('regModal');
-    showToast('✅ Маълумот ба WhatsApp-и админ фиристода шуд!');
-}
-
-function contactMaster(phone) {
-    const client = localStorage.getItem('autoUstoClientName') || 'Муштарӣ';
-    const msg = `Салом усто! Ман аз AutoUsto TJ шуморо пайдо кардам. Номи ман ${client}. Масъалаи мошин доштам.`;
-    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
-}
-
-function sendSOS() {
-    const phone = document.getElementById('sosPhone').value.trim();
-    const client = localStorage.getItem('autoUstoClientName') || 'Муштарӣ';
-    if(!phone) { showToast('⚠️ Рақамро нависед'); return; }
-
-    const msg = `🚨 *SOS КӮМАК ТАЪҶИЛӢ ДАР РОҲ*\n\n👤 Муштарӣ: ${client}\n📞 Телефон: +992${phone}`;
-    window.open(`https://wa.me/${MY_WHATSAPP}?text=${encodeURIComponent(msg)}`, '_blank');
-    closeModal('sosModal');
-}
-
-function openRegModal() { document.getElementById('regModal').classList.add('open'); }
-function openSOSModal() { document.getElementById('sosModal').classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-
-function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg; t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-}
-</script>
+  <script src="script.js"></script>
 </body>
 </html>
