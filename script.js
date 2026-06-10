@@ -3,12 +3,12 @@
 // ===== DEMO DATA =====
 const MASTERS_DATA = [
   {
-    id: 1, name: "Алишер Назаров", photo: "01.jpg", profession: "Автоэлектрик",
-    city: "Душанбе", workplace: "СТО «АвтоМастер», кӯч. Исмоилӣ 12",
+    id: 1, name: "Аслиддинов Садриддин", photo: "01.jpg", profession: "Автоэлектрик",
+    city: "Душанбе", workplace: "Автосервис кушониён",
     experience: 8, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.8, reviews: 34, vip: true, weekly: true,
     color: "#1a6e4a",
-    bio: "Мутахассиси электрика ва компютерҳои автомобилӣ. Таҷрибаи 8-сол. Кор бо ҳамаи маркаҳо.",
+    bio: "Мутахассис, электрик ва компютерҳои автомобилӣ. Таҷрибаи 8-сол. Кор бо ҳамаи маркаҳо.",
   },
   {
     id: 2, name: "Баҳром Раҳимов", photo: "01.jpg", profession: "Механик",
@@ -19,7 +19,7 @@ const MASTERS_DATA = [
     bio: "Таъмири двигатель, КПП, подвеска. Кор мекунам бо ҳамаи маркаҳо.",
   },
   {
-    id: 3, name: "Комил Юсупов", photo: "01.jpg", profession: "Кузовщик",
+    id: 3, name: "Комил Юсупов", photo: "01.jpg", profession: "Кузов",
     city: "Душанбе", workplace: "Кузовной цех «ТоҷАвто»",
     experience: 9, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.7, reviews: 41, vip: true, weekly: true,
@@ -27,7 +27,7 @@ const MASTERS_DATA = [
     bio: "Таъмири кузов, рихтагирии панел, иваз кардани қисмҳо. Сифати олӣ.",
   },
   {
-    id: 4, name: "Шариф Мирзоев", photo: "01.jpg", profession: "Малярщик",
+    id: 4, name: "Шариф Мирзоев", photo: "01.jpg", profession: "Рангкунӣ",
     city: "Айни", workplace: "Покрасочный цех «Айни»",
     experience: 7, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.5, reviews: 19, vip: false, weekly: false,
@@ -35,7 +35,7 @@ const MASTERS_DATA = [
     bio: "Рангкунии автомобил, полировка, антикор. Технологияи муосир.",
   },
   {
-    id: 5, name: "Давлат Ҳасанов", photo: "01.jpg", profession: "Шиноменщик",
+    id: 5, name: "Давлат Ҳасанов", photo: "01.jpg", profession: "Шиномантаж",
     city: "Бохтар", workplace: "Шиномонтаж «Бохтар»",
     experience: 5, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.3, reviews: 22, vip: false, weekly: false,
@@ -43,12 +43,12 @@ const MASTERS_DATA = [
     bio: "Иваз кардани шина, балансировка, ҳаво пур кардан. Зуд ва боэтимод.",
   },
   {
-    id: 6, name: "Рустам Қодиров", photo: "01.jpg", profession: "Диагностик",
-    city: "Хуҷанд", workplace: "Маркази диагностика «ТехноАвто»",
+    id: 6, name: "Аслиддинов Садриддин", photo: "01.jpg", profession: "Автодиагностика",
+    city: "Душанбе", workplace: "Автосервис кушониён",
     experience: 6, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.9, reviews: 51, vip: true, weekly: false,
     color: "#1d4ed8",
-    bio: "Компютерии диагностика, хониши хато, танзими ECU. Асбобҳои муосир.",
+    bio: "Диагностикаи компютерӣ, хониши хато, танзими ECU. Асбобҳои муосир ва Инчунин мутахассис оид ба датчикҳои фишори шинаҳо",
   },
   {
     id: 7, name: "Ҷамшед Бобоев", photo: "01.jpg", profession: "Сварщик",
