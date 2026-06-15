@@ -11,7 +11,7 @@ const MASTERS_DATA = [
     bio: "Мутахассис, электрик ва компютерҳои автомобилӣ. Таҷрибаи 8-сол. Кор бо ҳамаи маркаҳо.",
   },
   {
-    id: 2, name: "Баҳром Раҳимов", photo: "01.jpg", profession: "Механик",
+    id: 2, name: "Баҳром Раҳимов", photo: "01.jpg", profession: "Моторист",
     city: "Хуҷанд", workplace: "СТО «Хуҷанд Авто»",
     experience: 12, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.6, reviews: 28, vip: true, weekly: false,
@@ -19,7 +19,7 @@ const MASTERS_DATA = [
     bio: "Таъмири двигатель, КПП, подвеска. Кор мекунам бо ҳамаи маркаҳо.",
   },
   {
-    id: 3, name: "Комил Юсупов", photo: "01.jpg", profession: "Кузов",
+    id: 3, name: "Комил Юсупов", photo: "01.jpg", profession: "Ходовой",
     city: "Душанбе", workplace: "Кузовной цех «ТоҷАвто»",
     experience: 9, phone: "+992933099029", whatsapp: "992933099029",
     rating: 4.7, reviews: 41, vip: true, weekly: true,
