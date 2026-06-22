@@ -27,8 +27,8 @@
 
 /* ===== RESET ===== */
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { font-size: 16px; scroll-behavior: smooth; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100vh; overflow: hidden; }
+html { font-size: 16px; scroll-behavior: smooth; height: 100%; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); height: 100%; overflow: hidden; }
 img { display: block; max-width: 100%; }
 button { cursor: pointer; font-family: var(--font); }
 a { text-decoration: none; }
@@ -44,8 +44,9 @@ a { text-decoration: none; }
 #onboarding-screen {
   background: linear-gradient(145deg, #0f4a31 0%, #1a6e4a 55%, #27a367 100%);
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .onboard-bg { position: fixed; inset: 0; overflow: hidden; pointer-events: none; }
 .ob-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.05); }
@@ -134,14 +135,13 @@ a { text-decoration: none; }
 .input-group input:focus,
 .input-group select:focus { border-color: var(--primary); background: white; }
 
-/* ══════════════════════════════════════
-   APP LAYOUT — MOBILE FIRST
-══════════════════════════════════════ */
+/* ===== APP LAYOUT — MOBILE FIRST ===== */
 #app-screen {
   background: var(--bg);
   flex-direction: column;
   overflow: hidden;
-  position: relative;
+  position: fixed;
+  inset: 0;
 }
 
 /* ===== TOPBAR ===== */
@@ -266,7 +266,14 @@ a { text-decoration: none; }
 #search-close { background: none; border: none; color: var(--text3); font-size: 16px; flex-shrink: 0; }
 
 /* ===== PAGE CONTENT ===== */
-.page-content { flex: 1; overflow-y: auto; overflow-x: hidden; padding-bottom: var(--bottom-h); }
+.page-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: var(--bottom-h);
+  height: 0; /* flex trick — ин скроллро кор мекунад */
+}
 .page { display: none; }
 .page.active { display: block; }
 
